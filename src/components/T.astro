@@ -1,0 +1,40 @@
+---
+/**
+ * Bilingual text. Renders a `{ ru, en }` value as two elements with data-lang
+ * (CSS shows the active language), or a plain string once. Set `html` for
+ * values that contain inline markup like <em> or <a>.
+ */
+import type { Localized } from '../lib/i18n';
+import { isBilingual } from '../lib/i18n';
+
+interface Props {
+  value: Localized;
+  tag?: string;
+  class?: string;
+  html?: boolean;
+}
+
+const { value, tag = 'span', class: className, html = false } = Astro.props;
+const Tag = tag as any;
+---
+
+{
+  isBilingual(value) ? (
+    <>
+      {html ? (
+        <Tag data-lang="ru" class={className} set:html={value.ru} />
+      ) : (
+        <Tag data-lang="ru" class={className}>{value.ru}</Tag>
+      )}
+      {html ? (
+        <Tag data-lang="en" class={className} set:html={value.en} />
+      ) : (
+        <Tag data-lang="en" class={className}>{value.en}</Tag>
+      )}
+    </>
+  ) : html ? (
+    <Tag class={className} set:html={value} />
+  ) : (
+    <Tag class={className}>{value}</Tag>
+  )
+}

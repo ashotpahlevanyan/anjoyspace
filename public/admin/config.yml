@@ -1,0 +1,484 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Lets you run the CMS locally against your working copy:
+#   npx decap-server   (then open http://localhost:4321/admin/)
+local_backend: true
+
+media_folder: "public/assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+site_url: https://anjoy.space
+display_url: https://anjoy.space
+
+collections:
+  # ── UPCOMING RETREATS (each entry = a full /retreats/<slug>/ page) ──
+  - name: retreats
+    label: "Retreats"
+    label_singular: "Retreat"
+    folder: "src/content/retreats"
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}} — {{location}}"
+    sortable_fields: [order, title]
+    fields:
+      - { label: "Order", name: order, widget: number, default: 0, value_type: int }
+      - { label: "Draft (hide from site)", name: draft, widget: boolean, default: false }
+      - { label: "Date label", name: tag, widget: string, hint: "e.g. Sep 2025" }
+      - { label: "Tag style", name: tagStyle, widget: select, options: [upcoming, intensive, journey], default: upcoming }
+      - { label: "Title", name: title, widget: string }
+      - { label: "Location", name: location, widget: string }
+      - { label: "Duration", name: days, widget: string, hint: "e.g. 7 Days" }
+      - { label: "Participants", name: participants, widget: string, hint: "e.g. 12 Participants" }
+      - { label: "Price", name: price, widget: string, hint: "e.g. $2,400" }
+      - { label: "Show 'from' before price", name: priceFrom, widget: boolean, default: true }
+      - { label: "Card summary", name: summary, widget: text }
+      - { label: "Hero eyebrow", name: heroEyebrow, widget: string, default: "Upcoming Retreat" }
+      - { label: "Intro (lead paragraph)", name: intro, widget: text, required: false }
+      - label: "Highlights"
+        name: highlights
+        widget: list
+        required: false
+        summary: "{{fields.item}}"
+        field: { label: Highlight, name: item, widget: string }
+      - label: "Itinerary"
+        name: itinerary
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: "Label", name: label, widget: string, hint: "e.g. Days 1–2" }
+          - { label: "Title", name: title, widget: string }
+          - { label: "Body", name: body, widget: text }
+      - label: "Gallery tiles"
+        name: gallery
+        widget: list
+        required: false
+        fields:
+          - { label: "Tile style", name: variant, widget: select, options: [g1, g2, g3, g4], default: g1 }
+          - { label: "Symbol", name: symbol, widget: string, hint: "A glyph or emoji" }
+      - { label: "CTA title (optional)", name: ctaTitle, widget: string, required: false }
+      - { label: "CTA body (optional)", name: ctaBody, widget: text, required: false }
+      - { label: "Overview (long description)", name: body, widget: markdown, required: false }
+
+  # ── PAST RETREATS (home archive) ──
+  - name: pastRetreats
+    label: "Past Retreats"
+    label_singular: "Past Retreat"
+    folder: "src/content/past-retreats"
+    create: true
+    extension: md
+    format: frontmatter
+    summary: "{{title}}"
+    fields:
+      - { label: "Order", name: order, widget: number, default: 0, value_type: int }
+      - { label: "Period", name: period, widget: string, hint: "e.g. Spring 2025 · Bali" }
+      - { label: "Title", name: title, widget: string }
+      - { label: "Location", name: location, widget: string }
+      - { label: "Summary", name: summary, widget: text }
+      - { label: "Participants", name: participants, widget: string, hint: "e.g. 12 participants · Sold out" }
+
+  # ── GALLERY (home) ──
+  - name: gallery
+    label: "Gallery"
+    label_singular: "Gallery Tile"
+    folder: "src/content/gallery"
+    create: true
+    extension: md
+    format: frontmatter
+    summary: "{{caption}}"
+    fields:
+      - { label: "Order", name: order, widget: number, default: 0, value_type: int }
+      - { label: "Symbol", name: symbol, widget: string, hint: "A glyph or emoji" }
+      - { label: "Tile style", name: variant, widget: select, options: [gimg-1, gimg-2, gimg-3, gimg-4, gimg-5, gimg-6, gimg-7, gimg-8] }
+      - { label: "Caption", name: caption, widget: string }
+
+  # ── TESTIMONIALS (home) ──
+  - name: testimonials
+    label: "Testimonials"
+    label_singular: "Testimonial"
+    folder: "src/content/testimonials"
+    create: true
+    extension: md
+    format: frontmatter
+    summary: "{{author}}"
+    fields:
+      - { label: "Order", name: order, widget: number, default: 0, value_type: int }
+      - { label: "Quote", name: quote, widget: text }
+      - { label: "Author", name: author, widget: string }
+      - { label: "Initial", name: initial, widget: string, hint: "Single letter for the avatar" }
+      - { label: "Retreat reference", name: retreatRef, widget: string }
+      - { label: "Rating", name: rating, widget: number, default: 5, min: 1, max: 5, value_type: int }
+
+  # ── TEACHERS (bilingual; each entry = a /teachers/<slug>/ page) ──
+  - name: teachers
+    label: "Teachers"
+    label_singular: "Teacher"
+    folder: "src/content/teachers"
+    create: true
+    extension: md
+    format: frontmatter
+    summary: "{{name.en}}"
+    fields:
+      - { label: "Order", name: order, widget: number, default: 0, value_type: int }
+      - { label: "Accent color", name: accent, widget: select, options: [gold, violet], default: gold }
+      - { label: "Portrait gradient", name: portraitVariant, widget: select, options: [tp-1, tp-2, tp-3], default: tp-1 }
+      - label: "Name"
+        name: name
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Card role"
+        name: cardRole
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Card tags"
+        name: cardTags
+        widget: list
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Card bio"
+        name: cardBio
+        widget: object
+        fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+      - label: "First name"
+        name: firstName
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Last name"
+        name: lastName
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Hero eyebrow"
+        name: eyebrow
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Hero lede"
+        name: lede
+        widget: object
+        fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+      - label: "Hero tags"
+        name: heroTags
+        widget: list
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Portrait role"
+        name: portraitRole
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Philosophy"
+        name: philosophy
+        widget: object
+        fields:
+          - label: "Quote"
+            name: quote
+            widget: object
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+          - label: "Attribution"
+            name: attribution
+            widget: object
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Offerings intro"
+        name: offeringsIntro
+        widget: object
+        fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+      - label: "Offerings"
+        name: offerings
+        widget: list
+        fields:
+          - label: "Tag (optional)"
+            name: tag
+            widget: object
+            required: false
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - label: "Title"
+            name: title
+            widget: object
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - label: "Body"
+            name: body
+            widget: object
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+          - label: "Link label (optional)"
+            name: linkLabel
+            widget: object
+            required: false
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - { label: "Link URL (optional)", name: linkHref, widget: string, required: false }
+      - label: "Practices intro"
+        name: practicesIntro
+        widget: object
+        fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+      - label: "Practices"
+        name: practices
+        widget: list
+        fields:
+          - { label: "Icon", name: icon, widget: string, hint: "A glyph, e.g. ⊙ ☽ ✦" }
+          - label: "Title"
+            name: title
+            widget: object
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - label: "Body"
+            name: body
+            widget: object
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+      - label: "Path / training"
+        name: path
+        widget: list
+        fields:
+          - label: "Year"
+            name: year
+            widget: object
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - label: "Title"
+            name: title
+            widget: object
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - label: "Body"
+            name: body
+            widget: object
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+      - label: "Gallery tiles"
+        name: gallery
+        widget: list
+        fields:
+          - { label: "Tile style", name: variant, widget: select, options: [g1, g2, g3, g4], default: g1 }
+          - { label: "Symbol", name: symbol, widget: string }
+      - label: "Testimonials"
+        name: testimonials
+        widget: list
+        fields:
+          - label: "Quote"
+            name: quote
+            widget: object
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+          - { label: "Name", name: name, widget: string }
+          - label: "Context"
+            name: meta
+            widget: object
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "CTA"
+        name: cta
+        widget: object
+        fields:
+          - label: "Title"
+            name: title
+            widget: object
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - label: "Body"
+            name: body
+            widget: object
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+      - label: "Contacts"
+        name: contacts
+        widget: list
+        fields:
+          - { label: "Label", name: label, widget: string }
+          - { label: "URL", name: href, widget: string }
+      - label: "Footer name"
+        name: footerName
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+
+  # ── SITE SETTINGS & THEME (singletons) ──
+  - name: settings
+    label: "Settings"
+    editor: { preview: false }
+    files:
+      - name: theme
+        label: "Theme & Colors"
+        file: "src/content/settings/theme.json"
+        fields:
+          - { label: "Active scheme (id)", name: active, widget: string, hint: "Which scheme below is applied site-wide" }
+          - { label: "Section spacing (gap)", name: gap, widget: string }
+          - label: "Fonts"
+            name: fonts
+            widget: object
+            fields:
+              - { label: "Serif", name: serif, widget: string }
+              - { label: "Sans", name: sans, widget: string }
+              - { label: "Mono", name: mono, widget: string }
+          - label: "Color schemes"
+            name: schemes
+            widget: list
+            summary: "{{label}}"
+            fields:
+              - { label: "ID", name: id, widget: string }
+              - { label: "Label", name: label, widget: string }
+              - label: "Colors"
+                name: colors
+                widget: object
+                fields:
+                  - { label: "Night (background)", name: night, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Deep (panel)", name: deep, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Parchment (text)", name: parchment, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Parchment dim", name: parchment-dim, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Gold (accent)", name: gold, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Gold light", name: gold-light, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Sage", name: sage, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Violet", name: violet, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Card background", name: card-bg, widget: color, enableAlpha: true, allowInput: true }
+                  - { label: "Border", name: border, widget: color, enableAlpha: true, allowInput: true }
+      - name: site
+        label: "Site Info"
+        file: "src/content/settings/site.json"
+        fields:
+          - { label: "Brand name", name: brandName, widget: string }
+          - { label: "Brand suffix", name: brandSuffix, widget: string }
+          - { label: "Email", name: email, widget: string }
+          - label: "Tagline"
+            name: tagline
+            widget: object
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+          - label: "Social links"
+            name: social
+            widget: list
+            fields:
+              - { label: "Label", name: label, widget: string }
+              - { label: "URL", name: href, widget: string }
+          - label: "Footer columns"
+            name: footerColumns
+            widget: list
+            fields:
+              - label: "Heading"
+                name: heading
+                widget: object
+                fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+              - label: "Links"
+                name: links
+                widget: list
+                fields:
+                  - label: "Label"
+                    name: label
+                    widget: object
+                    fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+                  - { label: "URL", name: href, widget: string }
+
+  # ── PAGE COPY (singletons) ──
+  - name: pages
+    label: "Page Copy"
+    editor: { preview: false }
+    files:
+      - name: home
+        label: "Home Page"
+        file: "src/content/pages/home.json"
+        fields:
+          - { label: "Browser title", name: title, widget: string }
+          - { label: "Meta description", name: description, widget: text }
+          - label: "Hero"
+            name: hero
+            widget: object
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Title (HTML)", name: titleHtml, widget: string }
+              - { label: "Text", name: text, widget: text }
+              - { label: "Primary button", name: primaryLabel, widget: string }
+              - { label: "Ghost button", name: ghostLabel, widget: string }
+          - label: "Locations strip"
+            name: locations
+            widget: object
+            fields:
+              - { label: "Label", name: label, widget: string }
+              - { label: "Places", name: places, widget: list }
+          - label: "Retreats header"
+            name: retreatsHeader
+            widget: object
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Title (HTML)", name: titleHtml, widget: string }
+              - { label: "Text", name: text, widget: text }
+          - label: "Past header"
+            name: pastHeader
+            widget: object
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Title (HTML)", name: titleHtml, widget: string }
+              - { label: "Text", name: text, widget: text }
+          - label: "Gallery header"
+            name: galleryHeader
+            widget: object
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Title (HTML)", name: titleHtml, widget: string }
+              - { label: "Text", name: text, widget: text }
+          - label: "Testimonials header"
+            name: testimonialsHeader
+            widget: object
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Title (HTML)", name: titleHtml, widget: string }
+          - label: "About"
+            name: about
+            widget: object
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Overlay quote", name: overlayQuote, widget: text }
+              - { label: "Title (HTML)", name: titleHtml, widget: string }
+              - { label: "Paragraphs", name: paragraphs, widget: list }
+              - label: "Stats"
+                name: stats
+                widget: list
+                fields:
+                  - { label: "Number", name: number, widget: string }
+                  - { label: "Label", name: label, widget: string }
+          - label: "CTA"
+            name: cta
+            widget: object
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Title", name: title, widget: string }
+              - { label: "Text", name: text, widget: text }
+      - name: teachersPage
+        label: "Teachers Page"
+        file: "src/content/pages/teachers.json"
+        fields:
+          - { label: "Browser title", name: title, widget: string }
+          - label: "Hero"
+            name: hero
+            widget: object
+            fields:
+              - label: "Eyebrow"
+                name: eyebrow
+                widget: object
+                fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+              - label: "Title (HTML)"
+                name: titleHtml
+                widget: object
+                fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+              - label: "Text"
+                name: text
+                widget: object
+                fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+          - label: "Partner note"
+            name: partnerNote
+            widget: object
+            fields:
+              - label: "Eyebrow"
+                name: eyebrow
+                widget: object
+                fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+              - label: "HTML"
+                name: html
+                widget: object
+                fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+          - label: "CTA"
+            name: cta
+            widget: object
+            fields:
+              - label: "Eyebrow"
+                name: eyebrow
+                widget: object
+                fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+              - label: "Title"
+                name: title
+                widget: object
+                fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+              - label: "Text"
+                name: text
+                widget: object
+                fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+              - label: "Primary button"
+                name: primaryLabel
+                widget: object
+                fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+              - { label: "Primary href", name: primaryHref, widget: string }

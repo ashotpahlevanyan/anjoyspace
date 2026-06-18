@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import page from '../../content/pages/teachers.json';
+import TeacherCard from '../../components/TeacherCard.astro';
+import T from '../../components/T.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+const teachers = (await getCollection('teachers')).sort((a, b) => a.data.order - b.data.order);
+
+const navLinks: NavLink[] = [
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/retreat-center/', label: { ru: 'Центр', en: 'Center' } },
+  { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/retreat-center/', label: { ru: 'Ретрит-центр', en: 'Retreat Center' } },
+  { href: '/corporate/', label: { ru: 'Для команд', en: 'For Teams' } },
+];
+const breadcrumb = { ru: '/ преподаватели', en: '/ teachers' };
+const footer = {
+  variant: 'simple' as const,
+  copyright: { ru: '© 2026, Anjoy Space', en: '© 2026, Anjoy Space' },
+  links: [{ label: { ru: 'На главную', en: 'Back to anjoy.space' }, href: '/' }],
+};
+---
+
+<BaseLayout title={page.title} pageClass="page-teachers" nav={{ breadcrumb, navLinks, menuLinks }} footer={footer}>
+  <div class="page-hero">
+    <div class="hero-bg"></div>
+    <div>
+      <T value={page.hero.eyebrow} tag="span" class="eyebrow" />
+      <T value={page.hero.titleHtml} tag="h1" html />
+      <T value={page.hero.text} tag="p" />
+    </div>
+  </div>
+
+  <section>
+    <div class="teachers-grid">
+      {
+        teachers.map((tc) => (
+          <TeacherCard
+            slug={tc.id}
+            name={tc.data.name}
+            role={tc.data.cardRole}
+            bio={tc.data.cardBio}
+            tags={tc.data.cardTags}
+            portraitVariant={tc.data.portraitVariant}
+            accent={tc.data.accent}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="partner-note reveal">
+    <T value={page.partnerNote.eyebrow} tag="span" class="eyebrow" />
+    <T value={page.partnerNote.html} tag="p" html />
+  </div>
+
+  <div class="cta-band">
+    <span class="eyebrow" style="color:rgba(245,240,232,0.7)" data-lang="ru">{page.cta.eyebrow.ru}</span>
+    <span class="eyebrow" style="color:rgba(245,240,232,0.7)" data-lang="en">{page.cta.eyebrow.en}</span>
+    <T value={page.cta.title} tag="h2" />
+    <T value={page.cta.text} tag="p" />
+    <a href={page.cta.primaryHref} class="btn-primary" data-lang="ru">{page.cta.primaryLabel.ru}</a>
+    <a href={page.cta.primaryHref} class="btn-primary" data-lang="en">{page.cta.primaryLabel.en}</a>
+  </div>
+</BaseLayout>

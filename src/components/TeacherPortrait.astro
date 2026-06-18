@@ -1,0 +1,40 @@
+---
+import { ACCENTS, type AccentKey } from '../lib/accents';
+
+interface Props {
+  accent?: AccentKey;
+  detailed?: boolean; // detail-page hero uses the fuller sacred-geometry frame
+}
+
+const { accent = 'gold', detailed = false } = Astro.props;
+const color = ACCENTS[accent].accent;
+const dot = ACCENTS[accent].dot;
+const flowerCircles = [
+  [150, 190], [172, 190], [128, 190], [161, 171], [139, 171], [161, 209], [139, 209],
+];
+---
+
+<svg viewBox="0 0 300 380" fill="none">
+  <ellipse cx="150" cy="120" rx="38" ry="42" fill={color} opacity="0.18" />
+  <path
+    d="M150 165 C 110 175, 90 230, 95 290 C 130 310, 170 310, 205 290 C 210 230, 190 175, 150 165 Z"
+    fill={color}
+    opacity="0.13"
+  />
+  {
+    detailed ? (
+      <>
+        <circle cx="150" cy="190" r="120" stroke={color} stroke-width="0.4" opacity="0.3" />
+        <circle cx="150" cy="190" r="90" stroke={color} stroke-width="0.4" opacity="0.25" />
+        <g stroke={color} stroke-width="0.3" opacity="0.3" fill="none">
+          {flowerCircles.map(([cx, cy]) => (
+            <circle cx={cx} cy={cy} r="22" />
+          ))}
+        </g>
+      </>
+    ) : (
+      <circle cx="150" cy="190" r="100" stroke={color} stroke-width="0.4" opacity="0.25" />
+    )
+  }
+  <circle cx="150" cy="120" r="3" fill={dot} opacity="0.7" />
+</svg>

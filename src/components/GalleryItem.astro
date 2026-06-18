@@ -1,0 +1,18 @@
+---
+interface Props {
+  variant: string; // gimg-1 … gimg-8
+  symbol: string;
+  caption: string;
+}
+
+const { variant, symbol, caption } = Astro.props;
+---
+
+<div class="gallery-item reveal">
+  <div class="gallery-item-inner">
+    <div class={`gallery-img gimg ${variant}`}>
+      <div class="gallery-symbol">{symbol}</div>
+    </div>
+    <div class="gallery-overlay"><span>{caption}</span></div>
+  </div>
+</div>

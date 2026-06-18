@@ -1,0 +1,62 @@
+{
+  "title": "Anjoy Space — Йога-ретриты",
+  "description": "Immersive yoga & meditation retreats in places where the earth remembers stillness. Small groups, deep work.",
+  "hero": {
+    "eyebrow": "Yoga · Meditation · Sacred Space",
+    "titleHtml": "Where you come<br>back to <em>yourself</em>",
+    "text": "Immersive retreats designed to dissolve what is not you — held in places where the earth remembers stillness.",
+    "primaryLabel": "View Retreats",
+    "ghostLabel": "Our Philosophy"
+  },
+  "locations": {
+    "label": "We've gathered in",
+    "places": [
+      "Bali, Indonesia",
+      "Tuscany, Italy",
+      "Rishikesh, India",
+      "Tulum, Mexico",
+      "Yerevan, Armenia",
+      "Ibiza, Spain"
+    ]
+  },
+  "retreatsHeader": {
+    "eyebrow": "Upcoming",
+    "titleHtml": "Choose your <em>journey</em>",
+    "text": "Each retreat is crafted as a complete arc — arrival, dissolution, renewal. Small groups. Deep work."
+  },
+  "pastHeader": {
+    "eyebrow": "Archive",
+    "titleHtml": "Where we've <em>gathered</em>",
+    "text": "Each retreat lives on in the people who attended. A record of places and transformations."
+  },
+  "galleryHeader": {
+    "eyebrow": "Gallery",
+    "titleHtml": "Moments in <em>practice</em>",
+    "text": "Snapshots of light, stillness, and community from our retreats around the world."
+  },
+  "testimonialsHeader": {
+    "eyebrow": "Stories",
+    "titleHtml": "What people <em>carry home</em>"
+  },
+  "about": {
+    "eyebrow": "Our philosophy",
+    "overlayQuote": "The retreat is not an escape from life. It is the remembering of what life is.",
+    "titleHtml": "Not a break from life.<br>A return to <em>it.</em>",
+    "paragraphs": [
+      "Anjoy Space was born from a simple conviction: that transformation doesn't happen in spite of slowing down — it happens because of it. We curate retreats that create the conditions for genuine inner work, not spiritual tourism.",
+      "Every location is chosen because the land itself carries something. Every schedule leaves space for the unplanned encounter with yourself. Every teacher in our community has done the work they're inviting you to do.",
+      "We hold small groups deliberately. Eight to sixteen people, depending on the retreat. Large enough for the richness of community; intimate enough that nothing gets lost."
+    ],
+    "stats": [
+      { "number": "24+", "label": "Retreats completed" },
+      { "number": "340+", "label": "Lives touched" },
+      { "number": "12", "label": "Countries visited" },
+      { "number": "94%", "label": "Return participants" }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Begin",
+    "title": "Ready to find your stillness?",
+    "text": "Spots fill quickly. If a retreat calls to you, reach out — we'll answer within 24 hours and help you find the right fit."
+  }
+}

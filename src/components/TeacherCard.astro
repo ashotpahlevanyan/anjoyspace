@@ -1,0 +1,38 @@
+---
+import type { Localized } from '../lib/i18n';
+import type { AccentKey } from '../lib/accents';
+import T from './T.astro';
+import TeacherPortrait from './TeacherPortrait.astro';
+
+interface Props {
+  slug: string;
+  name: Localized;
+  role: Localized;
+  bio: Localized;
+  tags: Localized[];
+  portraitVariant: string; // tp-1 / tp-2 / tp-3
+  accent: AccentKey;
+}
+
+const { slug, name, role, bio, tags, portraitVariant, accent } = Astro.props;
+---
+
+<a href={`/teachers/${slug}/`} class="teacher-card reveal">
+  <div class:list={['teacher-portrait', portraitVariant]}>
+    <div class="geo-ring"></div>
+    <TeacherPortrait accent={accent} />
+    <div class="teacher-portrait-caption">
+      <T value={name} tag="p" class="teacher-name" />
+      <T value={role} tag="p" class="teacher-role" />
+    </div>
+  </div>
+  <div class="teacher-body">
+    <div class="teacher-tags">
+      {tags.map((t) => <T value={t} tag="span" class="teacher-tag" />)}
+    </div>
+    <T value={bio} tag="p" class="bio" />
+    <span class="teacher-link">
+      <span data-lang="ru">Подробнее →</span><span data-lang="en">View Profile →</span>
+    </span>
+  </div>
+</a>

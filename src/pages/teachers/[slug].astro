@@ -1,0 +1,212 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import TeacherPortrait from '../../components/TeacherPortrait.astro';
+import T from '../../components/T.astro';
+import { accentStyle } from '../../lib/accents';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+export async function getStaticPaths() {
+  const teachers = await getCollection('teachers');
+  return teachers.map((teacher) => ({ params: { slug: teacher.id }, props: { teacher } }));
+}
+
+const { teacher } = Astro.props;
+const d = teacher.data;
+
+// Section headers are structural and identical across teachers.
+const HDR = {
+  offerings: {
+    eyebrow: { ru: 'Предложения', en: 'Offerings' },
+    title: { ru: 'Как мы можем <em>работать вместе</em>', en: 'How we can <em>work together</em>' },
+  },
+  practices: {
+    eyebrow: { ru: 'Модальности', en: 'Modalities' },
+    title: { ru: 'Инструменты <em>практики</em>', en: 'Tools of the <em>practice</em>' },
+  },
+  path: {
+    eyebrow: { ru: 'Путь', en: 'Journey' },
+    title: { ru: 'Обучение и <em>практика</em>', en: 'Training and <em>practice</em>' },
+  },
+  gallery: {
+    eyebrow: { ru: 'Галерея', en: 'Gallery' },
+    title: { ru: 'Моменты <em>практики</em>', en: 'Moments of <em>practice</em>' },
+  },
+  reviews: {
+    eyebrow: { ru: 'Отзывы', en: 'Stories' },
+    title: { ru: 'Что говорят <em>участники</em>', en: 'What people <em>say</em>' },
+  },
+};
+
+const breadcrumb = {
+  ru: `/ ${d.name.ru.toLowerCase()}`,
+  en: `/ ${d.name.en.toLowerCase()}`,
+};
+const navLinks: NavLink[] = [
+  { href: '#offerings', label: { ru: 'Предложения', en: 'Offerings' } },
+  { href: '#practices', label: { ru: 'Практики', en: 'Practices' } },
+  { href: '#path', label: { ru: 'Путь', en: 'Journey' } },
+  { href: '#gallery', label: { ru: 'Галерея', en: 'Gallery' } },
+  { href: '#reviews', label: { ru: 'Отзывы', en: 'Stories' } },
+  { href: '/teachers/', label: { ru: 'Все преподаватели', en: 'All Teachers' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  ...navLinks,
+];
+const footer = {
+  variant: 'simple' as const,
+  copyright: {
+    ru: `© 2026, ${d.footerName.ru} · anjoy.space`,
+    en: `© 2026, ${d.footerName.en} · anjoy.space`,
+  },
+  links: [{ label: { ru: 'Все преподаватели', en: 'All Teachers' }, href: '/teachers/' }],
+};
+---
+
+<BaseLayout
+  title={`${d.name.en} — Anjoy Space`}
+  pageClass="page-teacher"
+  accentVars={accentStyle(d.accent)}
+  nav={{ breadcrumb, navLinks, menuLinks }}
+  footer={footer}
+  contact={false}
+>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-text">
+      <T value={d.eyebrow} tag="span" class="eyebrow" />
+      <h1 data-lang="ru"><span class="t-first">{d.firstName.ru}</span><span class="t-last">{d.lastName.ru}</span></h1>
+      <h1 data-lang="en"><span class="t-first">{d.firstName.en}</span><span class="t-last">{d.lastName.en}</span></h1>
+      <T value={d.lede} tag="p" class="lede" />
+      <div class="hero-tags">
+        {d.heroTags.map((tag) => <T value={tag} tag="span" class="hero-tag" />)}
+      </div>
+      <div>
+        <a href="#offerings" class="btn-primary" data-lang="ru">Что я предлагаю</a>
+        <a href="#offerings" class="btn-primary" data-lang="en">What I Offer</a>
+        <a href="#path" class="btn-ghost" data-lang="ru">Мой путь</a>
+        <a href="#path" class="btn-ghost" data-lang="en">My Journey</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="portrait-frame">
+        <div class="geo-ring"></div>
+        <div class="portrait-silhouette"><TeacherPortrait accent={d.accent} detailed /></div>
+        <div class="portrait-caption">
+          <T value={d.name} tag="p" class="name" />
+          <T value={d.portraitRole} tag="p" class="role" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <div class="philosophy reveal">
+    <span class="mark">"</span>
+    <T value={d.philosophy.quote} tag="blockquote" />
+    <T value={d.philosophy.attribution} tag="p" class="attribution" />
+  </div>
+
+  <!-- OFFERINGS -->
+  <section id="offerings">
+    <SectionHeader eyebrow={HDR.offerings.eyebrow} title={HDR.offerings.title} text={d.offeringsIntro} />
+    <div class="offerings-grid">
+      {
+        d.offerings.map((o) => {
+          const ext = o.linkHref?.startsWith('http');
+          return (
+            <div class="offering-card reveal">
+              {o.tag && <T value={o.tag} tag="span" class="offering-tag" />}
+              <T value={o.title} tag="h3" />
+              <T value={o.body} tag="p" />
+              {o.linkHref && o.linkLabel && (
+                <>
+                  <a class="offering-link" href={o.linkHref} data-lang="ru" target={ext ? '_blank' : undefined} rel={ext ? 'noopener' : undefined}>
+                    {o.linkLabel.ru}
+                  </a>
+                  <a class="offering-link" href={o.linkHref} data-lang="en" target={ext ? '_blank' : undefined} rel={ext ? 'noopener' : undefined}>
+                    {o.linkLabel.en}
+                  </a>
+                </>
+              )}
+            </div>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <!-- PRACTICES -->
+  <section id="practices">
+    <SectionHeader eyebrow={HDR.practices.eyebrow} title={HDR.practices.title} text={d.practicesIntro} />
+    <div class="practices-grid">
+      {
+        d.practices.map((p) => (
+          <div class="practice-card reveal">
+            <span class="practice-icon">{p.icon}</span>
+            <T value={p.title} tag="h3" />
+            <T value={p.body} tag="p" />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- PATH -->
+  <section id="path" class="path-section">
+    <SectionHeader eyebrow={HDR.path.eyebrow} title={HDR.path.title} />
+    <div class="path-list">
+      {
+        d.path.map((item) => (
+          <div class="path-item reveal">
+            <T value={item.year} tag="span" class="path-year" />
+            <div>
+              <T value={item.title} tag="h4" />
+              <T value={item.body} tag="p" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="gallery-strip">
+    <SectionHeader eyebrow={HDR.gallery.eyebrow} title={HDR.gallery.title} />
+    <div class="gallery-grid">
+      {d.gallery.map((g) => (
+        <div class={`gallery-tile ${g.variant} reveal`}><div class="gallery-symbol">{g.symbol}</div></div>
+      ))}
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="reviews">
+    <SectionHeader eyebrow={HDR.reviews.eyebrow} title={HDR.reviews.title} />
+    <div class="testimonials-grid">
+      {
+        d.testimonials.map((t) => (
+          <div class="testimonial-card reveal">
+            <T value={t.quote} tag="blockquote" />
+            <p class="testimonial-name">{t.name}</p>
+            <T value={t.meta} tag="p" class="testimonial-meta" />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band" id="contact">
+    <span class="eyebrow" style="color:rgba(243,236,226,0.7)" data-lang="ru">Связь</span>
+    <span class="eyebrow" style="color:rgba(243,236,226,0.7)" data-lang="en">Get in touch</span>
+    <T value={d.cta.title} tag="h2" />
+    <T value={d.cta.body} tag="p" />
+    <div class="contact-row">
+      {d.contacts.map((c) => <a href={c.href} class="contact-pill" target="_blank" rel="noopener">{c.label}</a>)}
+    </div>
+  </div>
+</BaseLayout>

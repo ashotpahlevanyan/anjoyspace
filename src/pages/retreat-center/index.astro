@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+const navLinks: NavLink[] = [
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/retreat-center/', label: { ru: 'Ретрит-центр', en: 'Retreat Center' } },
+  { href: '/corporate/', label: { ru: 'Для команд', en: 'For Teams' } },
+];
+const breadcrumb = { ru: '/ ретрит-центр', en: '/ retreat center' };
+const footer = {
+  variant: 'simple' as const,
+  copyright: '© 2026, Anjoy Space · Retreat Center Project',
+  links: [
+    { label: 'Back to anjoy.space', href: '/' },
+    { label: 'All Teachers', href: '/teachers/' },
+    { label: 'Meet Ani', href: '/teachers/ani/' },
+  ],
+};
+
+const facilities = [
+  { img: 'fimg-1', symbol: '⊙', title: 'Main Practice Hall', body: 'A column-free shala built for 16+ practitioners, oriented for natural light and morning sun salutations.' },
+  { img: 'fimg-2', symbol: '☽', title: 'Nidra & Stillness Room', body: 'A dedicated low-light room for yoga nidra, sound healing, and restorative work — separate from active practice spaces.' },
+  { img: 'fimg-3', symbol: '⬡', title: 'Circle Room', body: 'An intimate space for women\'s circles, group dialogue, and ceremony — seating in the round, no front of room.' },
+  { img: 'fimg-4', symbol: '❋', title: 'Private Guest Quarters', body: '12-16 individually designed rooms prioritizing quiet, natural materials, and minimal digital distraction.' },
+  { img: 'fimg-5', symbol: '✦', title: 'Shared Kitchen & Dining', body: 'Farm-to-table vegetarian kitchen built around communal meals as part of the retreat rhythm, not an afterthought.' },
+  { img: 'fimg-6', symbol: '◎', title: 'Outdoor Practice Deck', body: 'Weather-adaptable open-air space for sunrise and sunset practice, framed by the surrounding landscape.' },
+];
+const pastRuns = [
+  { img: 'pimg-1', symbol: '🌿', meta: 'Spring 2025 · Bali', title: 'Into the Stillness', location: 'Ubud Forest Sanctuary', desc: 'Eight days of deep immersion among rice terraces. Sold out within 48 hours of opening.' },
+  { img: 'pimg-2', symbol: '◎', meta: 'Winter 2024 · India', title: 'Rishikesh Pilgrimage', location: 'Ganga Riverbank Ashram', desc: 'Two weeks of classical practice and daily river ceremonies during the sacred Kartik month.' },
+  { img: 'pimg-3', symbol: '⬡', meta: 'Autumn 2024 · Italy', title: 'Harvest & Surrender', location: "Val d'Orcia, Tuscany", desc: 'Kundalini, seasonal cooking, and silent walking through Tuscan olive groves.' },
+  { img: 'pimg-4', symbol: '✦', meta: 'Summer 2024 · Greece', title: 'Aegean Alignment', location: 'Santorini Clifftop Villa', desc: 'Sunrise pranayama over the caldera. The retreat many of our returning community started with.' },
+  { img: 'pimg-5', symbol: '❋', meta: 'Spring 2024 · Portugal', title: 'Atlantic Reset', location: 'Alentejo Countryside', desc: 'Breathwork and cold ocean immersion in the Portuguese countryside.' },
+  { img: 'pimg-6', symbol: '☽', meta: 'Winter 2023 · Mexico', title: "Year's End Ceremony", location: 'Tulum Jungle', desc: 'Cacao ceremony and group breathwork under the jungle canopy on the first annual edition.' },
+];
+---
+
+<BaseLayout title="The Retreat Center — Anjoy Space" pageClass="page-center" nav={{ breadcrumb, navLinks, menuLinks }} footer={footer} contact={false}>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="status-pill"><span class="status-dot"></span> In development · Opening 2027</div>
+      <span class="eyebrow">The Anjoy Retreat Center</span>
+      <h1>A permanent home<br />for <em>deep practice</em></h1>
+      <p class="lede">We're building a year-round retreat center designed from the ground up for small-group immersion — not a hotel with yoga classes, but infrastructure purpose-built for transformation.</p>
+      <div>
+        <a href="#vision" class="btn-primary">Read the Vision</a>
+        <a href="#contact" class="btn-ghost">Partner With Us</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISION -->
+  <section id="vision" class="vision-section">
+    <div class="vision-grid">
+      <div class="vision-text reveal">
+        <span class="eyebrow">The opportunity</span>
+        <h2>Why a <em>dedicated</em> center</h2>
+        <p>For five years, Anjoy has run retreats inside borrowed spaces — rented villas, partner yoga houses, seasonal venues. Every edition has sold out, and every edition has required rebuilding the container from scratch.</p>
+        <p>A dedicated retreat center solves this permanently. <strong>One location, designed specifically for small-group immersive practice</strong> — consistent quality, lower per-retreat cost over time, and a base from which to scale programming: more retreats per year, longer-format intensives, and teacher residencies that aren't possible in a rented space.</p>
+        <p>We are currently scoping land and property options, with a target opening window of 2027. This page will be updated as the project moves from vision to ground-breaking.</p>
+        <div class="vision-stats">
+          <div class="vstat"><span class="number">24+</span><span class="label">Retreats run to date, fully booked</span></div>
+          <div class="vstat"><span class="number">94%</span><span class="label">Returning participant rate</span></div>
+          <div class="vstat"><span class="number">12-16</span><span class="label">Target capacity per retreat cycle</span></div>
+          <div class="vstat"><span class="number">2027</span><span class="label">Target opening</span></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="site-visual">
+          <div class="gallery-symbol">⊕</div>
+          <div class="site-visual-caption">
+            <span class="tag">Concept render — placeholder</span>
+            <p>Site and architecture visuals to be added as the property is confirmed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACILITIES -->
+  <section id="facilities">
+    <SectionHeader
+      eyebrow="Designed for practice"
+      title="What the center <em>will hold</em>"
+      text="Every space is planned around one question: does this serve the depth of the work, or just the comfort of the stay? Renderings below are conceptual placeholders ahead of final architectural plans."
+    />
+    <div class="facilities-grid">
+      {
+        facilities.map((f) => (
+          <div class="facility-card reveal">
+            <div class={`facility-img ${f.img}`}><div class="gallery-symbol">{f.symbol}</div></div>
+            <div class="facility-body">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- PAST RETREATS -->
+  <section id="past" class="past-section">
+    <SectionHeader
+      eyebrow="Track record"
+      title="Retreats we've already <em>run</em>"
+      text="Before the center exists, the model has been proven — in borrowed spaces, across six countries, consistently sold out."
+    />
+    <div class="past-grid">
+      {
+        pastRuns.map((p) => (
+          <div class="past-card reveal">
+            <div class={`past-img ${p.img}`}><div class="gallery-symbol">{p.symbol}</div></div>
+            <div class="past-body">
+              <span class="past-meta">{p.meta}</span>
+              <h3>{p.title}</h3>
+              <p class="location">{p.location}</p>
+              <p class="desc">{p.desc}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section id="network">
+    <SectionHeader
+      eyebrow="Network"
+      title="Part of a wider <em>practice community</em>"
+      text="Anjoy Space works alongside aligned studios and retreat organizers. Here's where else you can find us."
+    />
+    <div class="partners-grid">
+      <div class="partner-card reveal">
+        <div class="partner-top">
+          <div class="partner-mark pm-1">Й</div>
+          <div><h3>Yoga Berezhno</h3><span class="url">yogaberezhno</span></div>
+        </div>
+        <p class="desc">A practice studio built on the principle of gentle, attentive bodywork — careful pacing, close attention to each practitioner's sensation, and a soft approach to building strength and flexibility over time.</p>
+        <a href="https://yogaberezhno.ru" target="_blank" rel="noopener" class="partner-link">Visit yogaberezhno.ru →</a>
+      </div>
+      <div class="partner-card reveal">
+        <div class="partner-top">
+          <div class="partner-mark pm-2">DY</div>
+          <div><h3>Deep Yoga Weekend</h3><span class="url">deepyogaweekend.ru</span></div>
+        </div>
+        <p class="desc">A weekend retreat near Moscow built around yoga, meditation, and a slower pace of life — set on the shores of Lake Pleshcheyevo, with a rotating team of certified teachers including Anjoy's own Ani Ovakimian.</p>
+        <a href="https://deepyogaweekend.ru" target="_blank" rel="noopener" class="partner-link">Visit deepyogaweekend.ru →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band" id="contact">
+    <span class="eyebrow" style="color:rgba(245,240,232,0.7)">Get involved</span>
+    <h2>Help us build it</h2>
+    <p>Whether you're a future guest, a teacher who wants to run a residency here, or interested in supporting the project directly — we'd like to hear from you.</p>
+    <a href="mailto:hello@anjoy.space" class="btn-primary">hello@anjoy.space</a>
+  </div>
+</BaseLayout>

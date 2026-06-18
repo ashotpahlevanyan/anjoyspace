@@ -1,0 +1,104 @@
+---
+import '../styles/global.scss';
+import { buildRootCss } from '../lib/theme';
+import { DEFAULT_LANG } from '../lib/i18n';
+import type { Localized } from '../lib/i18n';
+import SiteNav, { type NavLink } from '../components/SiteNav.tsx';
+import SiteFooter from '../components/SiteFooter.astro';
+import ContactModal from '../components/ContactModal.tsx';
+import NetlifyForms from '../components/NetlifyForms.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  pageClass: string;
+  accentVars?: string;
+  nav: {
+    breadcrumb?: { ru: string; en: string };
+    navLinks: NavLink[];
+    menuLinks: NavLink[];
+    cta?: { ru: string; en: string };
+  };
+  footer?: {
+    variant: 'full' | 'simple';
+    copyright?: Localized;
+    links?: { label: Localized; href: string }[];
+  };
+  /** Render the contact modal island on this page (any [data-contact] trigger). */
+  contact?: boolean;
+}
+
+import siteData from '../content/settings/site.json';
+const { title, description, pageClass, accentVars, nav, footer = { variant: 'full' }, contact = true } =
+  Astro.props;
+const rootCss = buildRootCss();
+---
+
+<!doctype html>
+<html lang={DEFAULT_LANG} id="htmlRoot">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global set:html={rootCss}></style>
+    <script is:inline>
+      (function () {
+        try {
+          var l = localStorage.getItem('anjoy_lang') || 'ru';
+          document.documentElement.setAttribute('lang', l);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <SiteNav
+      client:load
+      brandName={siteData.brandName}
+      brandSuffix={siteData.brandSuffix}
+      breadcrumb={nav.breadcrumb}
+      navLinks={nav.navLinks}
+      menuLinks={nav.menuLinks}
+      cta={nav.cta}
+    />
+
+    <main class={pageClass} style={accentVars}>
+      <slot />
+    </main>
+
+    <SiteFooter variant={footer.variant} copyright={footer.copyright} links={footer.links} />
+
+    {contact && <ContactModal client:idle />}
+    <NetlifyForms />
+
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        var obs = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry, i) {
+              if (entry.isIntersecting) {
+                setTimeout(function () {
+                  entry.target.classList.add('visible');
+                }, i * 70);
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08 },
+        );
+        els.forEach(function (el) {
+          obs.observe(el);
+        });
+      })();
+    </script>
+  </body>
+</html>

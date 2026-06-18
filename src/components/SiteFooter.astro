@@ -1,0 +1,63 @@
+---
+import siteData from '../content/settings/site.json';
+import type { Localized } from '../lib/i18n';
+import T from './T.astro';
+
+interface Props {
+  variant?: 'full' | 'simple';
+  copyright?: Localized;
+  links?: { label: Localized; href: string }[];
+}
+
+const { variant = 'full', copyright, links = [] } = Astro.props;
+const site = siteData;
+---
+
+{
+  variant === 'full' ? (
+    <footer class="site-footer site-footer--full">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            {site.brandName}
+            <span>{site.brandSuffix}</span>
+          </a>
+          <T value={site.tagline} tag="p" />
+        </div>
+        {site.footerColumns.map((col) => (
+          <div class="footer-col">
+            <T value={col.heading} tag="h4" />
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href}>
+                    <T value={l.label} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 {site.brandName}{site.brandSuffix} · All rights reserved</p>
+        <div class="social-links">
+          {site.social.map((s) => (
+            <a href={s.href}>{s.label}</a>
+          ))}
+        </div>
+      </div>
+    </footer>
+  ) : (
+    <footer class="site-footer site-footer--simple">
+      {copyright && <T value={copyright} tag="p" />}
+      <div class="footer-simple-links">
+        {links.map((l) => (
+          <a href={l.href}>
+            <T value={l.label} />
+          </a>
+        ))}
+      </div>
+    </footer>
+  )
+}

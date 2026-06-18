@@ -1,0 +1,86 @@
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--night);
+  color: var(--parchment);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+img { max-width: 100%; display: block; }
+
+/* ── LANGUAGE VISIBILITY SYSTEM ──
+   Every bilingual element is rendered twice with data-lang; CSS shows only the
+   language matching <html lang>. Mirrors the original site.css behavior. */
+[data-lang] { display: none !important; }
+html[lang="ru"] [data-lang="ru"] { display: revert !important; }
+html[lang="ru"] [data-lang="ru"].block { display: block !important; }
+html[lang="ru"] [data-lang="ru"].flex { display: flex !important; }
+html[lang="ru"] [data-lang="ru"].grid { display: grid !important; }
+html[lang="en"] [data-lang="en"] { display: revert !important; }
+html[lang="en"] [data-lang="en"].block { display: block !important; }
+html[lang="en"] [data-lang="en"].flex { display: flex !important; }
+html[lang="en"] [data-lang="en"].grid { display: grid !important; }
+
+/* ── SHARED PRIMITIVES ── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1rem; display: block;
+}
+
+.divider { width: 40px; height: 1px; background: var(--gold); margin: 1.2rem 0; }
+
+section { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
+
+.section-header { margin-bottom: 3rem; }
+.section-header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300; line-height: 1.1; color: var(--parchment);
+}
+.section-header h2 em { font-style: italic; color: var(--gold); }
+.section-header p {
+  font-weight: 300; color: var(--parchment-dim);
+  max-width: 520px; line-height: 1.8;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-block;
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--night);
+  background: var(--gold); padding: 1rem 2.4rem;
+  text-decoration: none; transition: all 0.3s;
+  margin-right: 1rem; border: none; cursor: pointer;
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+.btn-ghost {
+  display: inline-block;
+  font-size: 0.78rem; font-weight: 400; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--parchment-dim);
+  border: 1px solid var(--border); padding: 1rem 2.4rem;
+  text-decoration: none; transition: all 0.3s;
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+.btn-small {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold);
+  border: 1px solid var(--border); padding: 0.55rem 1.2rem;
+  text-decoration: none; display: inline-block; transition: all 0.3s;
+}
+.btn-small:hover { background: var(--gold); color: var(--night); }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+.reveal.visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}

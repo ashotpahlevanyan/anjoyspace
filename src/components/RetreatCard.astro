@@ -1,0 +1,30 @@
+---
+interface Props {
+  href: string;
+  tag: string;
+  tagStyle: 'upcoming' | 'intensive' | 'journey';
+  title: string;
+  location: string;
+  days: string;
+  participants: string;
+  price: string;
+  priceFrom?: boolean;
+  summary: string;
+}
+
+const { href, tag, tagStyle, title, location, days, participants, price, priceFrom = true, summary } =
+  Astro.props;
+---
+
+<a href={href} class="retreat-card reveal">
+  <span class={`retreat-tag tag-${tagStyle}`}>{tag}</span>
+  <h3>{title}</h3>
+  <div class="retreat-meta">
+    <span>📍 {location}</span>
+    <span>⏱ {days}</span>
+    <span>👥 {participants}</span>
+  </div>
+  <p>{summary}</p>
+  <div class="retreat-price">{priceFrom && <sup>from</sup>} {price}</div>
+  <span class="btn-small">View Retreat →</span>
+</a>

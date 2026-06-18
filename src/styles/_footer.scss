@@ -1,0 +1,69 @@
+/* ── FOOTER (shared component, two variants) ── */
+.site-footer {
+  background: #080c11;
+  border-top: 1px solid var(--border);
+}
+
+/* Simple footer — subpages */
+.site-footer--simple {
+  padding: 3rem clamp(1.5rem, 6vw, 8rem) 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.site-footer--simple p {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  color: var(--parchment-dim); opacity: 0.6;
+}
+.site-footer--simple .footer-simple-links a {
+  color: var(--parchment-dim); text-decoration: none;
+  font-size: 0.78rem; margin-left: 1.5rem;
+}
+.site-footer--simple .footer-simple-links a:hover { color: var(--gold); }
+
+/* Full footer — home */
+.site-footer--full { padding: 4rem clamp(1.5rem, 6vw, 8rem) 2rem; }
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem; margin-bottom: 3rem;
+}
+.footer-logo {
+  font-family: var(--font-serif); font-size: 1.6rem; font-weight: 300;
+  color: var(--gold); letter-spacing: 0.12em;
+  text-decoration: none; display: block; margin-bottom: 1rem;
+}
+.footer-logo span { color: var(--parchment); }
+.footer-brand p {
+  font-size: 0.85rem; color: var(--parchment-dim);
+  line-height: 1.8; font-weight: 300; max-width: 280px;
+}
+.footer-col h4 {
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.6rem; }
+.footer-col ul a {
+  font-size: 0.85rem; color: var(--parchment-dim);
+  text-decoration: none; transition: color 0.3s; font-weight: 300;
+}
+.footer-col ul a:hover { color: var(--gold); }
+.footer-bottom {
+  border-top: 1px solid var(--border); padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-bottom p {
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em;
+  color: var(--parchment-dim); opacity: 0.5;
+}
+.social-links { display: flex; gap: 1.5rem; }
+.social-links a {
+  font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--parchment-dim); text-decoration: none; transition: color 0.3s;
+}
+.social-links a:hover { color: var(--gold); }
+
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-brand { grid-column: 1 / -1; }
+}

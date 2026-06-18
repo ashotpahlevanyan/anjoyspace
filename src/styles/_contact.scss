@@ -1,0 +1,66 @@
+/* ── CONTACT MODAL (in-browser, posts to Netlify Forms) ── */
+.contact-modal {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(13, 17, 23, 0.92); backdrop-filter: blur(24px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.contact-modal.open { opacity: 1; pointer-events: all; }
+.contact-modal-inner {
+  background: var(--deep); border: 1px solid var(--border);
+  padding: 2.5rem; max-width: 480px; width: 100%; position: relative;
+}
+.contact-modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none; color: var(--parchment-dim);
+  font-size: 1.4rem; cursor: pointer; line-height: 1;
+}
+.contact-modal h3 {
+  font-family: var(--font-serif); font-size: 1.8rem;
+  font-weight: 300; margin-bottom: 0.4rem; color: var(--parchment);
+}
+.contact-modal p {
+  font-size: 0.85rem; color: var(--parchment-dim);
+  margin-bottom: 1.4rem; font-weight: 300; line-height: 1.7;
+}
+.cform { display: flex; flex-direction: column; gap: 0.7rem; }
+.cform input, .cform textarea {
+  padding: 0.8rem 1rem; background: rgba(245, 240, 232, 0.05);
+  border: 1px solid var(--border); color: var(--parchment);
+  font-family: var(--font-sans); font-size: 0.85rem; outline: none;
+  transition: border-color 0.3s;
+}
+.cform input:focus, .cform textarea:focus { border-color: var(--gold); }
+.cform input::placeholder, .cform textarea::placeholder { color: var(--parchment-dim); opacity: 0.5; }
+.cform button {
+  padding: 0.9rem; background: var(--gold); border: none;
+  font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--night);
+  cursor: pointer; transition: background 0.3s;
+}
+.cform button:hover { background: var(--gold-light); }
+.cform-success {
+  text-align: center; padding: 2rem;
+  font-family: var(--font-serif); font-size: 1.4rem;
+  font-weight: 300; color: var(--gold);
+}
+
+/* ── NEWSLETTER NETLIFY FORM ── */
+.newsletter-form { display: flex; max-width: 440px; margin: 2rem auto 0; }
+.newsletter-form input {
+  flex: 1; padding: 0.9rem 1.2rem;
+  background: rgba(13, 17, 23, 0.5);
+  border: 1px solid rgba(201, 169, 110, 0.3); border-right: none;
+  color: var(--parchment); font-family: var(--font-sans);
+  font-size: 0.85rem; outline: none; transition: border-color 0.3s;
+}
+.newsletter-form input:focus { border-color: var(--gold); }
+.newsletter-form input::placeholder { color: var(--parchment-dim); opacity: 0.5; }
+.newsletter-form button {
+  padding: 0.9rem 1.4rem; background: var(--gold); border: none;
+  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--night);
+  cursor: pointer; transition: background 0.3s; white-space: nowrap;
+}
+.newsletter-form button:hover { background: var(--gold-light); }

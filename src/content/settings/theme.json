@@ -1,0 +1,43 @@
+{
+  "active": "night",
+  "gap": "clamp(2rem, 5vw, 5rem)",
+  "fonts": {
+    "serif": "'Cormorant Garamond', serif",
+    "sans": "'DM Sans', sans-serif",
+    "mono": "'DM Mono', monospace"
+  },
+  "schemes": [
+    {
+      "id": "night",
+      "label": "Anjoy Night (default)",
+      "colors": {
+        "night": "#0D1117",
+        "deep": "#141B24",
+        "parchment": "#F5F0E8",
+        "parchment-dim": "#B8B0A0",
+        "gold": "#C9A96E",
+        "gold-light": "#E2C98A",
+        "sage": "#3D6B5E",
+        "violet": "#8B6F9E",
+        "card-bg": "#1A2330",
+        "border": "rgba(201,169,110,0.2)"
+      }
+    },
+    {
+      "id": "violet-dusk",
+      "label": "Violet Dusk",
+      "colors": {
+        "night": "#0E0B14",
+        "deep": "#171221",
+        "parchment": "#F3EEF7",
+        "parchment-dim": "#B4A9C4",
+        "gold": "#B99AD4",
+        "gold-light": "#D6C2EC",
+        "sage": "#4A6B7E",
+        "violet": "#8B6F9E",
+        "card-bg": "#1E1730",
+        "border": "rgba(185,154,212,0.22)"
+      }
+    }
+  ]
+}

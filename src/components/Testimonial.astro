@@ -1,0 +1,25 @@
+---
+interface Props {
+  quote: string;
+  author: string;
+  initial: string;
+  retreatRef: string;
+  rating?: number;
+}
+
+const { quote, author, initial, retreatRef, rating = 5 } = Astro.props;
+const stars = Array.from({ length: rating });
+---
+
+<div class="testimonial-card reveal">
+  <div class="stars">{stars.map(() => <span>★</span>)}</div>
+  <span class="quote-mark">"</span>
+  <blockquote>{quote}</blockquote>
+  <div class="testimonial-author">
+    <div class="author-avatar">{initial}</div>
+    <div class="author-info">
+      <p class="name">{author}</p>
+      <p class="retreat-ref">{retreatRef}</p>
+    </div>
+  </div>
+</div>

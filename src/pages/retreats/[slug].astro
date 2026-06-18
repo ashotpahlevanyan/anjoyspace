@@ -1,0 +1,127 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+export async function getStaticPaths() {
+  const retreats = await getCollection('retreats', ({ data }) => !data.draft);
+  return retreats.map((retreat) => ({ params: { slug: retreat.id }, props: { retreat } }));
+}
+
+const { retreat } = Astro.props;
+const d = retreat.data;
+const { Content } = await render(retreat);
+
+const navLinks: NavLink[] = [
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/retreat-center/', label: { ru: 'Центр', en: 'Center' } },
+  { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/retreat-center/', label: { ru: 'Ретрит-центр', en: 'Retreat Center' } },
+  { href: '/corporate/', label: { ru: 'Для команд', en: 'For Teams' } },
+  { href: '#contact', label: { ru: 'Записаться', en: 'Enquire' }, contact: true },
+];
+const breadcrumb = { ru: '/ ретриты', en: '/ retreats' };
+const footer = {
+  variant: 'simple' as const,
+  copyright: { ru: '© 2026, Anjoy Space', en: '© 2026, Anjoy Space' },
+  links: [
+    { label: { ru: 'Все ретриты', en: 'All Retreats' }, href: '/#retreats' },
+    { label: { ru: 'На главную', en: 'Home' }, href: '/' },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${d.title} — Anjoy Space`}
+  description={d.summary}
+  pageClass="page-retreat"
+  nav={{ breadcrumb, navLinks, menuLinks }}
+  footer={footer}
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="eyebrow">{d.heroEyebrow}</p>
+      <span class={`retreat-tag tag-${d.tagStyle}`}>{d.tag}</span>
+      <h1>{d.title}</h1>
+      <div class="retreat-meta">
+        <span>📍 {d.location}</span>
+        <span>⏱ {d.days}</span>
+        <span>👥 {d.participants}</span>
+      </div>
+      <div class="retreat-price">{d.priceFrom && <sup>from</sup>} {d.price}</div>
+      {d.intro && <p class="lede">{d.intro}</p>}
+      <div>
+        <a href="#contact" class="btn-primary" data-contact>Enquire</a>
+        <a href="/#retreats" class="btn-ghost">All Retreats</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="overview-section">
+    <article class="overview-prose reveal"><Content /></article>
+  </section>
+
+  <!-- HIGHLIGHTS -->
+  {
+    d.highlights.length > 0 && (
+      <section>
+        <SectionHeader eyebrow="Highlights" title="What you'll practice" />
+        <div class="highlights-grid">
+          {d.highlights.map((h) => <div class="highlight-card">{h}</div>)}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ITINERARY -->
+  {
+    d.itinerary.length > 0 && (
+      <section class="itinerary-section">
+        <SectionHeader eyebrow="The arc" title="A typical journey" />
+        <div class="itinerary-list">
+          {d.itinerary.map((it) => (
+            <div class="itinerary-item reveal">
+              <span class="itinerary-label">{it.label}</span>
+              <div>
+                <h4>{it.title}</h4>
+                <p>{it.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- GALLERY -->
+  {
+    d.gallery.length > 0 && (
+      <section class="gallery-strip">
+        <div class="gallery-grid">
+          {d.gallery.map((g) => (
+            <div class={`gallery-tile ${g.variant} reveal`}>
+              <div class="gallery-symbol">{g.symbol}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- CTA -->
+  <div class="cta-band" id="contact">
+    <h2>{d.ctaTitle ?? 'Ready to join this retreat?'}</h2>
+    <p>{d.ctaBody ?? "Spots are limited and fill quickly. Reach out and we'll reply within 24 hours to help you find the right fit."}</p>
+    <a href="#contact" class="btn-primary" data-contact>Enquire</a>
+  </div>
+</BaseLayout>

@@ -1,0 +1,44 @@
+{
+  "brandName": "anjoy",
+  "brandSuffix": ".space",
+  "email": "hello@anjoy.space",
+  "tagline": {
+    "ru": "Йога-ретриты в местах, где земля помнит тишину. Малые группы. Глубокая работа. Настоящая трансформация.",
+    "en": "Yoga retreats held in places where the earth remembers stillness. Small groups. Deep work. Real transformation."
+  },
+  "social": [
+    { "label": "Instagram", "href": "#" },
+    { "label": "Telegram", "href": "#" },
+    { "label": "WhatsApp", "href": "#" }
+  ],
+  "footerColumns": [
+    {
+      "heading": { "ru": "Ретриты", "en": "Retreats" },
+      "links": [
+        { "label": { "ru": "Ближайшие", "en": "Upcoming" }, "href": "/#retreats" },
+        { "label": { "ru": "Прошлые", "en": "Past Retreats" }, "href": "/#past" },
+        { "label": { "ru": "Галерея", "en": "Gallery" }, "href": "/#gallery" },
+        { "label": { "ru": "Для команд", "en": "Private Groups" }, "href": "/corporate/" }
+      ]
+    },
+    {
+      "heading": { "ru": "О нас", "en": "About" },
+      "links": [
+        { "label": { "ru": "Философия", "en": "Our Philosophy" }, "href": "/#about" },
+        { "label": { "ru": "Истории", "en": "Stories" }, "href": "/#testimonials" },
+        { "label": { "ru": "Преподаватели", "en": "Our Teachers" }, "href": "/teachers/" },
+        { "label": { "ru": "Ретрит-центр", "en": "Retreat Center" }, "href": "/retreat-center/" },
+        { "label": { "ru": "Для команд", "en": "For Teams" }, "href": "/corporate/" }
+      ]
+    },
+    {
+      "heading": { "ru": "Связь", "en": "Connect" },
+      "links": [
+        { "label": { "ru": "hello@anjoy.space", "en": "hello@anjoy.space" }, "href": "mailto:hello@anjoy.space" },
+        { "label": { "ru": "Instagram", "en": "Instagram" }, "href": "#" },
+        { "label": { "ru": "Telegram", "en": "Telegram" }, "href": "#" },
+        { "label": { "ru": "WhatsApp", "en": "WhatsApp" }, "href": "#" }
+      ]
+    }
+  ]
+}

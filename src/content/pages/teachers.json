@@ -1,0 +1,28 @@
+{
+  "title": "Our Teachers — Anjoy Space",
+  "hero": {
+    "eyebrow": { "ru": "Наша команда", "en": "Our community" },
+    "titleHtml": { "ru": "Преподаватели <em>анджой</em>", "en": "Anjoy <em>Teachers</em>" },
+    "text": {
+      "ru": "Сертифицированные преподаватели йоги, объединённые любовью к телесным практикам и вниманием к каждому, кто приходит на коврик.",
+      "en": "Certified yoga teachers united by a love of body-centered practice and close attention to everyone who steps onto the mat."
+    }
+  },
+  "partnerNote": {
+    "eyebrow": { "ru": "Связь с сообществом", "en": "Community ties" },
+    "html": {
+      "ru": "Юлия и Катя также преподают на ретритах <a href=\"https://deepyogaweekend.ru\" target=\"_blank\" rel=\"noopener\">Deep Yoga Weekend</a>, а Юлия ведёт практику в студии <a href=\"https://yogaberezhno.ru\" target=\"_blank\" rel=\"noopener\">yogaberezhno</a>. Anjoy Space растёт вместе с этим более широким сообществом преподавателей.",
+      "en": "Yulia and Katya also teach at <a href=\"https://deepyogaweekend.ru\" target=\"_blank\" rel=\"noopener\">Deep Yoga Weekend</a> retreats, and Yulia holds practice at the <a href=\"https://yogaberezhno.ru\" target=\"_blank\" rel=\"noopener\">yogaberezhno</a> studio. Anjoy Space grows alongside this wider teaching community."
+    }
+  },
+  "cta": {
+    "eyebrow": { "ru": "Присоединиться", "en": "Join us" },
+    "title": { "ru": "Хотите практиковать с нами?", "en": "Want to practice with us?" },
+    "text": {
+      "ru": "Посмотрите ближайшие ретриты или напишите нам напрямую, чтобы найти подходящий формат.",
+      "en": "Browse upcoming retreats or reach out directly to find the right format for you."
+    },
+    "primaryLabel": { "ru": "Смотреть ретриты", "en": "View Retreats" },
+    "primaryHref": "/#retreats"
+  }
+}

@@ -1,0 +1,21 @@
+---
+import type { Localized } from '../lib/i18n';
+import T from './T.astro';
+
+interface Props {
+  eyebrow?: Localized;
+  title: Localized; // may contain <em>
+  text?: Localized; // may contain <a>
+  divider?: boolean;
+  reveal?: boolean;
+}
+
+const { eyebrow, title, text, divider = true, reveal = true } = Astro.props;
+---
+
+<div class:list={['section-header', reveal && 'reveal']}>
+  {eyebrow && <T value={eyebrow} tag="span" class="eyebrow" />}
+  <T value={title} tag="h2" html />
+  {divider && <div class="divider"></div>}
+  {text && <T value={text} tag="p" html />}
+</div>

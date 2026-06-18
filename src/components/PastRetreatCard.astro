@@ -1,0 +1,19 @@
+---
+interface Props {
+  period: string;
+  title: string;
+  location: string;
+  summary: string;
+  participants: string;
+}
+
+const { period, title, location, summary, participants } = Astro.props;
+---
+
+<div class="past-card reveal">
+  <p class="year">{period}</p>
+  <h3>{title}</h3>
+  <p class="location">{location}</p>
+  <p>{summary}</p>
+  <p class="participants">{participants}</p>
+</div>

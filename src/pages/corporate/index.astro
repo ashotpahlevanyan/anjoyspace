@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+const navLinks: NavLink[] = [
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/retreat-center/', label: { ru: 'Ретрит-центр', en: 'Retreat Center' } },
+  { href: '/corporate/', label: { ru: 'Для команд', en: 'For Teams' } },
+];
+const breadcrumb = { ru: '/ для команд', en: '/ for teams' };
+const footer = {
+  variant: 'simple' as const,
+  copyright: '© 2026, Anjoy Space · Corporate Retreats',
+  links: [
+    { label: 'Back to anjoy.space', href: '/' },
+    { label: 'Retreat Center', href: '/retreat-center/' },
+  ],
+};
+
+const reasons = [
+  { icon: '⊙', title: "Burnout, before it's a resignation", body: 'Retreats give teams a structured reset before burnout turns into attrition — far cheaper than backfilling a senior role.' },
+  { icon: '☽', title: 'Deep work needs deep rest', body: "Yoga nidra and guided rest practices restore the kind of focus that caffeine and PTO days alone don't." },
+  { icon: '❋', title: 'Real connection, not forced fun', body: 'Shared physical practice builds trust between teammates faster than icebreakers or trust-fall exercises ever did.' },
+  { icon: '✦', title: 'A genuine employer benefit', body: 'In a tight talent market, "we run real wellness retreats" differentiates an offer letter more than another perk stipend.' },
+  { icon: '⬡', title: 'Distributed teams, finally together', body: 'For remote-first companies, this may be the only time the team is physically in one room all year — we make it count.' },
+  { icon: '◎', title: 'Built for small groups', body: "We don't do 200-person conferences. Our format is built for the 8-16 person team or leadership group, by design." },
+];
+const packages = [
+  { featured: false, tag: 'Day Reset', title: 'One-Day Offsite', price: '€95', per: ' / person', duration: 'Full day, no overnight stay', items: ['Morning movement + breathwork session', 'Guided team reflection circle', 'Healthy lunch included', 'Afternoon yoga nidra reset', 'Best for: quarterly team days'] },
+  { featured: true, tag: 'Most Booked', title: 'Weekend Reset', price: '€340', per: ' / person', duration: '3 days, 2 nights', items: ['Full retreat schedule — yoga, nidra, meditation', 'Private accommodation for the group', 'All meals, vegetarian kitchen', 'One structured team-alignment session', 'Take-home practice guide for the team', 'Best for: team offsites, leadership retreats'] },
+  { featured: false, tag: 'Deep Immersion', title: 'Full Week Program', price: '€780', per: ' / person', duration: '7 days, 6 nights', items: ['Everything in Weekend Reset, extended', 'Daily one-on-one check-ins available', 'Dedicated facilitator for the full week', 'Custom programming around team goals', 'Best for: leadership cohorts, founder retreats'] },
+];
+const process = [
+  { num: '01', title: 'Tell us about your team', body: "Team size, location preference, dates, and what you're hoping the offsite achieves — burnout relief, alignment, celebration, or all three." },
+  { num: '02', title: 'We send a tailored proposal', body: 'A specific itinerary and quote based on your team, not a generic brochure — usually within 48 hours.' },
+  { num: '03', title: 'We handle logistics', body: 'Venue, food, facilitators, and schedule are ours to manage. Your team just needs to show up.' },
+  { num: '04', title: 'Post-retreat follow-up', body: "A short practice guide and optional follow-up session so the reset doesn't evaporate the first week back at work." },
+];
+---
+
+<BaseLayout title="Corporate Retreats for Tech Teams — Anjoy Space" pageClass="page-corporate" nav={{ breadcrumb, navLinks, menuLinks }} footer={footer} contact={false}>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-text">
+      <span class="eyebrow">For Tech &amp; Remote Teams</span>
+      <h1>Your offsite budget,<br />spent on something that <em>lasts</em></h1>
+      <p class="lede">Most team offsites are a hotel, a conference room, and an open bar. We replace that with a structured retreat built around rest, focus, and genuine reconnection — the kind that shows up in retention, not just a group photo.</p>
+      <div>
+        <a href="#packages" class="btn-primary">View Packages</a>
+        <a href="#contact" class="btn-ghost">Talk to Us</a>
+      </div>
+    </div>
+    <div class="hero-stats reveal">
+      <div class="hstat"><span class="num">77%</span><span class="desc">of tech workers report burnout at their current job</span></div>
+      <div class="hstat"><span class="num">3-5x</span><span class="desc">cost of replacing a senior engineer vs. retaining one</span></div>
+      <div class="hstat"><span class="num">8-16</span><span class="desc">team size we're built for — not a 200-person conference</span></div>
+    </div>
+  </div>
+
+  <!-- COMPARISON -->
+  <section class="compare-section">
+    <SectionHeader eyebrow="The shift" title="From <em>resort offsite</em> to <em>retreat</em>" text="The standard tech offsite hasn't changed in a decade. Teams are starting to ask for something different — here's the real difference." />
+    <div class="compare-grid">
+      <div class="compare-col reveal">
+        <h3>The resort offsite</h3>
+        <ul class="compare-list">
+          <li>Generic hotel conference room, repurposed for "team time"</li>
+          <li>Schedule built around meetings, with leisure as filler</li>
+          <li>Alcohol-centered social bonding</li>
+          <li>Screens and slides for most of the day</li>
+          <li>Team returns tired, not recovered</li>
+          <li>No lasting practice or habit — resets within a week</li>
+        </ul>
+      </div>
+      <div class="compare-col highlight reveal">
+        <h3>The Anjoy retreat</h3>
+        <ul class="compare-list">
+          <li>Purpose-built space designed around rest and focus</li>
+          <li>Schedule built around the body — movement, stillness, dialogue</li>
+          <li>Connection built through shared practice, not just dinner</li>
+          <li>Phones down for structured blocks of the day</li>
+          <li>Team returns regulated, not just relaxed</li>
+          <li>Simple practices participants can keep using after they leave</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why">
+    <SectionHeader eyebrow="Why this, why now" title="The case for <em>human-centric</em> offsites" text="Engineering and product teams run on attention and nervous-system regulation — not free snacks. Here's what a retreat actually addresses that a hotel can't." />
+    <div class="reasons-grid">
+      {
+        reasons.map((r) => (
+          <div class="reason-card reveal">
+            <span class="reason-icon">{r.icon}</span>
+            <h3>{r.title}</h3>
+            <p>{r.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section id="packages" class="packages-section">
+    <SectionHeader eyebrow="Packages" title="Built for your <em>team size and budget</em>" text="Every package includes practice sessions, meals, and accommodation. Final pricing depends on group size, season, and location — these are starting points for planning." />
+    <div class="packages-grid">
+      {
+        packages.map((p) => (
+          <div class:list={['package-card', p.featured && 'featured', 'reveal']}>
+            <span class="package-tag">{p.tag}</span>
+            <h3>{p.title}</h3>
+            <div class="price">{p.price}<sub>{p.per}</sub></div>
+            <div class="duration">{p.duration}</div>
+            <ul class="package-list">{p.items.map((i) => <li>{i}</li>)}</ul>
+            <a href="#contact" class="btn-small">Request This</a>
+          </div>
+        ))
+      }
+    </div>
+    <p class="price-note">Pricing shown is indicative and scales with group size. Companies booking recurring quarterly retreats receive custom annual pricing — ask us for a proposal.</p>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <SectionHeader eyebrow="How it works" title="From inquiry to <em>offsite</em>" />
+    <div class="process-list">
+      {
+        process.map((s) => (
+          <div class="process-item reveal">
+            <span class="process-num">{s.num}</span>
+            <div><h4>{s.title}</h4><p>{s.body}</p></div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT FORM -->
+  <div class="cta-band" id="contact">
+    <span class="eyebrow" style="color:rgba(245,240,232,0.75)">Get a proposal</span>
+    <h2>Plan your team's retreat</h2>
+    <p>Tell us a bit about your team and we'll send a tailored proposal — no obligation, no generic PDF.</p>
+    <form class="contact-form" name="corporate" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/corporate/?submitted=true">
+      <input type="hidden" name="form-name" value="corporate" />
+      <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
+      <input type="text" name="company" placeholder="Company name" required />
+      <input type="text" name="name" placeholder="Your name" required />
+      <input type="email" name="email" placeholder="Work email" required />
+      <select name="team-size" required>
+        <option value="" disabled selected>Team size</option>
+        <option>5–8 people</option>
+        <option>9–16 people</option>
+        <option>17–30 people</option>
+        <option>30+ people</option>
+      </select>
+      <textarea name="message" rows="3" placeholder="What are you hoping this offsite achieves?"></textarea>
+      <button type="submit">Request Proposal</button>
+    </form>
+  </div>
+</BaseLayout>

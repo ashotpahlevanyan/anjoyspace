@@ -1,0 +1,254 @@
+/* ════ HOME PAGE ════ */
+@keyframes breathe {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.75; }
+  50% { transform: scale(1.06) rotate(60deg); opacity: 1; }
+}
+
+.page-home {
+  /* ── LOCATIONS STRIP ── */
+  .locations-strip {
+    background: var(--deep);
+    padding: 1.2rem clamp(1.5rem, 6vw, 8rem);
+    display: flex; align-items: center; gap: 3rem;
+    overflow-x: auto; border-bottom: 1px solid var(--border);
+    margin-top: 60px;
+  }
+  .locations-strip .label {
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); white-space: nowrap; flex-shrink: 0;
+  }
+  .locations-strip .loc {
+    font-size: 0.8rem; color: var(--parchment-dim);
+    white-space: nowrap; font-weight: 300;
+  }
+  .loc-dot { width: 3px; height: 3px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; place-items: center;
+    padding: 6rem clamp(1.5rem, 6vw, 8rem) 4rem;
+    position: relative; overflow: hidden; text-align: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(61, 107, 94, 0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 70% 60%, rgba(139, 111, 158, 0.12) 0%, transparent 60%),
+      var(--night);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 780px; }
+
+  .mandala-wrap { width: 220px; height: 220px; margin: 0 auto 2.5rem; position: relative; }
+  .mandala-wrap svg { width: 100%; height: 100%; animation: breathe 6s ease-in-out infinite; opacity: 0.85; }
+  @media (prefers-reduced-motion: reduce) { .mandala-wrap svg { animation: none; } }
+
+  .hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 300; line-height: 1.05; letter-spacing: -0.01em;
+    margin-bottom: 1.5rem; color: var(--parchment);
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero > .hero-content > p:not(.eyebrow) {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-weight: 300; color: var(--parchment-dim);
+    max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.8;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: 0.65rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--parchment-dim); opacity: 0.5;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); }
+
+  /* ── UPCOMING RETREATS ── */
+  #retreats { background: var(--deep); }
+  .retreats-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5px; background: var(--border);
+  }
+  .retreat-card {
+    background: var(--card-bg); padding: 2.2rem;
+    position: relative; overflow: hidden; transition: background 0.3s;
+    cursor: pointer; text-decoration: none; color: inherit; display: block;
+  }
+  .retreat-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--gold); transition: height 0.4s;
+  }
+  .retreat-card:hover::before { height: 100%; }
+  .retreat-card:hover { background: #1e2b3a; }
+  .retreat-tag {
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.2em;
+    text-transform: uppercase; padding: 0.3rem 0.7rem;
+    margin-bottom: 1.2rem; display: inline-block;
+  }
+  .tag-upcoming { background: rgba(61, 107, 94, 0.25); color: #7ec8b2; }
+  .tag-intensive { background: rgba(139, 111, 158, 0.25); color: #c4a8d9; }
+  .tag-journey { background: rgba(201, 169, 110, 0.2); color: var(--gold); }
+  .retreat-card h3 {
+    font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400;
+    margin-bottom: 0.5rem; color: var(--parchment); line-height: 1.2;
+  }
+  .retreat-meta { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .retreat-meta span {
+    font-family: var(--font-mono); font-size: 0.68rem;
+    color: var(--parchment-dim); letter-spacing: 0.1em;
+  }
+  .retreat-card p {
+    font-size: 0.9rem; color: var(--parchment-dim);
+    line-height: 1.7; margin-bottom: 1.5rem; font-weight: 300;
+  }
+  .retreat-price {
+    font-family: var(--font-serif); font-size: 1.3rem; color: var(--gold); margin-bottom: 1rem;
+  }
+  .retreat-price sup { font-size: 0.7em; vertical-align: super; }
+
+  /* ── PAST RETREATS ── */
+  .past-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;
+  }
+  .past-card { border-top: 1px solid var(--border); padding-top: 1.5rem; }
+  .past-card .year {
+    font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.2em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .past-card h3 {
+    font-family: var(--font-serif); font-size: 1.25rem; font-weight: 400; margin-bottom: 0.4rem;
+  }
+  .past-card .location {
+    font-size: 0.8rem; color: var(--sage); letter-spacing: 0.05em; margin-bottom: 0.8rem;
+  }
+  .past-card p { font-size: 0.85rem; color: var(--parchment-dim); line-height: 1.7; font-weight: 300; }
+  .past-card .participants {
+    font-family: var(--font-mono); font-size: 0.62rem; color: var(--parchment-dim);
+    margin-top: 1rem; opacity: 0.6;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-section { background: var(--deep); }
+  .gallery-grid { columns: 3 280px; gap: 0.8rem; }
+  .gallery-item { break-inside: avoid; margin-bottom: 0.8rem; overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item-inner { position: relative; overflow: hidden; }
+  .gallery-img {
+    width: 100%; display: block; background: var(--card-bg);
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .gallery-item:hover .gallery-img { transform: scale(1.04); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13, 17, 23, 0.7) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 1rem;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay span {
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--parchment-dim);
+  }
+  .gimg { aspect-ratio: var(--ratio, 4/3); }
+  .gimg-1 { --ratio: 4/5; background: linear-gradient(135deg, #1a2d2a 0%, #2d4a3e 40%, #1a2d2a 100%); }
+  .gimg-2 { --ratio: 4/3; background: linear-gradient(160deg, #1e1a2e 0%, #2d2040 50%, #1a1528 100%); }
+  .gimg-3 { --ratio: 1/1; background: linear-gradient(45deg, #1f2820 0%, #2e4030 60%, #1a2318 100%); }
+  .gimg-4 { --ratio: 4/3; background: linear-gradient(200deg, #2a1f10 0%, #3d2d18 50%, #1e1508 100%); }
+  .gimg-5 { --ratio: 3/4; background: linear-gradient(110deg, #1a2530 0%, #253545 60%, #12182a 100%); }
+  .gimg-6 { --ratio: 4/3; background: linear-gradient(70deg, #22182e 0%, #3a2850 50%, #180e25 100%); }
+  .gimg-7 { --ratio: 1/1; background: linear-gradient(155deg, #1e2a1e 0%, #304830 60%, #14201a 100%); }
+  .gimg-8 { --ratio: 3/2; background: linear-gradient(225deg, #2e2410 0%, #4a3a20 50%, #1c1608 100%); }
+  .gallery-symbol {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-serif); font-size: 3.5rem; color: rgba(201, 169, 110, 0.12);
+    pointer-events: none;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section { background: var(--night); }
+  .testimonials-track {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem;
+  }
+  .testimonial-card {
+    background: var(--card-bg); padding: 2rem; position: relative;
+    border-left: 2px solid transparent; transition: border-color 0.3s;
+  }
+  .testimonial-card:hover { border-left-color: var(--gold); }
+  .quote-mark {
+    font-family: var(--font-serif); font-size: 5rem; line-height: 0.5;
+    color: var(--gold); opacity: 0.3; margin-bottom: 1rem; display: block;
+  }
+  .testimonial-card blockquote {
+    font-family: var(--font-serif); font-size: 1.15rem; font-weight: 300;
+    font-style: italic; line-height: 1.7; color: var(--parchment); margin-bottom: 1.5rem;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
+  .author-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--sage), var(--violet));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-serif); font-size: 0.9rem; color: var(--parchment); flex-shrink: 0;
+  }
+  .author-info .name { font-size: 0.85rem; font-weight: 500; color: var(--parchment); }
+  .author-info .retreat-ref {
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em;
+    color: var(--gold); opacity: 0.8; text-transform: uppercase;
+  }
+  .stars { display: flex; gap: 2px; margin-bottom: 0.8rem; }
+  .stars span { color: var(--gold); font-size: 0.75rem; }
+
+  /* ── ABOUT / PHILOSOPHY ── */
+  .about-section {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    padding: var(--gap) clamp(1.5rem, 6vw, 8rem);
+  }
+  .about-visual { position: relative; aspect-ratio: 3/4; background: var(--card-bg); overflow: hidden; }
+  .about-visual-bg { position: absolute; inset: 0; background: linear-gradient(160deg, #1a2d2a 0%, #0d1a16 100%); }
+  .about-mandala { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.25; }
+  .about-mandala svg { width: 80%; height: 80%; }
+  .about-text-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(13, 17, 23, 0.9) 0%, transparent 100%);
+    padding: 3rem 2rem 2rem;
+  }
+  .about-text-overlay blockquote {
+    font-family: var(--font-serif); font-size: 1.3rem; font-style: italic;
+    line-height: 1.6; color: var(--parchment); font-weight: 300;
+  }
+  .about-content h2 {
+    font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300; line-height: 1.15; margin-bottom: 1.5rem;
+  }
+  .about-content h2 em { font-style: italic; color: var(--gold); }
+  .about-content p {
+    font-size: 0.95rem; color: var(--parchment-dim);
+    line-height: 1.85; font-weight: 300; margin-bottom: 1rem;
+  }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+  .stat { border-top: 1px solid var(--border); padding-top: 1rem; }
+  .stat .number { font-family: var(--font-serif); font-size: 2.2rem; color: var(--gold); display: block; }
+  .stat .label { font-size: 0.78rem; color: var(--parchment-dim); font-weight: 300; }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    background: linear-gradient(135deg, var(--sage) 0%, #2a4a3e 50%, #1a3028 100%);
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 8rem);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-band::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
+  }
+  .cta-band h2 {
+    font-family: var(--font-serif); font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 300; line-height: 1.1; color: var(--parchment); margin-bottom: 1rem; position: relative;
+  }
+  .cta-band > p {
+    font-size: 1rem; color: rgba(245, 240, 232, 0.7);
+    max-width: 440px; margin: 0 auto 2.5rem; font-weight: 300; line-height: 1.8; position: relative;
+  }
+  .cta-band .buttons { position: relative; }
+
+  @media (max-width: 768px) {
+    .about-section { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+}

@@ -1,0 +1,6 @@
+# Legacy/bookmark safety net — old direct .html links still resolve
+/ani.html             /teachers/ani/   301
+/ani                  /teachers/ani/   301
+
+# Trailing-slash normalization handled natively by Netlify's pretty URLs,
+# no further rules needed for index.html-based folders.

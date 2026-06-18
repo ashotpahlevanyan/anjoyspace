@@ -1,0 +1,191 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import home from '../content/pages/home.json';
+import SectionHeader from '../components/SectionHeader.astro';
+import RetreatCard from '../components/RetreatCard.astro';
+import PastRetreatCard from '../components/PastRetreatCard.astro';
+import GalleryItem from '../components/GalleryItem.astro';
+import Testimonial from '../components/Testimonial.astro';
+import Mandala from '../components/Mandala.astro';
+import NewsletterForm from '../components/NewsletterForm.tsx';
+import type { NavLink } from '../components/SiteNav.tsx';
+
+const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) => a.data.order - b.data.order;
+
+const retreats = (await getCollection('retreats', ({ data }) => !data.draft)).sort(byOrder);
+const past = (await getCollection('pastRetreats')).sort(byOrder);
+const galleryItems = (await getCollection('gallery')).sort(byOrder);
+const testimonials = (await getCollection('testimonials')).sort(byOrder);
+
+const navLinks: NavLink[] = [
+  { href: '#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '#past', label: { ru: 'Прошлые', en: 'Past' } },
+  { href: '#gallery', label: { ru: 'Галерея', en: 'Gallery' } },
+  { href: '#testimonials', label: { ru: 'Истории', en: 'Stories' } },
+  { href: '#about', label: { ru: 'О нас', en: 'About' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/retreat-center/', label: { ru: 'Центр', en: 'Center' } },
+  { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
+];
+const menuLinks: NavLink[] = [
+  ...navLinks,
+  { href: '#contact', label: { ru: 'Записаться на ретрит', en: 'Reserve a Spot' }, contact: true },
+];
+const cta = { ru: 'Записаться', en: 'Reserve' };
+---
+
+<BaseLayout
+  title={home.title}
+  description={home.description}
+  pageClass="page-home"
+  nav={{ navLinks, menuLinks, cta }}
+  footer={{ variant: 'full' }}
+>
+  <!-- LOCATIONS STRIP -->
+  <div class="locations-strip">
+    <span class="label">{home.locations.label}</span>
+    {
+      home.locations.places.map((place, i) => (
+        <>
+          {i > 0 && <span class="loc-dot"></span>}
+          <span class="loc">{place}</span>
+        </>
+      ))
+    }
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="mandala-wrap"><Mandala variant="hero" /></div>
+      <p class="eyebrow">{home.hero.eyebrow}</p>
+      <h1 set:html={home.hero.titleHtml}></h1>
+      <p>{home.hero.text}</p>
+      <div>
+        <a href="#retreats" class="btn-primary">{home.hero.primaryLabel}</a>
+        <a href="#about" class="btn-ghost">{home.hero.ghostLabel}</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- UPCOMING RETREATS -->
+  <section id="retreats">
+    <SectionHeader
+      eyebrow={home.retreatsHeader.eyebrow}
+      title={home.retreatsHeader.titleHtml}
+      text={home.retreatsHeader.text}
+    />
+    <div class="retreats-grid">
+      {
+        retreats.map((r) => (
+          <RetreatCard
+            href={`/retreats/${r.id}/`}
+            tag={r.data.tag}
+            tagStyle={r.data.tagStyle}
+            title={r.data.title}
+            location={r.data.location}
+            days={r.data.days}
+            participants={r.data.participants}
+            price={r.data.price}
+            priceFrom={r.data.priceFrom}
+            summary={r.data.summary}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- PAST RETREATS -->
+  <section id="past">
+    <SectionHeader eyebrow={home.pastHeader.eyebrow} title={home.pastHeader.titleHtml} text={home.pastHeader.text} />
+    <div class="past-grid">
+      {
+        past.map((p) => (
+          <PastRetreatCard
+            period={p.data.period}
+            title={p.data.title}
+            location={p.data.location}
+            summary={p.data.summary}
+            participants={p.data.participants}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="gallery-section">
+    <SectionHeader
+      eyebrow={home.galleryHeader.eyebrow}
+      title={home.galleryHeader.titleHtml}
+      text={home.galleryHeader.text}
+    />
+    <div class="gallery-grid">
+      {galleryItems.map((g) => <GalleryItem variant={g.data.variant} symbol={g.data.symbol} caption={g.data.caption} />)}
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="testimonials-section">
+    <SectionHeader eyebrow={home.testimonialsHeader.eyebrow} title={home.testimonialsHeader.titleHtml} />
+    <div class="testimonials-track">
+      {
+        testimonials.map((t) => (
+          <Testimonial
+            quote={t.data.quote}
+            author={t.data.author}
+            initial={t.data.initial}
+            retreatRef={t.data.retreatRef}
+            rating={t.data.rating}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <div class="about-section" id="about">
+    <div class="about-visual reveal">
+      <div class="about-visual-bg"></div>
+      <div class="about-mandala"><Mandala variant="about" /></div>
+      <div class="about-text-overlay">
+        <blockquote>"{home.about.overlayQuote}"</blockquote>
+      </div>
+    </div>
+    <div class="about-content reveal">
+      <p class="eyebrow">{home.about.eyebrow}</p>
+      <h2 set:html={home.about.titleHtml}></h2>
+      <div class="divider"></div>
+      {home.about.paragraphs.map((para) => <p>{para}</p>)}
+      <div class="about-stats">
+        {
+          home.about.stats.map((s) => (
+            <div class="stat">
+              <span class="number">{s.number}</span>
+              <span class="label">{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="cta-band" id="contact">
+    <p class="eyebrow">{home.cta.eyebrow}</p>
+    <h2>{home.cta.title}</h2>
+    <p>{home.cta.text}</p>
+    <div class="buttons">
+      <a href="#contact" class="btn-primary" data-contact>
+        <span data-lang="ru">Написать нам</span><span data-lang="en">hello@anjoy.space</span>
+      </a>
+    </div>
+    <NewsletterForm client:visible />
+  </div>
+</BaseLayout>

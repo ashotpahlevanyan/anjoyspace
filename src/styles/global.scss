@@ -1,0 +1,17 @@
+/* Anjoy Space — global stylesheet.
+   Color/font tokens are injected as :root CSS variables by BaseLayout from the
+   CMS-editable theme (src/lib/theme.ts), so everything here uses var(--token). */
+
+// Shared chrome
+@use 'base';
+@use 'nav';
+@use 'contact';
+@use 'footer';
+
+// Page-scoped styles (namespaced by .page-* wrapper to avoid collisions)
+@use 'home';
+@use 'teachers';
+@use 'teacher';
+@use 'retreat';
+@use 'center';
+@use 'corporate';
