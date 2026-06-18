@@ -1,8 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: ashotpahlevanyan/anjoyspace
   branch: main
 
-# Lets you run the CMS locally against your working copy:
+# Lets you run the CMS locally against your working copy (no auth needed):
 #   npx decap-server   (then open http://localhost:4321/admin/)
 local_backend: true
 

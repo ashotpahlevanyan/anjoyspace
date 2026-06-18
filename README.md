@@ -81,13 +81,22 @@ forms use **Netlify Forms** — hidden detection forms are emitted on every page
 
 ### One-time setup for the CMS in production
 
-The git-based CMS needs a connected git host and login:
+The CMS uses the **GitHub backend** (`backend: { name: github, repo: ashotpahlevanyan/anjoyspace }`
+in `public/admin/config.yml`). Sveltia CMS does **not** support Netlify's deprecated Git
+Gateway, so authentication is a GitHub OAuth app registered with Netlify's OAuth provider:
 
-1. Push this repo to GitHub and connect it to a Netlify site.
-2. In Netlify: **Identity** → enable it; under **Services → Git Gateway**, enable it.
-3. Invite editors via **Identity → Invite users**. They log in at `https://<site>/admin/`.
+1. **Create a GitHub OAuth App** — GitHub → *Settings → Developer settings → OAuth Apps →
+   New OAuth App*:
+   - Homepage URL: `https://<your-site>.netlify.app`
+   - Authorization callback URL: `https://api.netlify.com/auth/done`
+   - Register, then copy the **Client ID** and generate a **Client Secret**.
+2. **Add it to Netlify** — your site → *Access control* (a.k.a. Access & security) → **OAuth →
+   Install provider → GitHub**, and paste the Client ID + Secret.
+3. Editors then open `https://<your-site>/admin/` and click **Login with GitHub** (they need
+   write access to the repo).
 
-(Alternatively, switch `public/admin/config.yml` `backend` to Sveltia's GitHub backend.)
+No Netlify Identity is required. Local editing (`npx decap-server` + `local_backend`) needs
+none of this.
 
 ## Notes
 
