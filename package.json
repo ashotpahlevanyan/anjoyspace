@@ -19,9 +19,11 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "decap-server": "^3.9.0",
+    "@astrojs/check": "^0.9.9",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "sass": "^1.85.0"
+    "decap-server": "^3.9.0",
+    "sass": "^1.85.0",
+    "typescript": "^5.9.3"
   }
 }

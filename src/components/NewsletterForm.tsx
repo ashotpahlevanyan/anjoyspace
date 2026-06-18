@@ -10,9 +10,7 @@ type Status = 'idle' | 'done' | 'error';
 export default function NewsletterForm() {
   const [status, setStatus] = useState<Status>('idle');
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
+  const submit = async (form: HTMLFormElement) => {
     try {
       await fetch('/', {
         method: 'POST',
@@ -26,10 +24,19 @@ export default function NewsletterForm() {
       setStatus('error');
       setTimeout(() => setStatus('idle'), 2000);
     }
-  }
+  };
 
   return (
-    <form className="newsletter-form" name="newsletter" method="POST" data-netlify="true" onSubmit={handleSubmit}>
+    <form
+      className="newsletter-form"
+      name="newsletter"
+      method="POST"
+      data-netlify="true"
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit(e.currentTarget);
+      }}
+    >
       <input type="hidden" name="form-name" value="newsletter" />
       <input type="email" name="email" placeholder="Your email — for retreat announcements" required />
       {status === 'done' ? (

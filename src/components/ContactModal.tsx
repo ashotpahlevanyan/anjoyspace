@@ -34,9 +34,7 @@ export default function ContactModal() {
     setOpen(false);
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
+  const submit = async (form: HTMLFormElement) => {
     try {
       await fetch('/', {
         method: 'POST',
@@ -48,7 +46,7 @@ export default function ContactModal() {
     } catch {
       alert('Something went wrong. Please email hello@anjoy.space directly.');
     }
-  }
+  };
 
   return (
     <div className={`contact-modal${open ? ' open' : ''}`} onClick={(e) => e.target === e.currentTarget && close()}>
@@ -71,7 +69,17 @@ export default function ContactModal() {
             <p data-lang="en">
               Tell us about yourself — we'll reply within 24 hours and help find the right retreat for you.
             </p>
-            <form className="cform" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={handleSubmit}>
+            <form
+              className="cform"
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              onSubmit={(e) => {
+                e.preventDefault();
+                submit(e.currentTarget);
+              }}
+            >
               <input type="hidden" name="form-name" value="contact" />
               <p hidden>
                 <label>
