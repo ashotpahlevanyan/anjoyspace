@@ -1,0 +1,18 @@
+---
+// Sveltia CMS entry point. Lives as a route (not just a public file) so the
+// /admin/ path resolves in both `astro dev` and production. The config is read
+// from /admin/config.yml (public/admin/config.yml).
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Anjoy Space — Content</title>
+  </head>
+  <body>
+    <script is:inline src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  </body>
+</html>
