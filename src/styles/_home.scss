@@ -55,17 +55,6 @@
     font-weight: 300; color: var(--parchment-dim);
     max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.8;
   }
-  .scroll-hint {
-    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-    font-family: var(--font-mono); font-size: 0.65rem;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--parchment-dim); opacity: 0.5;
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-  }
-  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); }
-  /* Decorative only — hide on phones where the absolute hint crowds the hero. */
-  @media (max-width: 600px) { .scroll-hint { display: none; } }
-
   /* ── UPCOMING RETREATS ── */
   #retreats { background: var(--deep); }
   .retreats-grid {

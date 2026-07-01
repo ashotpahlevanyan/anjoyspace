@@ -76,6 +76,26 @@ const rootCss = buildRootCss();
 
     {contact && <ContactModal client:idle />}
 
+    <button id="scrollTopBtn" class="scroll-top" type="button" aria-label="Back to top">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7"></path>
+      </svg>
+    </button>
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById('scrollTopBtn');
+        if (!btn) return;
+        var toggle = function () {
+          btn.classList.toggle('visible', window.scrollY > 500);
+        };
+        btn.addEventListener('click', function () {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        window.addEventListener('scroll', toggle, { passive: true });
+        toggle();
+      })();
+    </script>
+
     <script is:inline>
       (function () {
         var els = document.querySelectorAll('.reveal');
