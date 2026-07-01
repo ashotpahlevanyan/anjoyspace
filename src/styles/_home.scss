@@ -63,6 +63,8 @@
     display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
   }
   .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); }
+  /* Decorative only — hide on phones where the absolute hint crowds the hero. */
+  @media (max-width: 600px) { .scroll-hint { display: none; } }
 
   /* ── UPCOMING RETREATS ── */
   #retreats { background: var(--deep); }
