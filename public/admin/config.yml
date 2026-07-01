@@ -2,6 +2,9 @@ backend:
   name: github
   repo: ashotpahlevanyan/anjoyspace
   branch: main
+  # Self-hosted OAuth relay (Vercel functions at /auth + /callback).
+  # Replaces the old Netlify OAuth provider now that the site runs on Vercel.
+  base_url: https://anjoy.space
 
 # Lets you run the CMS locally against your working copy (no auth needed):
 #   npx decap-server   (then open http://localhost:4321/admin/)
