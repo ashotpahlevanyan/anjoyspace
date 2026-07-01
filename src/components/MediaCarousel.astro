@@ -1,0 +1,182 @@
+---
+/**
+ * Horizontal media carousel with a shared lightbox/popup, used on retreat
+ * pages to mirror the original deepyogaweekend.ru photo gallery and video
+ * reviews. Items open in a modal that plays self-hosted video, shows images,
+ * or embeds a VK player.
+ *
+ * The lightbox + interaction live in one processed <script> below; Astro
+ * bundles it a single time however many carousels are on the page.
+ */
+import type { Localized } from '../lib/i18n';
+import T from './T.astro';
+
+export interface MediaItem {
+  type: 'image' | 'video' | 'vk';
+  src?: string; // image or video file (image/video)
+  poster?: string; // tile + video poster
+  embed?: string; // iframe src (vk)
+  name?: Localized; // caption shown under review tiles
+}
+
+interface Props {
+  items: MediaItem[];
+  variant?: 'photo' | 'review';
+}
+
+const { items, variant = 'photo' } = Astro.props;
+---
+
+<div class:list={['dyw-carousel', `dyw-${variant}`]} data-dyw-carousel>
+  <button class="dyw-arrow dyw-arrow-prev" data-dyw-dir="-1" aria-label="Previous">‹</button>
+  <div class="dyw-track" data-dyw-track>
+    {
+      items.map((it) => (
+        <button
+          class="dyw-tile"
+          data-dyw-open
+          data-type={it.type}
+          data-src={it.src}
+          data-poster={it.poster}
+          data-embed={it.embed}
+        >
+          <div class="dyw-thumb">
+            {(it.poster || (it.type === 'image' && it.src)) && (
+              <img src={it.poster ?? it.src} alt="" loading="lazy" />
+            )}
+            {(it.type === 'video' || it.type === 'vk') && (
+              <span class="dyw-play" aria-hidden="true">▶</span>
+            )}
+          </div>
+          {it.name && <T value={it.name} tag="span" class="dyw-caption" />}
+        </button>
+      ))
+    }
+  </div>
+  <button class="dyw-arrow dyw-arrow-next" data-dyw-dir="1" aria-label="Next">›</button>
+</div>
+
+<style>
+  .dyw-carousel { position: relative; display: flex; align-items: center; gap: 0.5rem; }
+  .dyw-track {
+    display: flex; gap: 0.9rem; overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; padding: 0.4rem 0.2rem 1.1rem; flex: 1;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .dyw-track::-webkit-scrollbar { height: 6px; }
+  .dyw-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .dyw-tile {
+    flex: 0 0 auto; scroll-snap-align: start; cursor: pointer; background: none;
+    border: none; padding: 0; text-align: center; display: flex; flex-direction: column;
+    gap: 0.5rem; color: var(--parchment-dim); font: inherit;
+  }
+  .dyw-thumb {
+    position: relative; overflow: hidden; border-radius: 10px; background: var(--deep);
+    border: 1px solid var(--border); transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .dyw-tile:hover .dyw-thumb { transform: translateY(-4px); border-color: var(--gold); }
+  .dyw-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .dyw-review .dyw-thumb { width: 220px; aspect-ratio: 9 / 16; }
+  .dyw-photo .dyw-thumb { width: 320px; aspect-ratio: 4 / 3; }
+  .dyw-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: var(--parchment);
+  }
+  .dyw-play::before {
+    content: ''; position: absolute; width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(20, 28, 24, 0.55); backdrop-filter: blur(2px);
+    border: 1px solid rgba(245, 240, 232, 0.5);
+  }
+  .dyw-play { z-index: 1; }
+  .dyw-caption { font-size: 0.8rem; letter-spacing: 0.02em; }
+  .dyw-arrow {
+    flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+    background: var(--deep); border: 1px solid var(--border); color: var(--parchment);
+    font-size: 1.4rem; line-height: 1; transition: border-color 0.3s ease, color 0.3s ease;
+  }
+  .dyw-arrow:hover { border-color: var(--gold); color: var(--gold); }
+  @media (max-width: 600px) {
+    .dyw-arrow { display: none; }
+    .dyw-review .dyw-thumb { width: 160px; }
+    .dyw-photo .dyw-thumb { width: 250px; }
+  }
+</style>
+
+<script>
+  function getLightbox(): HTMLElement {
+    let lb = document.getElementById('dyw-lightbox');
+    if (lb) return lb;
+    lb = document.createElement('div');
+    lb.id = 'dyw-lightbox';
+    lb.className = 'dyw-lightbox';
+    lb.setAttribute('hidden', '');
+    lb.innerHTML =
+      '<div class="dyw-lightbox__backdrop" data-dyw-close></div>' +
+      '<button class="dyw-lightbox__close" data-dyw-close aria-label="Close">×</button>' +
+      '<div class="dyw-lightbox__stage"></div>';
+    document.body.appendChild(lb);
+
+    const style = document.createElement('style');
+    style.textContent =
+      '.dyw-lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:3vmin}' +
+      '.dyw-lightbox[hidden]{display:none}' +
+      '.dyw-lightbox__backdrop{position:absolute;inset:0;background:rgba(8,12,10,.92);backdrop-filter:blur(4px)}' +
+      '.dyw-lightbox__close{position:absolute;top:18px;right:24px;z-index:2;width:46px;height:46px;border-radius:50%;background:rgba(20,28,24,.6);border:1px solid rgba(245,240,232,.4);color:#f5f0e8;font-size:1.6rem;line-height:1;cursor:pointer}' +
+      '.dyw-lightbox__close:hover{border-color:#c9a96e;color:#c9a96e}' +
+      '.dyw-lightbox__stage{position:relative;z-index:1;max-width:100%;max-height:100%;display:flex;align-items:center;justify-content:center}' +
+      '.dyw-lightbox__stage img,.dyw-lightbox__stage video{max-width:100%;max-height:90vh;border-radius:10px;display:block}' +
+      '.dyw-lightbox__stage video{max-height:90vh;height:90vh}' +
+      '.dyw-lightbox__stage iframe{width:min(90vw,1100px);aspect-ratio:16/9;max-height:90vh;border:0;border-radius:10px}';
+    document.head.appendChild(style);
+
+    const close = () => {
+      lb!.setAttribute('hidden', '');
+      lb!.querySelector('.dyw-lightbox__stage')!.innerHTML = '';
+    };
+    lb.querySelectorAll('[data-dyw-close]').forEach((el) => el.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !lb!.hasAttribute('hidden')) close();
+    });
+    return lb;
+  }
+
+  function openItem(t: HTMLElement) {
+    const lb = getLightbox();
+    const stage = lb.querySelector('.dyw-lightbox__stage') as HTMLElement;
+    const type = t.dataset.type;
+    const src = t.dataset.src;
+    const poster = t.dataset.poster;
+    const embed = t.dataset.embed;
+    if (type === 'video' && src) {
+      stage.innerHTML = '';
+      const v = document.createElement('video');
+      v.src = src;
+      if (poster) v.poster = poster;
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      stage.appendChild(v);
+    } else if (type === 'vk' && embed) {
+      stage.innerHTML =
+        '<iframe src="' + embed + '" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+    } else if (src) {
+      stage.innerHTML = '<img src="' + src + '" alt="">';
+    }
+    lb.removeAttribute('hidden');
+  }
+
+  document.addEventListener('click', (e) => {
+    const tile = (e.target as HTMLElement).closest<HTMLElement>('[data-dyw-open]');
+    if (tile) {
+      openItem(tile);
+      return;
+    }
+    const arrow = (e.target as HTMLElement).closest<HTMLElement>('[data-dyw-dir]');
+    if (arrow) {
+      const track = arrow.parentElement!.querySelector<HTMLElement>('[data-dyw-track]');
+      const tileEl = track?.querySelector<HTMLElement>('.dyw-tile');
+      const step = (tileEl?.offsetWidth ?? 240) + 16;
+      track?.scrollBy({ left: step * Number(arrow.dataset.dyw_dir ?? arrow.dataset.dywDir), behavior: 'smooth' });
+    }
+  });
+</script>

@@ -76,6 +76,15 @@
   .itinerary-item h4 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; color: var(--parchment); margin-bottom: 0.3rem; }
   .itinerary-item p { font-size: 0.85rem; color: var(--parchment-dim); font-weight: 300; line-height: 1.7; }
 
+  /* ── FAQ ── */
+  .faq-list { border-top: 1px solid var(--border); }
+  .faq-item { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+  .faq-item h4 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; color: var(--parchment); margin-bottom: 0.5rem; }
+  .faq-item p { font-size: 0.9rem; color: var(--parchment-dim); font-weight: 300; line-height: 1.8; max-width: 760px; }
+
+  /* ── REVIEWS ── */
+  .reviews-section { background: var(--deep); }
+
   /* ── GALLERY ── */
   .gallery-strip { background: var(--night); }
   .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.8rem; }

@@ -5,6 +5,12 @@ import { glob } from 'astro/loaders';
 const loc = z.object({ ru: z.string(), en: z.string() });
 
 /**
+ * A field that is either a plain string (single-language — as the English-only
+ * demo retreats use) or a bilingual { ru, en } pair. Rendered through `<T>`.
+ */
+const localized = z.union([z.string(), loc]);
+
+/**
  * Upcoming retreats. Each entry is a folder-collection file in the CMS, and
  * each one statically generates a full page at /retreats/<slug>/ — so authors
  * create new retreat pages simply by adding an entry. The markdown body holds
@@ -16,25 +22,46 @@ const retreats = defineCollection({
     order: z.number().default(0),
     draft: z.boolean().default(false),
     // card + hero
-    tag: z.string(), // e.g. "Sep 2025"
+    tag: localized, // e.g. "Sep 2025"
     tagStyle: z.enum(['upcoming', 'intensive', 'journey']).default('upcoming'),
-    title: z.string(),
-    location: z.string(),
-    days: z.string(), // e.g. "7 Days"
-    participants: z.string(), // e.g. "12 Participants"
-    price: z.string(), // e.g. "$2,400"
+    title: localized,
+    location: localized,
+    days: localized, // e.g. "7 Days"
+    participants: localized, // e.g. "12 Participants"
+    price: localized, // e.g. "$2,400"
     priceFrom: z.boolean().default(true),
-    summary: z.string(), // card description
+    summary: localized, // card description
     // detail page
-    heroEyebrow: z.string().default('Upcoming Retreat'),
-    intro: z.string().optional(), // lead paragraph on the detail page
-    highlights: z.array(z.string()).default([]),
+    heroEyebrow: localized.default('Upcoming Retreat'),
+    intro: localized.optional(), // lead paragraph on the detail page
+    highlights: z.array(localized).default([]),
     itinerary: z
-      .array(z.object({ label: z.string(), title: z.string(), body: z.string() }))
+      .array(z.object({ label: localized, title: localized, body: localized }))
+      .default([]),
+    // long-form overview, expressed as bilingual sections instead of the
+    // markdown body (which cannot carry two languages). When non-empty these
+    // render in place of the markdown <Content />.
+    sections: z
+      .array(z.object({ heading: localized, body: z.array(localized).default([]) }))
+      .default([]),
+    faq: z.array(z.object({ q: localized, a: localized })).default([]),
+    // real venue photos (carousel + lightbox); preferred over `gallery` glyphs.
+    photos: z.array(z.object({ src: z.string(), alt: localized.optional() })).default([]),
+    // video / image testimonials shown in a carousel with popups.
+    reviews: z
+      .array(
+        z.object({
+          name: localized,
+          kind: z.enum(['video', 'image', 'vk']).default('video'),
+          poster: z.string().optional(),
+          src: z.string().optional(), // self-hosted video / image file
+          vk: z.string().optional(), // VK video id, e.g. "-230744987_456239018"
+        }),
+      )
       .default([]),
     gallery: z.array(z.object({ variant: z.string(), symbol: z.string() })).default([]),
-    ctaTitle: z.string().optional(),
-    ctaBody: z.string().optional(),
+    ctaTitle: localized.optional(),
+    ctaBody: localized.optional(),
   }),
 });
 

@@ -2,6 +2,10 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import T from '../../components/T.astro';
+import MediaCarousel from '../../components/MediaCarousel.astro';
+import type { MediaItem } from '../../components/MediaCarousel.astro';
+import { pick } from '../../lib/i18n';
 import type { NavLink } from '../../components/SiteNav.tsx';
 
 export async function getStaticPaths() {
@@ -12,6 +16,21 @@ export async function getStaticPaths() {
 const { retreat } = Astro.props;
 const d = retreat.data;
 const { Content } = await render(retreat);
+
+// Build carousel item lists for the photo gallery + video reviews.
+const photoItems: MediaItem[] = d.photos.map((p) => ({ type: 'image', src: p.src }));
+const reviewItems: MediaItem[] = d.reviews.map((r) => {
+  if (r.kind === 'vk' && r.vk) {
+    const [oid, id] = r.vk.split('_');
+    return {
+      type: 'vk',
+      embed: `https://vk.com/video_ext.php?oid=${oid}&id=${id}&hd=2`,
+      poster: r.poster,
+      name: r.name,
+    } satisfies MediaItem;
+  }
+  return { type: r.kind, src: r.src, poster: r.poster, name: r.name } satisfies MediaItem;
+});
 
 const navLinks: NavLink[] = [
   { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
@@ -39,8 +58,8 @@ const footer = {
 ---
 
 <BaseLayout
-  title={`${d.title} — Anjoy Space`}
-  description={d.summary}
+  title={`${pick(d.title)} — Anjoy Space`}
+  description={pick(d.summary)}
   pageClass="page-retreat"
   nav={{ breadcrumb, navLinks, menuLinks }}
   footer={footer}
@@ -49,35 +68,63 @@ const footer = {
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <p class="eyebrow">{d.heroEyebrow}</p>
-      <span class={`retreat-tag tag-${d.tagStyle}`}>{d.tag}</span>
-      <h1>{d.title}</h1>
+      <T value={d.heroEyebrow} tag="p" class="eyebrow" />
+      <span class={`retreat-tag tag-${d.tagStyle}`}><T value={d.tag} /></span>
+      <T value={d.title} tag="h1" />
       <div class="retreat-meta">
-        <span>📍 {d.location}</span>
-        <span>⏱ {d.days}</span>
-        <span>👥 {d.participants}</span>
+        <span>📍 <T value={d.location} /></span>
+        <span>⏱ <T value={d.days} /></span>
+        <span>👥 <T value={d.participants} /></span>
       </div>
-      <div class="retreat-price">{d.priceFrom && <sup>from</sup>} {d.price}</div>
-      {d.intro && <p class="lede">{d.intro}</p>}
+      <div class="retreat-price">
+        {d.priceFrom && (
+          <sup><span data-lang="ru">от</span><span data-lang="en">from</span></sup>
+        )} <T value={d.price} />
+      </div>
+      {d.intro && <T value={d.intro} tag="p" class="lede" />}
       <div>
-        <a href="#contact" class="btn-primary" data-contact>Enquire</a>
-        <a href="/#retreats" class="btn-ghost">All Retreats</a>
+        <a href="#contact" class="btn-primary" data-contact data-lang="ru">Записаться</a>
+        <a href="#contact" class="btn-primary" data-contact data-lang="en">Enquire</a>
+        <a href="/#retreats" class="btn-ghost" data-lang="ru">Все ретриты</a>
+        <a href="/#retreats" class="btn-ghost" data-lang="en">All Retreats</a>
       </div>
     </div>
   </section>
 
   <!-- OVERVIEW -->
   <section class="overview-section">
-    <article class="overview-prose reveal"><Content /></article>
+    <article class="overview-prose reveal">
+      {
+        d.sections.length > 0 ? (
+          d.sections.map((s) => (
+            <>
+              <T value={s.heading} tag="h2" />
+              {s.body.map((p) => (
+                <T value={p} tag="p" />
+              ))}
+            </>
+          ))
+        ) : (
+          <Content />
+        )
+      }
+    </article>
   </section>
 
   <!-- HIGHLIGHTS -->
   {
     d.highlights.length > 0 && (
       <section>
-        <SectionHeader eyebrow="Highlights" title="What you'll practice" />
+        <SectionHeader
+          eyebrow={{ ru: 'Что вас ждёт', en: 'Highlights' }}
+          title={{ ru: 'Что будем практиковать', en: "What you'll practice" }}
+        />
         <div class="highlights-grid">
-          {d.highlights.map((h) => <div class="highlight-card">{h}</div>)}
+          {d.highlights.map((h) => (
+            <div class="highlight-card">
+              <T value={h} />
+            </div>
+          ))}
         </div>
       </section>
     )
@@ -87,14 +134,17 @@ const footer = {
   {
     d.itinerary.length > 0 && (
       <section class="itinerary-section">
-        <SectionHeader eyebrow="The arc" title="A typical journey" />
+        <SectionHeader
+          eyebrow={{ ru: 'Программа', en: 'The arc' }}
+          title={{ ru: 'Подробное расписание', en: 'A typical journey' }}
+        />
         <div class="itinerary-list">
           {d.itinerary.map((it) => (
             <div class="itinerary-item reveal">
-              <span class="itinerary-label">{it.label}</span>
+              <T value={it.label} tag="span" class="itinerary-label" />
               <div>
-                <h4>{it.title}</h4>
-                <p>{it.body}</p>
+                <T value={it.title} tag="h4" />
+                <T value={it.body} tag="p" />
               </div>
             </div>
           ))}
@@ -103,14 +153,19 @@ const footer = {
     )
   }
 
-  <!-- GALLERY -->
+  <!-- FAQ -->
   {
-    d.gallery.length > 0 && (
-      <section class="gallery-strip">
-        <div class="gallery-grid">
-          {d.gallery.map((g) => (
-            <div class={`gallery-tile ${g.variant} reveal`}>
-              <div class="gallery-symbol">{g.symbol}</div>
+    d.faq.length > 0 && (
+      <section class="faq-section">
+        <SectionHeader
+          eyebrow={{ ru: 'Вопросы', en: 'FAQ' }}
+          title={{ ru: 'Частые вопросы', en: 'Common questions' }}
+        />
+        <div class="faq-list">
+          {d.faq.map((f) => (
+            <div class="faq-item reveal">
+              <T value={f.q} tag="h4" />
+              <T value={f.a} tag="p" />
             </div>
           ))}
         </div>
@@ -118,10 +173,58 @@ const footer = {
     )
   }
 
+  <!-- REVIEWS -->
+  {
+    reviewItems.length > 0 && (
+      <section class="reviews-section">
+        <SectionHeader
+          eyebrow={{ ru: 'Отзывы', en: 'Reviews' }}
+          title={{ ru: 'Как изменилась жизнь после ретрита', en: 'Life after the retreat' }}
+        />
+        <MediaCarousel items={reviewItems} variant="review" />
+      </section>
+    )
+  }
+
+  <!-- GALLERY -->
+  {
+    photoItems.length > 0 ? (
+      <section class="gallery-strip">
+        <SectionHeader
+          eyebrow={{ ru: 'Как это было', en: 'Gallery' }}
+          title={{ ru: 'Йога-дача и Плещеево озеро', en: 'The Yoga-dacha & Lake Pleshcheyevo' }}
+        />
+        <MediaCarousel items={photoItems} variant="photo" />
+      </section>
+    ) : (
+      d.gallery.length > 0 && (
+        <section class="gallery-strip">
+          <div class="gallery-grid">
+            {d.gallery.map((g) => (
+              <div class={`gallery-tile ${g.variant} reveal`}>
+                <div class="gallery-symbol">{g.symbol}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    )
+  }
+
   <!-- CTA -->
   <div class="cta-band" id="contact">
-    <h2>{d.ctaTitle ?? 'Ready to join this retreat?'}</h2>
-    <p>{d.ctaBody ?? "Spots are limited and fill quickly. Reach out and we'll reply within 24 hours to help you find the right fit."}</p>
-    <a href="#contact" class="btn-primary" data-contact>Enquire</a>
+    <T
+      value={d.ctaTitle ?? { ru: 'Готовы присоединиться к ретриту?', en: 'Ready to join this retreat?' }}
+      tag="h2"
+    />
+    <T
+      value={d.ctaBody ?? {
+        ru: 'Количество мест ограничено, они быстро разбираются. Напишите нам — мы ответим в течение 24 часов и поможем подобрать подходящий вариант.',
+        en: "Spots are limited and fill quickly. Reach out and we'll reply within 24 hours to help you find the right fit.",
+      }}
+      tag="p"
+    />
+    <a href="#contact" class="btn-primary" data-contact data-lang="ru">Записаться</a>
+    <a href="#contact" class="btn-primary" data-contact data-lang="en">Enquire</a>
   </div>
 </BaseLayout>

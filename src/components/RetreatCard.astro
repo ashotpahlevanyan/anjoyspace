@@ -1,15 +1,18 @@
 ---
+import type { Localized } from '../lib/i18n';
+import T from './T.astro';
+
 interface Props {
   href: string;
-  tag: string;
+  tag: Localized;
   tagStyle: 'upcoming' | 'intensive' | 'journey';
-  title: string;
-  location: string;
-  days: string;
-  participants: string;
-  price: string;
+  title: Localized;
+  location: Localized;
+  days: Localized;
+  participants: Localized;
+  price: Localized;
   priceFrom?: boolean;
-  summary: string;
+  summary: Localized;
 }
 
 const { href, tag, tagStyle, title, location, days, participants, price, priceFrom = true, summary } =
@@ -17,14 +20,18 @@ const { href, tag, tagStyle, title, location, days, participants, price, priceFr
 ---
 
 <a href={href} class="retreat-card reveal">
-  <span class={`retreat-tag tag-${tagStyle}`}>{tag}</span>
-  <h3>{title}</h3>
+  <span class={`retreat-tag tag-${tagStyle}`}><T value={tag} /></span>
+  <T value={title} tag="h3" />
   <div class="retreat-meta">
-    <span>📍 {location}</span>
-    <span>⏱ {days}</span>
-    <span>👥 {participants}</span>
+    <span>📍 <T value={location} /></span>
+    <span>⏱ <T value={days} /></span>
+    <span>👥 <T value={participants} /></span>
   </div>
-  <p>{summary}</p>
-  <div class="retreat-price">{priceFrom && <sup>from</sup>} {price}</div>
-  <span class="btn-small">View Retreat →</span>
+  <T value={summary} tag="p" />
+  <div class="retreat-price">
+    {priceFrom && (
+      <sup><span data-lang="ru">от</span><span data-lang="en">from</span></sup>
+    )} <T value={price} />
+  </div>
+  <span class="btn-small"><span data-lang="ru">Подробнее →</span><span data-lang="en">View Retreat →</span></span>
 </a>
