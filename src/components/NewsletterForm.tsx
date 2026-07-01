@@ -36,14 +36,23 @@ export default function NewsletterForm() {
       }}
     >
       <input type="hidden" name="form-name" value="newsletter" />
-      <input type="email" name="email" placeholder="Your email — for retreat announcements" required />
+      <input
+        type="email"
+        name="email"
+        placeholder="Ваш email — для анонсов ретритов"
+        data-ph-ru="Ваш email — для анонсов ретритов"
+        data-ph-en="Your email — for retreat announcements"
+        required
+      />
       {status === 'done' ? (
         <button type="button" style={{ background: 'var(--sage)', color: 'var(--parchment)' }}>
-          ✓ You're in
+          <span data-lang="ru">✓ Вы с нами</span>
+          <span data-lang="en">✓ You're in</span>
         </button>
       ) : status === 'error' ? (
         <button type="submit" style={{ background: 'var(--gold)', color: 'var(--night)' }}>
-          Error — try again
+          <span data-lang="ru">Ошибка — попробуйте ещё раз</span>
+          <span data-lang="en">Error — try again</span>
         </button>
       ) : (
         <>

@@ -44,7 +44,12 @@ export default function ContactModal() {
       setSubmitted(true);
       setTimeout(close, 3000);
     } catch {
-      alert('Something went wrong. Please email hello@anjoy.space directly.');
+      const ru = (document.documentElement.getAttribute('lang') || 'ru') === 'ru';
+      alert(
+        ru
+          ? 'Что-то пошло не так. Напишите нам напрямую: hello@anjoy.space.'
+          : 'Something went wrong. Please email hello@anjoy.space directly.',
+      );
     } finally {
       setSending(false);
     }
@@ -86,9 +91,15 @@ export default function ContactModal() {
                   Don't fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" />
                 </label>
               </p>
-              <input type="text" name="name" placeholder="Your name" required />
-              <input type="email" name="email" placeholder="Your email" required />
-              <textarea name="message" rows={4} placeholder="Which retreat interests you, or just say hello..." />
+              <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+              <input type="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
+              <textarea
+                name="message"
+                rows={4}
+                placeholder="Какой ретрит вам интересен, или просто поздоровайтесь..."
+                data-ph-ru="Какой ретрит вам интересен, или просто поздоровайтесь..."
+                data-ph-en="Which retreat interests you, or just say hello..."
+              />
               <button type="submit" data-lang="ru" disabled={sending}>
                 {sending ? 'Отправляем…' : 'Отправить'}
               </button>
