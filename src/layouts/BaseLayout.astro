@@ -97,6 +97,34 @@ const rootCss = buildRootCss();
     </script>
 
     <script is:inline>
+      // Language toggle for attributes/elements CSS can't switch (input
+      // placeholders, <option> text). Elements carry data-ph-ru/data-ph-en
+      // (placeholder) or data-t-ru/data-t-en (textContent); we apply the
+      // active language and re-apply when <html lang> changes or React
+      // islands hydrate. rAF-debounced.
+      (function () {
+        var html = document.documentElement;
+        var lang = function () { return html.getAttribute('lang') || 'ru'; };
+        var apply = function () {
+          var l = lang();
+          document.querySelectorAll('[data-ph-' + l + ']').forEach(function (el) {
+            el.setAttribute('placeholder', el.getAttribute('data-ph-' + l));
+          });
+          document.querySelectorAll('[data-t-' + l + ']').forEach(function (el) {
+            el.textContent = el.getAttribute('data-t-' + l);
+          });
+        };
+        var scheduled = false;
+        var schedule = function () {
+          if (scheduled) return;
+          scheduled = true;
+          requestAnimationFrame(function () { scheduled = false; apply(); });
+        };
+        apply();
+        new MutationObserver(schedule).observe(html, { attributes: true, attributeFilter: ['lang'] });
+        new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+      })();
+
       (function () {
         var els = document.querySelectorAll('.reveal');
         if (!els.length) return;
