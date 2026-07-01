@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import home from '../content/pages/home.json';
 import SectionHeader from '../components/SectionHeader.astro';
+import T from '../components/T.astro';
+import { pick } from '../lib/i18n';
 import RetreatCard from '../components/RetreatCard.astro';
 import PastRetreatCard from '../components/PastRetreatCard.astro';
 import GalleryItem from '../components/GalleryItem.astro';
@@ -36,20 +38,20 @@ const cta = { ru: 'Записаться', en: 'Reserve' };
 ---
 
 <BaseLayout
-  title={home.title}
-  description={home.description}
+  title={pick(home.title)}
+  description={pick(home.description)}
   pageClass="page-home"
   nav={{ navLinks, menuLinks, cta }}
   footer={{ variant: 'full' }}
 >
   <!-- LOCATIONS STRIP -->
   <div class="locations-strip">
-    <span class="label">{home.locations.label}</span>
+    <T value={home.locations.label} tag="span" class="label" />
     {
       home.locations.places.map((place, i) => (
         <>
           {i > 0 && <span class="loc-dot"></span>}
-          <span class="loc">{place}</span>
+          <T value={place} tag="span" class="loc" />
         </>
       ))
     }
@@ -60,17 +62,13 @@ const cta = { ru: 'Записаться', en: 'Reserve' };
     <div class="hero-bg"></div>
     <div class="hero-content">
       <div class="mandala-wrap"><Mandala variant="hero" /></div>
-      <p class="eyebrow">{home.hero.eyebrow}</p>
-      <h1 set:html={home.hero.titleHtml}></h1>
-      <p>{home.hero.text}</p>
+      <T value={home.hero.eyebrow} tag="p" class="eyebrow" />
+      <T value={home.hero.titleHtml} tag="h1" html />
+      <T value={home.hero.text} tag="p" />
       <div>
-        <a href="#retreats" class="btn-primary">{home.hero.primaryLabel}</a>
-        <a href="#about" class="btn-ghost">{home.hero.ghostLabel}</a>
+        <a href="#retreats" class="btn-primary"><T value={home.hero.primaryLabel} /></a>
+        <a href="#about" class="btn-ghost"><T value={home.hero.ghostLabel} /></a>
       </div>
-    </div>
-    <div class="scroll-hint">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
     </div>
   </section>
 
@@ -155,20 +153,20 @@ const cta = { ru: 'Записаться', en: 'Reserve' };
       <div class="about-visual-bg"></div>
       <div class="about-mandala"><Mandala variant="about" /></div>
       <div class="about-text-overlay">
-        <blockquote>"{home.about.overlayQuote}"</blockquote>
+        <blockquote>«<T value={home.about.overlayQuote} tag="span" />»</blockquote>
       </div>
     </div>
     <div class="about-content reveal">
-      <p class="eyebrow">{home.about.eyebrow}</p>
-      <h2 set:html={home.about.titleHtml}></h2>
+      <T value={home.about.eyebrow} tag="p" class="eyebrow" />
+      <T value={home.about.titleHtml} tag="h2" html />
       <div class="divider"></div>
-      {home.about.paragraphs.map((para) => <p>{para}</p>)}
+      {home.about.paragraphs.map((para) => <T value={para} tag="p" />)}
       <div class="about-stats">
         {
           home.about.stats.map((s) => (
             <div class="stat">
               <span class="number">{s.number}</span>
-              <span class="label">{s.label}</span>
+              <T value={s.label} tag="span" class="label" />
             </div>
           ))
         }
@@ -178,9 +176,9 @@ const cta = { ru: 'Записаться', en: 'Reserve' };
 
   <!-- CTA BAND -->
   <div class="cta-band" id="contact">
-    <p class="eyebrow">{home.cta.eyebrow}</p>
-    <h2>{home.cta.title}</h2>
-    <p>{home.cta.text}</p>
+    <T value={home.cta.eyebrow} tag="p" class="eyebrow" />
+    <T value={home.cta.title} tag="h2" />
+    <T value={home.cta.text} tag="p" />
     <div class="buttons">
       <a href="#contact" class="btn-primary" data-contact>
         <span data-lang="ru">Написать нам</span><span data-lang="en">hello@anjoy.space</span>

@@ -1,62 +1,128 @@
 {
-  "title": "Anjoy Space — Йога-ретриты",
-  "description": "Immersive yoga & meditation retreats in places where the earth remembers stillness. Small groups, deep work.",
+  "title": {
+    "ru": "Anjoy Space — Йога-ретриты",
+    "en": "Anjoy Space — Yoga Retreats"
+  },
+  "description": {
+    "ru": "Иммерсивные ретриты по йоге и медитации в местах, где земля хранит тишину. Небольшие группы, глубокая работа.",
+    "en": "Immersive yoga & meditation retreats in places where the earth remembers stillness. Small groups, deep work."
+  },
   "hero": {
-    "eyebrow": "Yoga · Meditation · Sacred Space",
-    "titleHtml": "Where you come<br>back to <em>yourself</em>",
-    "text": "Immersive retreats designed to dissolve what is not you — held in places where the earth remembers stillness.",
-    "primaryLabel": "View Retreats",
-    "ghostLabel": "Our Philosophy"
+    "eyebrow": {
+      "ru": "Йога · Медитация · Пространство тишины",
+      "en": "Yoga · Meditation · Sacred Space"
+    },
+    "titleHtml": {
+      "ru": "Место, где вы возвращаетесь<br>к <em>себе</em>",
+      "en": "Where you come<br>back to <em>yourself</em>"
+    },
+    "text": {
+      "ru": "Иммерсивные ретриты, которые помогают растворить всё наносное — в местах, где земля хранит тишину.",
+      "en": "Immersive retreats designed to dissolve what is not you — held in places where the earth remembers stillness."
+    },
+    "primaryLabel": {
+      "ru": "Смотреть ретриты",
+      "en": "View Retreats"
+    },
+    "ghostLabel": {
+      "ru": "Наша философия",
+      "en": "Our Philosophy"
+    }
   },
   "locations": {
-    "label": "We've gathered in",
+    "label": {
+      "ru": "Мы собирались в",
+      "en": "We've gathered in"
+    },
     "places": [
-      "Bali, Indonesia",
-      "Tuscany, Italy",
-      "Rishikesh, India",
-      "Tulum, Mexico",
-      "Yerevan, Armenia",
-      "Ibiza, Spain"
+      { "ru": "Бали, Индонезия", "en": "Bali, Indonesia" },
+      { "ru": "Тоскана, Италия", "en": "Tuscany, Italy" },
+      { "ru": "Ришикеш, Индия", "en": "Rishikesh, India" },
+      { "ru": "Тулум, Мексика", "en": "Tulum, Mexico" },
+      { "ru": "Ереван, Армения", "en": "Yerevan, Armenia" },
+      { "ru": "Ибица, Испания", "en": "Ibiza, Spain" }
     ]
   },
   "retreatsHeader": {
-    "eyebrow": "Upcoming",
-    "titleHtml": "Choose your <em>journey</em>",
-    "text": "Each retreat is crafted as a complete arc — arrival, dissolution, renewal. Small groups. Deep work."
+    "eyebrow": { "ru": "Ближайшие", "en": "Upcoming" },
+    "titleHtml": {
+      "ru": "Выберите своё <em>путешествие</em>",
+      "en": "Choose your <em>journey</em>"
+    },
+    "text": {
+      "ru": "Каждый ретрит выстроен как целостная дуга — приезд, растворение, обновление. Небольшие группы. Глубокая работа.",
+      "en": "Each retreat is crafted as a complete arc — arrival, dissolution, renewal. Small groups. Deep work."
+    }
   },
   "pastHeader": {
-    "eyebrow": "Archive",
-    "titleHtml": "Where we've <em>gathered</em>",
-    "text": "Each retreat lives on in the people who attended. A record of places and transformations."
+    "eyebrow": { "ru": "Архив", "en": "Archive" },
+    "titleHtml": {
+      "ru": "Где мы <em>собирались</em>",
+      "en": "Where we've <em>gathered</em>"
+    },
+    "text": {
+      "ru": "Каждый ретрит продолжает жить в тех, кто был рядом. Летопись мест и преображений.",
+      "en": "Each retreat lives on in the people who attended. A record of places and transformations."
+    }
   },
   "galleryHeader": {
-    "eyebrow": "Gallery",
-    "titleHtml": "Moments in <em>practice</em>",
-    "text": "Snapshots of light, stillness, and community from our retreats around the world."
+    "eyebrow": { "ru": "Галерея", "en": "Gallery" },
+    "titleHtml": {
+      "ru": "Мгновения <em>практики</em>",
+      "en": "Moments in <em>practice</em>"
+    },
+    "text": {
+      "ru": "Кадры света, тишины и общности с наших ретритов по всему миру.",
+      "en": "Snapshots of light, stillness, and community from our retreats around the world."
+    }
   },
   "testimonialsHeader": {
-    "eyebrow": "Stories",
-    "titleHtml": "What people <em>carry home</em>"
+    "eyebrow": { "ru": "Истории", "en": "Stories" },
+    "titleHtml": {
+      "ru": "Что люди <em>уносят с собой</em>",
+      "en": "What people <em>carry home</em>"
+    }
   },
   "about": {
-    "eyebrow": "Our philosophy",
-    "overlayQuote": "The retreat is not an escape from life. It is the remembering of what life is.",
-    "titleHtml": "Not a break from life.<br>A return to <em>it.</em>",
+    "eyebrow": { "ru": "Наша философия", "en": "Our philosophy" },
+    "overlayQuote": {
+      "ru": "Ретрит — не бегство от жизни. Это возвращение к тому, чем жизнь является.",
+      "en": "The retreat is not an escape from life. It is the remembering of what life is."
+    },
+    "titleHtml": {
+      "ru": "Не пауза в жизни.<br>А возвращение к <em>ней.</em>",
+      "en": "Not a break from life.<br>A return to <em>it.</em>"
+    },
     "paragraphs": [
-      "Anjoy Space was born from a simple conviction: that transformation doesn't happen in spite of slowing down — it happens because of it. We curate retreats that create the conditions for genuine inner work, not spiritual tourism.",
-      "Every location is chosen because the land itself carries something. Every schedule leaves space for the unplanned encounter with yourself. Every teacher in our community has done the work they're inviting you to do.",
-      "We hold small groups deliberately. Eight to sixteen people, depending on the retreat. Large enough for the richness of community; intimate enough that nothing gets lost."
+      {
+        "ru": "Anjoy Space родилось из простого убеждения: преображение случается не вопреки замедлению, а благодаря ему. Мы создаём ретриты, которые дают условия для настоящей внутренней работы, а не для духовного туризма.",
+        "en": "Anjoy Space was born from a simple conviction: that transformation doesn't happen in spite of slowing down — it happens because of it. We curate retreats that create the conditions for genuine inner work, not spiritual tourism."
+      },
+      {
+        "ru": "Каждое место выбрано потому, что сама земля хранит в себе нечто особенное. В каждом расписании есть простор для незапланированной встречи с собой. Каждый учитель нашего сообщества сам прошёл тот путь, на который приглашает вас.",
+        "en": "Every location is chosen because the land itself carries something. Every schedule leaves space for the unplanned encounter with yourself. Every teacher in our community has done the work they're inviting you to do."
+      },
+      {
+        "ru": "Мы намеренно работаем с небольшими группами — от восьми до шестнадцати человек, в зависимости от ретрита. Достаточно, чтобы ощутить богатство общности; достаточно камерно, чтобы никто не потерялся.",
+        "en": "We hold small groups deliberately. Eight to sixteen people, depending on the retreat. Large enough for the richness of community; intimate enough that nothing gets lost."
+      }
     ],
     "stats": [
-      { "number": "24+", "label": "Retreats completed" },
-      { "number": "340+", "label": "Lives touched" },
-      { "number": "12", "label": "Countries visited" },
-      { "number": "94%", "label": "Return participants" }
+      { "number": "24+", "label": { "ru": "Проведённых ретритов", "en": "Retreats completed" } },
+      { "number": "340+", "label": { "ru": "Изменённых жизней", "en": "Lives touched" } },
+      { "number": "12", "label": { "ru": "Посещённых стран", "en": "Countries visited" } },
+      { "number": "94%", "label": { "ru": "Возвращаются снова", "en": "Return participants" } }
     ]
   },
   "cta": {
-    "eyebrow": "Begin",
-    "title": "Ready to find your stillness?",
-    "text": "Spots fill quickly. If a retreat calls to you, reach out — we'll answer within 24 hours and help you find the right fit."
+    "eyebrow": { "ru": "Начните", "en": "Begin" },
+    "title": {
+      "ru": "Готовы найти свою тишину?",
+      "en": "Ready to find your stillness?"
+    },
+    "text": {
+      "ru": "Места заканчиваются быстро. Если ретрит откликается вам — напишите нам, и мы ответим в течение 24 часов и поможем выбрать подходящий.",
+      "en": "Spots fill quickly. If a retreat calls to you, reach out — we'll answer within 24 hours and help you find the right fit."
+    }
   }
 }

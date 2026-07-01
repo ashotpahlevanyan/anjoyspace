@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
 
-/** Encode form data the way Netlify Forms expects. */
-function encode(form: HTMLFormElement): string {
-  return new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
-}
-
 /**
  * In-browser contact modal. Opens when any element with [data-contact] is
- * clicked (nav CTA, hero buttons, CTA band), and posts to Netlify Forms.
+ * clicked (nav CTA, hero buttons, CTA band), and posts to the /api/lead
+ * serverless function.
  */
 export default function ContactModal() {
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     const triggers = Array.from(document.querySelectorAll('[data-contact]'));
@@ -35,16 +32,21 @@ export default function ContactModal() {
   }
 
   const submit = async (form: HTMLFormElement) => {
+    setSending(true);
+    const data = Object.fromEntries(new FormData(form) as unknown as Iterable<[string, string]>);
     try {
-      await fetch('/', {
+      const res = await fetch('/api/lead', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode(form),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
+      if (!res.ok) throw new Error(String(res.status));
       setSubmitted(true);
       setTimeout(close, 3000);
     } catch {
       alert('Something went wrong. Please email hello@anjoy.space directly.');
+    } finally {
+      setSending(false);
     }
   };
 
@@ -73,27 +75,25 @@ export default function ContactModal() {
               className="cform"
               name="contact"
               method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
               onSubmit={(e) => {
                 e.preventDefault();
                 submit(e.currentTarget);
               }}
             >
               <input type="hidden" name="form-name" value="contact" />
-              <p hidden>
+              <p hidden aria-hidden="true">
                 <label>
-                  Don't fill this out: <input name="bot-field" />
+                  Don't fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" />
                 </label>
               </p>
               <input type="text" name="name" placeholder="Your name" required />
               <input type="email" name="email" placeholder="Your email" required />
               <textarea name="message" rows={4} placeholder="Which retreat interests you, or just say hello..." />
-              <button type="submit" data-lang="ru">
-                Отправить
+              <button type="submit" data-lang="ru" disabled={sending}>
+                {sending ? 'Отправляем…' : 'Отправить'}
               </button>
-              <button type="submit" data-lang="en">
-                Send Message
+              <button type="submit" data-lang="en" disabled={sending}>
+                {sending ? 'Sending…' : 'Send Message'}
               </button>
             </form>
           </>

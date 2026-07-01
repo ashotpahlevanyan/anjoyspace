@@ -84,3 +84,24 @@ section { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* ── BACK TO TOP ── */
+.scroll-top {
+  position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 50;
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: color-mix(in srgb, var(--deep) 82%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  color: var(--gold); cursor: pointer;
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s, color 0.2s, border-color 0.2s;
+}
+.scroll-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.scroll-top:hover { color: var(--gold-light); border-color: var(--gold); }
+.scroll-top:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (max-width: 600px) {
+  .scroll-top { right: 1rem; bottom: 1rem; width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-top { transition: opacity 0.3s, visibility 0.3s; transform: none; }
+}

@@ -6,7 +6,6 @@ import type { Localized } from '../lib/i18n';
 import SiteNav, { type NavLink } from '../components/SiteNav.tsx';
 import SiteFooter from '../components/SiteFooter.astro';
 import ContactModal from '../components/ContactModal.tsx';
-import NetlifyForms from '../components/NetlifyForms.astro';
 
 interface Props {
   title: string;
@@ -76,7 +75,26 @@ const rootCss = buildRootCss();
     <SiteFooter variant={footer.variant} copyright={footer.copyright} links={footer.links} />
 
     {contact && <ContactModal client:idle />}
-    <NetlifyForms />
+
+    <button id="scrollTopBtn" class="scroll-top" type="button" aria-label="Back to top">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7"></path>
+      </svg>
+    </button>
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById('scrollTopBtn');
+        if (!btn) return;
+        var toggle = function () {
+          btn.classList.toggle('visible', window.scrollY > 500);
+        };
+        btn.addEventListener('click', function () {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        window.addEventListener('scroll', toggle, { passive: true });
+        toggle();
+      })();
+    </script>
 
     <script is:inline>
       (function () {
