@@ -1,19 +1,22 @@
 ---
+import type { Localized } from '../lib/i18n';
+import T from './T.astro';
+
 interface Props {
-  period: string;
-  title: string;
-  location: string;
-  summary: string;
-  participants: string;
+  period: Localized;
+  title: Localized;
+  location: Localized;
+  summary: Localized;
+  participants: Localized;
 }
 
 const { period, title, location, summary, participants } = Astro.props;
 ---
 
 <div class="past-card reveal">
-  <p class="year">{period}</p>
-  <h3>{title}</h3>
-  <p class="location">{location}</p>
-  <p>{summary}</p>
-  <p class="participants">{participants}</p>
+  <T value={period} tag="p" class="year" />
+  <T value={title} tag="h3" />
+  <T value={location} tag="p" class="location" />
+  <T value={summary} tag="p" />
+  <T value={participants} tag="p" class="participants" />
 </div>

@@ -1,9 +1,12 @@
 ---
+import type { Localized } from '../lib/i18n';
+import T from './T.astro';
+
 interface Props {
-  quote: string;
+  quote: Localized;
   author: string;
   initial: string;
-  retreatRef: string;
+  retreatRef: Localized;
   rating?: number;
 }
 
@@ -14,12 +17,12 @@ const stars = Array.from({ length: rating });
 <div class="testimonial-card reveal">
   <div class="stars">{stars.map(() => <span>★</span>)}</div>
   <span class="quote-mark">"</span>
-  <blockquote>{quote}</blockquote>
+  <T value={quote} tag="blockquote" />
   <div class="testimonial-author">
     <div class="author-avatar">{initial}</div>
     <div class="author-info">
       <p class="name">{author}</p>
-      <p class="retreat-ref">{retreatRef}</p>
+      <T value={retreatRef} tag="p" class="retreat-ref" />
     </div>
   </div>
 </div>
