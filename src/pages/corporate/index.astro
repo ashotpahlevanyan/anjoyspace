@@ -151,9 +151,9 @@ const process = [
     <span class="eyebrow" style="color:rgba(245,240,232,0.75)">Get a proposal</span>
     <h2>Plan your team's retreat</h2>
     <p>Tell us a bit about your team and we'll send a tailored proposal — no obligation, no generic PDF.</p>
-    <form class="contact-form" name="corporate" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/corporate/?submitted=true">
+    <form class="contact-form" id="corporateForm" name="corporate" method="POST" action="/api/lead">
       <input type="hidden" name="form-name" value="corporate" />
-      <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
+      <p hidden><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
       <input type="text" name="company" placeholder="Company name" required />
       <input type="text" name="name" placeholder="Your name" required />
       <input type="email" name="email" placeholder="Work email" required />
@@ -166,6 +166,39 @@ const process = [
       </select>
       <textarea name="message" rows="3" placeholder="What are you hoping this offsite achieves?"></textarea>
       <button type="submit">Request Proposal</button>
+      <p class="form-status" data-status hidden></p>
     </form>
   </div>
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('corporateForm');
+      if (!form) return;
+      var status = form.querySelector('[data-status]');
+      var button = form.querySelector('button[type="submit"]');
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var data = Object.fromEntries(new FormData(form).entries());
+        button.disabled = true;
+        status.hidden = true;
+        try {
+          var res = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          form.reset();
+          status.textContent = "Thank you — we'll send a tailored proposal within 24 hours.";
+          status.style.color = 'var(--sage)';
+        } catch (err) {
+          status.textContent = 'Something went wrong. Please email hello@anjoy.space directly.';
+          status.style.color = 'var(--gold)';
+        } finally {
+          button.disabled = false;
+          status.hidden = false;
+        }
+      });
+    })();
+  </script>
 </BaseLayout>

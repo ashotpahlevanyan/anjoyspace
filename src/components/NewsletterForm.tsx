@@ -1,28 +1,27 @@
 import { useState } from 'react';
 
-function encode(form: HTMLFormElement): string {
-  return new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
-}
+type Status = 'idle' | 'sending' | 'done' | 'error';
 
-type Status = 'idle' | 'done' | 'error';
-
-/** Newsletter signup that posts to Netlify Forms (form name="newsletter"). */
+/** Newsletter signup — posts to the /api/lead serverless function. */
 export default function NewsletterForm() {
   const [status, setStatus] = useState<Status>('idle');
 
   const submit = async (form: HTMLFormElement) => {
+    setStatus('sending');
+    const data = Object.fromEntries(new FormData(form) as unknown as Iterable<[string, string]>);
     try {
-      await fetch('/', {
+      const res = await fetch('/api/lead', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode(form),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
+      if (!res.ok) throw new Error(String(res.status));
       setStatus('done');
       form.reset();
       setTimeout(() => setStatus('idle'), 3000);
     } catch {
       setStatus('error');
-      setTimeout(() => setStatus('idle'), 2000);
+      setTimeout(() => setStatus('idle'), 4000);
     }
   };
 
@@ -31,7 +30,6 @@ export default function NewsletterForm() {
       className="newsletter-form"
       name="newsletter"
       method="POST"
-      data-netlify="true"
       onSubmit={(e) => {
         e.preventDefault();
         submit(e.currentTarget);
@@ -40,18 +38,20 @@ export default function NewsletterForm() {
       <input type="hidden" name="form-name" value="newsletter" />
       <input type="email" name="email" placeholder="Your email — for retreat announcements" required />
       {status === 'done' ? (
-        <button type="submit" style={{ background: 'var(--sage)', color: 'var(--parchment)' }}>
+        <button type="button" style={{ background: 'var(--sage)', color: 'var(--parchment)' }}>
           ✓ You're in
         </button>
       ) : status === 'error' ? (
-        <button type="submit">Error — try again</button>
+        <button type="submit" style={{ background: 'var(--gold)', color: 'var(--night)' }}>
+          Error — try again
+        </button>
       ) : (
         <>
-          <button type="submit" data-lang="ru">
-            Оставаться рядом
+          <button type="submit" data-lang="ru" disabled={status === 'sending'}>
+            {status === 'sending' ? 'Отправляем…' : 'Оставаться рядом'}
           </button>
-          <button type="submit" data-lang="en">
-            Stay close
+          <button type="submit" data-lang="en" disabled={status === 'sending'}>
+            {status === 'sending' ? 'Sending…' : 'Stay close'}
           </button>
         </>
       )}

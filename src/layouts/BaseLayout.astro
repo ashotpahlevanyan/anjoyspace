@@ -6,7 +6,6 @@ import type { Localized } from '../lib/i18n';
 import SiteNav, { type NavLink } from '../components/SiteNav.tsx';
 import SiteFooter from '../components/SiteFooter.astro';
 import ContactModal from '../components/ContactModal.tsx';
-import NetlifyForms from '../components/NetlifyForms.astro';
 
 interface Props {
   title: string;
@@ -76,7 +75,6 @@ const rootCss = buildRootCss();
     <SiteFooter variant={footer.variant} copyright={footer.copyright} links={footer.links} />
 
     {contact && <ContactModal client:idle />}
-    <NetlifyForms />
 
     <script is:inline>
       (function () {
