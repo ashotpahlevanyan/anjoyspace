@@ -71,7 +71,7 @@ offerings:
       ru: Year Compass
       en: Year Compass
     body:
-      ru: Тёплые встречи в конце года: оглянуться на прожитое и осознанно наметить новый — в небольшом кругу.
+      ru: 'Тёплые встречи в конце года: оглянуться на прожитое и осознанно наметить новый — в небольшом кругу.'
       en: Warm end-of-year gatherings — look back on the year and set the next one with intention, in a small circle.
     linkLabel:
       ru: Подробнее о встречах →
