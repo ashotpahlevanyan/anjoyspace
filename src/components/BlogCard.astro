@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import T from './T.astro';
+import { pick } from '../lib/i18n';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const d = post.data;
+
+const dateObj = new Date(d.date);
+const dateLabel = {
+  ru: new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).format(dateObj),
+  en: new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(dateObj),
+};
+const words = d.sections
+  .flatMap((s) => s.body)
+  .map((b) => pick(b, 'en'))
+  .join(' ')
+  .split(/\s+/)
+  .filter(Boolean).length;
+const minutes = d.readingTime ?? Math.max(1, Math.round(words / 200));
+const readLabel = { ru: `${minutes} мин`, en: `${minutes} min` };
+const accentVars = d.accent === 'violet' ? '--accent: var(--violet);' : '--accent: var(--gold);';
+---
+
+<a href={`/blog/${post.id}/`} class="blog-card reveal" style={accentVars}>
+  <div class="blog-card-top">
+    <span class="blog-card-symbol">{d.heroSymbol}</span>
+    <T value={d.category} tag="span" class="blog-card-category" />
+  </div>
+  <T value={d.title} tag="h3" />
+  <T value={d.excerpt} tag="p" class="blog-card-excerpt" />
+  <div class="blog-card-meta">
+    <T value={dateLabel} tag="span" />
+    <span class="dot">·</span>
+    <T value={readLabel} tag="span" />
+  </div>
+</a>

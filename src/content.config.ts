@@ -155,4 +155,34 @@ const teachers = defineCollection({
   }),
 });
 
-export const collections = { retreats, pastRetreats, gallery, testimonials, teachers };
+/**
+ * Blog. Each entry generates /blog/<slug>/ and appears on the /blog/ index.
+ * Bilingual throughout (rendered via <T>), consistent with the rest of the
+ * site's language-toggle model. The article body is expressed as `sections`
+ * (heading + paragraphs), each a { ru, en } pair, so both languages switch.
+ */
+const blog = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  schema: z.object({
+    order: z.number().default(0),
+    draft: z.boolean().default(false),
+    date: z.string(), // ISO date, e.g. "2026-07-02"
+    title: loc,
+    excerpt: loc, // card + meta description
+    category: loc, // e.g. { ru: "Практика", en: "Practice" }
+    tags: z.array(loc).default([]),
+    author: loc, // display name
+    authorSlug: z.string().optional(), // links to /teachers/<slug>/ when set
+    accent: z.enum(['gold', 'violet']).default('gold'),
+    heroSymbol: z.string().default('❋'),
+    coverImage: z.string().optional(),
+    readingTime: z.number().optional(), // minutes; computed when omitted
+    // Long-form body as bilingual sections (heading optional; body = paragraphs,
+    // may contain inline <em>/<a>/<strong>).
+    sections: z
+      .array(z.object({ heading: loc.optional(), body: z.array(loc).default([]) }))
+      .default([]),
+  }),
+});
+
+export const collections = { retreats, pastRetreats, gallery, testimonials, teachers, blog };

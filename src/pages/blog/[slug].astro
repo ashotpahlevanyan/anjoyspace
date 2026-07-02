@@ -1,0 +1,161 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import NewsletterForm from '../../components/NewsletterForm.tsx';
+import T from '../../components/T.astro';
+import { pick } from '../../lib/i18n';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const sorted = [...posts].sort((a, b) => b.data.date.localeCompare(a.data.date));
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post, others: sorted.filter((p) => p.id !== post.id).slice(0, 3) },
+  }));
+}
+
+const { post, others } = Astro.props;
+const d = post.data;
+
+const dateObj = new Date(d.date);
+const dateLabel = {
+  ru: new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).format(dateObj),
+  en: new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(dateObj),
+};
+const words = d.sections
+  .flatMap((s) => s.body)
+  .map((b) => pick(b, 'en'))
+  .join(' ')
+  .split(/\s+/)
+  .filter(Boolean).length;
+const minutes = d.readingTime ?? Math.max(1, Math.round(words / 200));
+const readLabel = { ru: `${minutes} мин чтения`, en: `${minutes} min read` };
+
+const canonical = new URL(`/blog/${post.id}/`, Astro.site ?? 'https://anjoy.space').href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: pick(d.title, 'en'),
+  description: pick(d.excerpt, 'en'),
+  datePublished: d.date,
+  inLanguage: ['ru', 'en'],
+  author: { '@type': 'Person', name: pick(d.author, 'en') },
+  publisher: { '@type': 'Organization', name: 'Anjoy Space' },
+  mainEntityOfPage: canonical,
+  ...(d.coverImage ? { image: new URL(d.coverImage, Astro.site ?? 'https://anjoy.space').href } : {}),
+};
+
+const navLinks: NavLink[] = [
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/retreat-center/', label: { ru: 'Ретрит-центр', en: 'Retreat Center' } },
+  { href: '/corporate/', label: { ru: 'Для команд', en: 'For Teams' } },
+];
+const breadcrumb = { ru: '/ журнал', en: '/ journal' };
+const footer = {
+  variant: 'simple' as const,
+  copyright: { ru: '© 2026, Anjoy Space', en: '© 2026, Anjoy Space' },
+  links: [
+    { label: { ru: 'Все статьи', en: 'All articles' }, href: '/blog/' },
+    { label: { ru: 'На главную', en: 'Home' }, href: '/' },
+  ],
+};
+const accentVars = d.accent === 'violet' ? '--accent: var(--violet);' : '--accent: var(--gold);';
+---
+
+<BaseLayout
+  title={`${pick(d.title)} — Anjoy Space`}
+  description={pick(d.excerpt)}
+  pageClass="page-post"
+  accentVars={accentVars}
+  ogType="article"
+  ogImage={d.coverImage}
+  nav={{ breadcrumb, navLinks, menuLinks }}
+  footer={footer}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} slot="head" />
+
+  <!-- HERO -->
+  <article class="post">
+    <header class="post-hero">
+      <div class="post-hero-symbol">{d.heroSymbol}</div>
+      <T value={d.category} tag="span" class="post-category" />
+      <T value={d.title} tag="h1" />
+      <div class="post-meta">
+        {
+          d.authorSlug ? (
+            <a href={`/teachers/${d.authorSlug}/`} class="post-author"><T value={d.author} /></a>
+          ) : (
+            <T value={d.author} tag="span" class="post-author" />
+          )
+        }
+        <span class="dot">·</span>
+        <T value={dateLabel} tag="span" />
+        <span class="dot">·</span>
+        <T value={readLabel} tag="span" />
+      </div>
+    </header>
+
+    <div class="post-body">
+      {
+        d.sections.map((s) => (
+          <>
+            {s.heading && <T value={s.heading} tag="h2" html />}
+            {s.body.map((p) => (
+              <T value={p} tag="p" html />
+            ))}
+          </>
+        ))
+      }
+    </div>
+
+    {
+      d.tags.length > 0 && (
+        <div class="post-tags">
+          {d.tags.map((t) => (
+            <span class="post-tag"><T value={t} /></span>
+          ))}
+        </div>
+      )
+    }
+  </article>
+
+  <!-- NEWSLETTER CTA -->
+  <div class="cta-band post-cta">
+    <span class="eyebrow" data-lang="ru">Оставайтесь рядом</span><span class="eyebrow" data-lang="en">Stay close</span>
+    <T value={{ ru: 'Тексты о практике, тишине и ретритах', en: 'Notes on practice, stillness, and retreats' }} tag="h2" />
+    <T
+      value={{
+        ru: 'Раз в несколько недель — новые статьи и анонсы ретритов. Без спама.',
+        en: 'Every few weeks — new writing and retreat announcements. No spam.',
+      }}
+      tag="p"
+    />
+    <NewsletterForm client:visible />
+  </div>
+
+  <!-- MORE POSTS -->
+  {
+    others.length > 0 && (
+      <section class="more-posts">
+        <SectionHeader eyebrow={{ ru: 'Ещё из журнала', en: 'More from the journal' }} title={{ ru: 'Читать дальше', en: 'Keep reading' }} />
+        <div class="blog-grid">
+          {others.map((p) => (
+            <BlogCard post={p} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
