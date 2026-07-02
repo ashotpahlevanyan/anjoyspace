@@ -6,6 +6,7 @@ import SectionHeader from '../components/SectionHeader.astro';
 import T from '../components/T.astro';
 import { pick } from '../lib/i18n';
 import RetreatCard from '../components/RetreatCard.astro';
+import SocialShare from '../components/SocialShare.astro';
 import PastRetreatCard from '../components/PastRetreatCard.astro';
 import GalleryItem from '../components/GalleryItem.astro';
 import Testimonial from '../components/Testimonial.astro';
@@ -192,5 +193,9 @@ const cta = { ru: 'Записаться', en: 'Reserve' };
         <span data-lang="en">☽ Or get our free Yoga Nidra guide →</span>
       </a>
     </p>
+    <div class="page-share">
+      <T value={{ ru: 'Поделиться Anjoy Space:', en: 'Share Anjoy Space:' }} tag="p" class="page-share-note" />
+      <SocialShare />
+    </div>
   </div>
 </BaseLayout>

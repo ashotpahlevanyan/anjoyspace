@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import T from '../../components/T.astro';
+import SocialShare from '../../components/SocialShare.astro';
 import type { NavLink } from '../../components/SiteNav.tsx';
 
 const navLinks: NavLink[] = [
@@ -118,6 +119,11 @@ const steps = [
         tag="p"
       />
       <a href="/#retreats" class="btn-primary"><T value={{ ru: 'Смотреть ретриты', en: 'View Retreats' }} /></a>
+    </div>
+
+    <div class="page-share">
+      <T value={{ ru: 'Знаете того, кому нужен отдых? Поделитесь:', en: 'Know someone who needs rest? Share it:' }} tag="p" class="page-share-note" />
+      <SocialShare />
     </div>
   </article>
 </BaseLayout>
