@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import T from '../../components/T.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+const navLinks: NavLink[] = [
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/lila/', label: { ru: 'Лила', en: 'Lila' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/lila/', label: { ru: 'Игра Лила', en: 'The Lila Game' } },
+  { href: '/year-compass/', label: { ru: 'Year Compass', en: 'Year Compass' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+];
+const breadcrumb = { ru: '/ лила', en: '/ lila' };
+const footer = {
+  variant: 'simple' as const,
+  copyright: { ru: '© 2026, Anjoy Space · Игра Лила', en: '© 2026, Anjoy Space · The Lila Game' },
+  links: [
+    { label: { ru: 'Познакомиться с Ани', en: 'Meet Ani' }, href: '/teachers/ani/' },
+    { label: { ru: 'На главную', en: 'Home' }, href: '/' },
+  ],
+};
+
+const steps = [
+  {
+    num: '01',
+    title: { ru: 'Вопрос-намерение', en: 'An intention' },
+    body: {
+      ru: 'Игра начинается с вашего честного вопроса к себе — о том, что сейчас по-настоящему важно. Он задаёт направление всей игре.',
+      en: 'The game begins with an honest question to yourself — about what truly matters now. It sets the direction for the whole game.',
+    },
+  },
+  {
+    num: '02',
+    title: { ru: 'Ходы по полю', en: 'Moving across the board' },
+    body: {
+      ru: 'Вы бросаете кубик и двигаетесь по 72 клеткам через восемь уровней. «Стрелы» поднимают выше, «змеи» возвращают назад; Ани помогает увидеть, как каждая клетка откликается в вашей жизни.',
+      en: 'You roll the die and move across 72 squares through eight levels. "Arrows" lift you higher, "snakes" bring you back; Ani helps you see how each square echoes in your life.',
+    },
+  },
+  {
+    num: '03',
+    title: { ru: 'Осознавание', en: 'Insight' },
+    body: {
+      ru: 'Постепенно проявляется рисунок — ваши привычные ловушки и то, что выводит из них. Это и есть сердце игры.',
+      en: 'Gradually a pattern emerges — your habitual traps and what moves you out of them. This is the heart of the game.',
+    },
+  },
+  {
+    num: '04',
+    title: { ru: 'Выход', en: 'The way out' },
+    body: {
+      ru: 'Игра завершается, когда по вашему вопросу приходит ясность и внутреннее освобождение. Вы уносите не совет, а собственное понимание.',
+      en: 'The game ends when clarity and a sense of release arrive around your question. You leave not with advice, but with your own understanding.',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="Игра Лила с Ани Овакимян — Anjoy Space"
+  description="Лила — древняя индийская трансформационная игра самопознания. Индивидуально или в малой группе, ведёт Ани Овакимян. Lila — a transformational game to move out of self-made traps."
+  pageClass="page-dir page-lila"
+  accentVars="--accent: var(--violet);"
+  nav={{ breadcrumb, navLinks, menuLinks }}
+  footer={footer}
+  contact={false}
+>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <T value={{ ru: 'Трансформационная игра', en: 'A transformational game' }} tag="span" class="eyebrow" />
+      <T value={{ ru: 'Лила — путь из <em>ловушек, которые мы строим сами</em>', en: 'Lila — a way out of <em>the traps we build ourselves</em>' }} tag="h1" html />
+      <T
+        value={{
+          ru: 'Древняя индийская игра самопознания. Через ходы на поле вы видите свои повторяющиеся сценарии — и находите из них выход. Игру ведёт Ани Овакимян в бережном пространстве, близком к женскому кругу.',
+          en: "An ancient Indian game of self-knowledge. Through moves on the board, you see your repeating patterns — and find the way out of them. Facilitated by Ani Ovakimian in a gentle space, close to a women's circle.",
+        }}
+        tag="p"
+        class="lede"
+      />
+      <div>
+        <a href="#book" class="btn-primary"><T value={{ ru: 'Записаться на игру', en: 'Book a session' }} /></a>
+        <a href="#how" class="btn-ghost"><T value={{ ru: 'Как это работает', en: 'How it works' }} /></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT IS LILA -->
+  <section>
+    <SectionHeader eyebrow={{ ru: 'Об игре', en: 'The game' }} title={{ ru: 'Что такое <em>Лила</em>', en: 'What <em>Lila</em> is' }} />
+    <div class="dir-prose reveal">
+      <T
+        value={{
+          ru: 'Лила (от санскр. «игра») — это не развлечение и не гадание, а древний инструмент самопознания. Игровое поле из 72 клеток, выстроенных в восемь уровней — от плотной материи до космического сознания, — отражает путь человека. Кубик, «стрелы» и «змеи» на поле и ваши ходы становятся точным зеркалом того, что происходит в жизни прямо сейчас.',
+          en: 'Lila (Sanskrit for "play") is not entertainment or fortune-telling, but an ancient tool for self-knowledge. A board of 72 squares arranged in eight levels — from dense matter to cosmic consciousness — reflects the human path. The die, the board\'s "arrows" and "snakes," and your moves become a precise mirror of what\'s happening in your life right now.',
+        }}
+        tag="p"
+      />
+      <T
+        value={{
+          ru: 'Играя, вы снова и снова узнаёте свои повторяющиеся сценарии — те самые ловушки, которые мы неосознанно строим сами, — и находите из них выход. Здесь нет желания победить и страха проиграть: нужны лишь искренность и открытость себе.',
+          en: 'As you play, you recognise your recurring patterns again and again — the very traps we unconsciously build for ourselves — and find the way out. Here there is no desire to win and no fear to lose: all it asks is sincerity and openness to yourself.',
+        }}
+        tag="p"
+      />
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="dir-alt">
+    <SectionHeader eyebrow={{ ru: 'Как это проходит', en: 'How it works' }} title={{ ru: 'Ход за ходом', en: 'Move by move' }} />
+    <div class="dir-steps">
+      {
+        steps.map((s) => (
+          <div class="dir-step reveal">
+            <span class="dir-step-n">{s.num}</span>
+            <div>
+              <T value={s.title} tag="h4" />
+              <T value={s.body} tag="p" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- FORMATS -->
+  <section>
+    <SectionHeader
+      eyebrow={{ ru: 'Форматы', en: 'Formats' }}
+      title={{ ru: 'Индивидуально или в <em>малой группе</em>', en: 'One-on-one or in a <em>small group</em>' }}
+      text={{ ru: 'Стоимость — по запросу; зависит от формата и длительности.', en: 'Pricing on request; it depends on the format and length.' }}
+    />
+    <div class="dir-grid">
+      <div class="dir-card reveal">
+        <span class="dir-card-icon">◑</span>
+        <T value={{ ru: 'Индивидуальная игра', en: 'One-on-one' }} tag="h3" />
+        <T value={{ ru: 'Личная игра один на один с Ани — глубокое погружение в ваш вопрос, в вашем темпе. Обычно 3–5 часов.', en: 'A private game, one-on-one with Ani — a deep dive into your question, at your pace. Usually 3–5 hours.' }} tag="p" />
+      </div>
+      <div class="dir-card reveal">
+        <span class="dir-card-icon">⬡</span>
+        <T value={{ ru: 'Малая группа', en: 'Small group' }} tag="h3" />
+        <T value={{ ru: 'Игра для небольшой группы, в духе женского круга — вы видите себя через истории других и чувствуете поддержку. По договорённости.', en: "A game for a small group, in the spirit of a women's circle — you see yourself through others' stories and feel held. By arrangement." }} tag="p" />
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="dir-alt">
+    <SectionHeader eyebrow={{ ru: 'Кому подходит', en: "Who it's for" }} title={{ ru: 'Если вы <em>ходите по кругу</em>', en: 'If you keep <em>circling the same place</em>' }} />
+    <T
+      value={{
+        ru: 'Лила — для тех, кто чувствует, что застрял в повторяющемся сценарии — в отношениях, работе, отношении к себе — и готов честно на это посмотреть. Опыт не нужен: нужна только готовность быть искренним с собой.',
+        en: "Lila is for those who sense they're stuck in a repeating pattern — in relationships, work, or how they treat themselves — and are ready to look at it honestly. No experience needed: only a willingness to be truthful with yourself.",
+      }}
+      tag="p"
+      class="dir-lead reveal"
+    />
+  </section>
+
+  <!-- FACILITATOR -->
+  <section>
+    <SectionHeader eyebrow={{ ru: 'Ведущая', en: 'Your facilitator' }} title={{ ru: 'Игру ведёт <em>Ани Овакимян</em>', en: 'Facilitated by <em>Ani Ovakimian</em>' }} />
+    <div class="dir-facilitator reveal">
+      <T
+        value={{
+          ru: 'Ани — проводник в соматические и глубинные практики: йога-нидра, медитация, женские круги и Лила. Она держит бережное, безопасное пространство, где можно быть настоящей.',
+          en: "Ani is a guide to somatic and deep practices — yoga nidra, meditation, women's circles, and Lila. She holds a gentle, safe space where you can be real.",
+        }}
+        tag="p"
+      />
+      <a href="/teachers/ani/" class="dir-link"><T value={{ ru: 'Познакомиться с Ани →', en: 'Meet Ani →' }} /></a>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <div class="cta-band" id="book">
+    <span class="eyebrow" style="color:rgba(245,240,232,0.75)" data-lang="ru">Записаться</span><span class="eyebrow" style="color:rgba(245,240,232,0.75)" data-lang="en">Book</span>
+    <T value={{ ru: 'Запишитесь на игру', en: 'Book your game' }} tag="h2" />
+    <T
+      value={{
+        ru: 'Расскажите немного о себе и что вас привело — Ани свяжется с вами, чтобы подобрать формат и время. Стоимость — по запросу.',
+        en: 'Tell us a little about yourself and what brings you — Ani will reach out to find the right format and time. Pricing on request.',
+      }}
+      tag="p"
+    />
+    <form class="contact-form" id="lilaForm" name="lila" method="POST" action="/api/lead">
+      <input type="hidden" name="form-name" value="lila" />
+      <input type="hidden" name="source" value="lila-page" />
+      <p hidden><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+      <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+      <input type="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
+      <select name="format" required>
+        <option value="" disabled selected data-t-ru="Формат" data-t-en="Format">Формат</option>
+        <option data-t-ru="Индивидуально" data-t-en="One-on-one">Индивидуально</option>
+        <option data-t-ru="Малая группа" data-t-en="Small group">Малая группа</option>
+        <option data-t-ru="Пока не знаю" data-t-en="Not sure yet">Пока не знаю</option>
+      </select>
+      <textarea name="message" rows="3" placeholder="Что вас привело? (по желанию)" data-ph-ru="Что вас привело? (по желанию)" data-ph-en="What brings you? (optional)"></textarea>
+      <button type="submit"><span data-lang="ru">Отправить заявку</span><span data-lang="en">Send request</span></button>
+      <p class="form-status" data-status hidden></p>
+    </form>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('lilaForm');
+      if (!form) return;
+      var status = form.querySelector('[data-status]');
+      var button = form.querySelector('button[type="submit"]');
+      var t = function (ru, en) {
+        return (document.documentElement.getAttribute('lang') || 'ru') === 'ru' ? ru : en;
+      };
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var data = Object.fromEntries(new FormData(form).entries());
+        button.disabled = true;
+        status.hidden = true;
+        try {
+          var res = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          form.reset();
+          status.textContent = t('Спасибо — Ани свяжется с вами в течение 24 часов.', 'Thank you — Ani will be in touch within 24 hours.');
+          status.style.color = 'var(--sage)';
+        } catch (err) {
+          status.textContent = t('Что-то пошло не так. Напишите нам напрямую: hello@anjoy.space.', 'Something went wrong. Please email hello@anjoy.space directly.');
+          status.style.color = 'var(--gold)';
+        } finally {
+          button.disabled = false;
+          status.hidden = false;
+        }
+      });
+    })();
+  </script>
+</BaseLayout>
