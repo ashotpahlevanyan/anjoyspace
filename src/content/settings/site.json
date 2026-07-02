@@ -16,7 +16,8 @@
       "heading": { "ru": "Ретриты", "en": "Retreats" },
       "links": [
         { "label": { "ru": "Ближайшие", "en": "Upcoming" }, "href": "/#retreats" },
-        { "label": { "ru": "Прошлые", "en": "Past Retreats" }, "href": "/#past" },
+        { "label": { "ru": "Игра Лила", "en": "The Lila Game" }, "href": "/lila/" },
+        { "label": { "ru": "Year Compass", "en": "Year Compass" }, "href": "/year-compass/" },
         { "label": { "ru": "Галерея", "en": "Gallery" }, "href": "/#gallery" },
         { "label": { "ru": "Для команд", "en": "Private Groups" }, "href": "/corporate/" }
       ]

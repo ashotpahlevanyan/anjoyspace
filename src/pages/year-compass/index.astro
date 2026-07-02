@@ -1,0 +1,229 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import T from '../../components/T.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+const navLinks: NavLink[] = [
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/year-compass/', label: { ru: 'Year Compass', en: 'Year Compass' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/lila/', label: { ru: 'Игра Лила', en: 'The Lila Game' } },
+  { href: '/year-compass/', label: { ru: 'Year Compass', en: 'Year Compass' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+];
+const breadcrumb = { ru: '/ year compass', en: '/ year compass' };
+const footer = {
+  variant: 'simple' as const,
+  copyright: { ru: '© 2026, Anjoy Space · Year Compass', en: '© 2026, Anjoy Space · Year Compass' },
+  links: [
+    { label: { ru: 'Познакомиться с Ани', en: 'Meet Ani' }, href: '/teachers/ani/' },
+    { label: { ru: 'На главную', en: 'Home' }, href: '/' },
+  ],
+};
+
+const steps = [
+  {
+    num: '01',
+    title: { ru: 'Оглянуться на год', en: 'Look back on the year' },
+    body: {
+      ru: 'Проходим год по месяцам: что удалось, что было трудным, чему он научил. Отмечаем победы и мягко отпускаем то, что пора оставить позади.',
+      en: "We walk through the year month by month: what worked, what was hard, what it taught. We honour the victories and gently release what's ready to be left behind.",
+    },
+  },
+  {
+    num: '02',
+    title: { ru: 'Найти фокус', en: 'Find your focus' },
+    body: {
+      ru: 'Из прожитого проявляется главное — темы, ценности и одно слово, которое задаёт тон следующему году.',
+      en: "From what you've lived, the essentials emerge — the themes, the values, and one word that sets the tone for the year ahead.",
+    },
+  },
+  {
+    num: '03',
+    title: { ru: 'Наметить новый год', en: 'Design the year ahead' },
+    body: {
+      ru: 'Не жёсткие обещания, а ясное намерение: как вы хотите жить, чувствовать и расти. Вы уходите с планом, который откликается, а не давит.',
+      en: 'Not rigid resolutions, but a clear intention: how you want to live, feel, and grow. You leave with a plan that resonates rather than pressures.',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="Year Compass — итоги года с Ани Овакимян — Anjoy Space"
+  description="Тёплая встреча в конце года: оглянуться на прожитый год и осознанно наметить новый. Year-end reflection meetups with Ani Ovakimian — close the year, plan the next."
+  pageClass="page-dir page-year-compass"
+  accentVars="--accent: var(--gold);"
+  nav={{ breadcrumb, navLinks, menuLinks }}
+  footer={footer}
+  contact={false}
+>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <T value={{ ru: 'Итоги года', en: 'Year-end reflection' }} tag="span" class="eyebrow" />
+      <T value={{ ru: 'Year Compass — <em>закрыть год</em> и открыть новый', en: 'Year Compass — <em>close the year</em>, open the next' }} tag="h1" html />
+      <T
+        value={{
+          ru: 'Тёплая встреча в конце года: несколько тихих часов, чтобы оглянуться на прожитое, отпустить лишнее и с ясностью наметить следующий год. Не список новогодних обещаний, а честная переоценка года — вместе, в бережном кругу.',
+          en: "A warm end-of-year gathering: a few quiet hours to look back on what you've lived, release what's done, and set the next year with clarity. Not a list of New Year's resolutions, but an honest reappraisal of the year — together, in a caring circle.",
+        }}
+        tag="p"
+        class="lede"
+      />
+      <div>
+        <a href="#book" class="btn-primary"><T value={{ ru: 'Записаться на встречу', en: 'Join the next meetup' }} /></a>
+        <a href="#how" class="btn-ghost"><T value={{ ru: 'Как это проходит', en: 'How it works' }} /></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT IT IS -->
+  <section>
+    <SectionHeader eyebrow={{ ru: 'О практике', en: 'The practice' }} title={{ ru: 'Что такое <em>Year Compass</em>', en: 'What <em>Year Compass</em> is' }} />
+    <div class="dir-prose reveal">
+      <T
+        value={{
+          ru: 'Year Compass — это проверенная методика подведения итогов года, которой с 2012 года пользуются больше миллиона человек по всему миру. Через продуманные вопросы и упражнения вы проходите год целиком — месяц за месяцем — и мягко готовите почву для следующего.',
+          en: 'Year Compass is a proven year-review method used by more than a million people worldwide since 2012. Through thoughtful questions and exercises you walk through the whole year — month by month — and gently prepare the ground for the next one.',
+        }}
+        tag="p"
+      />
+      <T
+        value={{
+          ru: 'Мы проходим это не в одиночку за столом, а вместе — в небольшом бережном кругу, где тишина и присутствие других помогают быть честнее с собой.',
+          en: 'We do this not alone at a desk, but together — in a small, caring circle, where silence and the presence of others help you be more honest with yourself.',
+        }}
+        tag="p"
+      />
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="dir-alt">
+    <SectionHeader eyebrow={{ ru: 'Как это проходит', en: 'How it works' }} title={{ ru: 'Два движения: <em>назад и вперёд</em>', en: 'Two movements: <em>back and forward</em>' }} />
+    <div class="dir-steps">
+      {
+        steps.map((s) => (
+          <div class="dir-step reveal">
+            <span class="dir-step-n">{s.num}</span>
+            <div>
+              <T value={s.title} tag="h4" />
+              <T value={s.body} tag="p" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- FORMAT / WHEN -->
+  <section>
+    <SectionHeader
+      eyebrow={{ ru: 'Формат', en: 'Format' }}
+      title={{ ru: 'Когда и как', en: 'When & how' }}
+    />
+    <T
+      value={{
+        ru: 'Встречи проходят в конце декабря и начале января — несколько часов вместе в небольшой группе. Нужны только вы, немного тишины и желание оглянуться; всё необходимое — с собой не берите. Дату и детали пришлём после регистрации.',
+        en: "Meetups take place in late December and early January — a few hours together in a small group. All you need is yourself, a little quiet, and a willingness to look back; we bring the rest. We'll send the date and details after you register.",
+      }}
+      tag="p"
+      class="dir-lead reveal"
+    />
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="dir-alt">
+    <SectionHeader eyebrow={{ ru: 'Кому подходит', en: "Who it's for" }} title={{ ru: 'Войти в год <em>из ясности</em>', en: 'Enter the year <em>from clarity</em>' }} />
+    <T
+      value={{
+        ru: 'Для всех, кто хочет войти в новый год не из спешки, а из ясности — оглянувшись, поблагодарив и мягко выбрав направление. Опыт и подготовка не нужны.',
+        en: 'For anyone who wants to enter the new year not from a rush but from clarity — having looked back, given thanks, and gently chosen a direction. No experience or preparation needed.',
+      }}
+      tag="p"
+      class="dir-lead reveal"
+    />
+  </section>
+
+  <!-- FACILITATOR -->
+  <section>
+    <SectionHeader eyebrow={{ ru: 'Ведущая', en: 'Your facilitator' }} title={{ ru: 'Встречу ведёт <em>Ани Овакимян</em>', en: 'Facilitated by <em>Ani Ovakimian</em>' }} />
+    <div class="dir-facilitator reveal">
+      <T
+        value={{
+          ru: 'Ани — проводник в соматические и глубинные практики: йога-нидра, медитация, женские круги, Лила и Year Compass. Она держит бережное, безопасное пространство, где можно быть настоящей.',
+          en: "Ani is a guide to somatic and deep practices — yoga nidra, meditation, women's circles, Lila, and Year Compass. She holds a gentle, safe space where you can be real.",
+        }}
+        tag="p"
+      />
+      <a href="/teachers/ani/" class="dir-link"><T value={{ ru: 'Познакомиться с Ани →', en: 'Meet Ani →' }} /></a>
+    </div>
+  </section>
+
+  <!-- REGISTER -->
+  <div class="cta-band" id="book">
+    <span class="eyebrow" style="color:rgba(245,240,232,0.75)" data-lang="ru">Регистрация</span><span class="eyebrow" style="color:rgba(245,240,232,0.75)" data-lang="en">Register</span>
+    <T value={{ ru: 'Записаться на встречу', en: 'Join the next meetup' }} tag="h2" />
+    <T
+      value={{
+        ru: 'Оставьте контакты — и мы пришлём дату ближайшей встречи и все детали. Места ограничены: группа небольшая.',
+        en: "Leave your details and we'll send the date of the next meetup and all the details. Space is limited — the group is small.",
+      }}
+      tag="p"
+    />
+    <form class="contact-form" id="ycForm" name="year-compass" method="POST" action="/api/lead">
+      <input type="hidden" name="form-name" value="year-compass" />
+      <input type="hidden" name="source" value="year-compass-page" />
+      <p hidden><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+      <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+      <input type="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
+      <textarea name="message" rows="3" placeholder="Вопрос или пожелание (по желанию)" data-ph-ru="Вопрос или пожелание (по желанию)" data-ph-en="A question or note (optional)"></textarea>
+      <button type="submit"><span data-lang="ru">Зарегистрироваться</span><span data-lang="en">Register</span></button>
+      <p class="form-status" data-status hidden></p>
+    </form>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('ycForm');
+      if (!form) return;
+      var status = form.querySelector('[data-status]');
+      var button = form.querySelector('button[type="submit"]');
+      var t = function (ru, en) {
+        return (document.documentElement.getAttribute('lang') || 'ru') === 'ru' ? ru : en;
+      };
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var data = Object.fromEntries(new FormData(form).entries());
+        button.disabled = true;
+        status.hidden = true;
+        try {
+          var res = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          form.reset();
+          status.textContent = t('Спасибо — мы пришлём дату и детали ближайшей встречи.', "Thank you — we'll send the date and details of the next meetup.");
+          status.style.color = 'var(--sage)';
+        } catch (err) {
+          status.textContent = t('Что-то пошло не так. Напишите нам напрямую: hello@anjoy.space.', 'Something went wrong. Please email hello@anjoy.space directly.');
+          status.style.color = 'var(--gold)';
+        } finally {
+          button.disabled = false;
+          status.hidden = false;
+        }
+      });
+    })();
+  </script>
+</BaseLayout>

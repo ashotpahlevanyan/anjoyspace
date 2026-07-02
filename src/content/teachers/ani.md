@@ -52,6 +52,32 @@ offeringsIntro:
   en: I'm currently building my own retreat center — a space for those seeking depth, not headcount.
 offerings:
   - tag:
+      ru: Игра · трансформация
+      en: Game · transformation
+    title:
+      ru: Игра Лила
+      en: The Lila Game
+    body:
+      ru: Древняя игра самопознания, которая выводит из повторяющихся сценариев — индивидуально или в малой группе.
+      en: An ancient game of self-knowledge that moves you out of repeating patterns — one-on-one or in a small group.
+    linkLabel:
+      ru: Подробнее об игре →
+      en: About the game →
+    linkHref: /lila/
+  - tag:
+      ru: Итоги года
+      en: Year-end
+    title:
+      ru: Year Compass
+      en: Year Compass
+    body:
+      ru: 'Тёплые встречи в конце года: оглянуться на прожитое и осознанно наметить новый — в небольшом кругу.'
+      en: Warm end-of-year gatherings — look back on the year and set the next one with intention, in a small circle.
+    linkLabel:
+      ru: Подробнее о встречах →
+      en: About the meetups →
+    linkHref: /year-compass/
+  - tag:
       ru: Новое · в разработке
       en: New · in progress
     title:
@@ -177,6 +203,15 @@ path:
     body:
       ru: Обучение в Organic People (куратор Александра Гаврилова). Прошла обучение по йога-нидре на постоянной основе.
       en: Trained at Organic People (curator Alexandra Gavrilova). Completed an ongoing yoga nidra training.
+  - year:
+      ru: сейчас
+      en: ongoing
+    title:
+      ru: Погружение в Дживамукти
+      en: Deepening in Jivamukti
+    body:
+      ru: Углубляю личную практику в традиции Дживамукти-йоги — новое направление, которое откликается и которому ещё предстоит расти.
+      en: Deepening a personal practice in the Jivamukti yoga tradition — a new direction that resonates and still has room to grow.
   - year:
       ru: сейчас
       en: ongoing
