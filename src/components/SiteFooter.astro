@@ -30,7 +30,7 @@ const site = siteData;
             <ul>
               {col.links.map((l) => (
                 <li>
-                  <a href={l.href}>
+                  <a href={l.href} {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>
                     <T value={l.label} />
                   </a>
                 </li>
@@ -43,7 +43,9 @@ const site = siteData;
         <p>© 2026 {site.brandName}{site.brandSuffix} · All rights reserved</p>
         <div class="social-links">
           {site.social.map((s) => (
-            <a href={s.href}>{s.label}</a>
+            <a href={s.href} {...(s.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>
+              {s.label}
+            </a>
           ))}
         </div>
       </div>

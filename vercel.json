@@ -3,5 +3,13 @@
   "rewrites": [
     { "source": "/auth", "destination": "/api/auth" },
     { "source": "/callback", "destination": "/api/callback" }
+  ],
+  "headers": [
+    {
+      "source": "/anjoy.vcf",
+      "headers": [
+        { "key": "Content-Type", "value": "text/vcard; charset=utf-8" }
+      ]
+    }
   ]
 }

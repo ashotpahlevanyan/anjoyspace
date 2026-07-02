@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;Anjoy Space;;;
+FN:Anjoy Space
+ORG:Anjoy Space
+TITLE:Yoga Retreats
+EMAIL;TYPE=INTERNET,PREF:hello@anjoy.space
+TEL;TYPE=CELL,VOICE:+79151593376
+URL:https://anjoy.space
+X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/anjoy_space/
+X-SOCIALPROFILE;TYPE=telegram:https://t.me/ovakimianani
+X-SOCIALPROFILE;TYPE=whatsapp:https://wa.me/79151593376
+NOTE:Yoga retreats held in places where the earth remembers stillness. Small groups. Deep work. Real transformation.
+END:VCARD
