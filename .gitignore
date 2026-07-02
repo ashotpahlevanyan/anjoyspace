@@ -25,3 +25,8 @@ untitled/
 
 # stray nested IntelliJ Java project (not part of this site)
 /anjoy.space/
+.vercel
+.env*
+
+# Local Netlify CLI folder
+.netlify

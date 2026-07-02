@@ -1,8 +1,11 @@
 ---
+import type { Localized } from '../lib/i18n';
+import T from './T.astro';
+
 interface Props {
   variant: string; // gimg-1 … gimg-8
   symbol: string;
-  caption: string;
+  caption: Localized;
 }
 
 const { variant, symbol, caption } = Astro.props;
@@ -13,6 +16,6 @@ const { variant, symbol, caption } = Astro.props;
     <div class={`gallery-img gimg ${variant}`}>
       <div class="gallery-symbol">{symbol}</div>
     </div>
-    <div class="gallery-overlay"><span>{caption}</span></div>
+    <div class="gallery-overlay"><T value={caption} tag="span" /></div>
   </div>
 </div>

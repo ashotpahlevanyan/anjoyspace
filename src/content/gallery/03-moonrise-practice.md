@@ -2,5 +2,5 @@
 order: 3
 symbol: "☽"
 variant: "gimg-3"
-caption: "Moonrise Practice"
+caption: { ru: "Практика на восходе луны", en: "Moonrise Practice" }
 ---

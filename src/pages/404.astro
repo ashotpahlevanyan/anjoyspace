@@ -4,11 +4,18 @@ const rootCss = buildRootCss();
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page not found — anjoy.space</title>
+    <title>Страница не найдена — anjoy.space</title>
+    <script is:inline>
+      (function () {
+        try {
+          document.documentElement.setAttribute('lang', localStorage.getItem('anjoy_lang') || 'ru');
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -40,14 +47,20 @@ const rootCss = buildRootCss();
         letter-spacing: 0.16em; text-transform: uppercase; color: var(--night);
         background: var(--gold); padding: 1rem 2.2rem; text-decoration: none;
       }
+      [data-lang] { display: none; }
+      html[lang="ru"] [data-lang="ru"], html[lang="en"] [data-lang="en"] { display: inline; }
     </style>
   </head>
   <body>
     <div>
       <span class="eyebrow">404</span>
-      <h1>This path led <em>nowhere</em></h1>
-      <p>Even the best journeys sometimes take a wrong turn. Let's bring you back to stillness.</p>
-      <a href="/">Return Home</a>
+      <h1>
+        <span data-lang="ru">Эта тропа привела <em>в никуда</em></span><span data-lang="en">This path led <em>nowhere</em></span>
+      </h1>
+      <p>
+        <span data-lang="ru">Даже лучшие путешествия иногда сворачивают не туда. Давайте вернём вас к тишине.</span><span data-lang="en">Even the best journeys sometimes take a wrong turn. Let's bring you back to stillness.</span>
+      </p>
+      <a href="/"><span data-lang="ru">Вернуться домой</span><span data-lang="en">Return Home</span></a>
     </div>
   </body>
 </html>

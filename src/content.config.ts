@@ -65,16 +65,16 @@ const retreats = defineCollection({
   }),
 });
 
-/** Past retreats archive (home page). English-only, as in the original site. */
+/** Past retreats archive (home page). Bilingual. */
 const pastRetreats = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/past-retreats' }),
   schema: z.object({
     order: z.number().default(0),
-    period: z.string(), // "Spring 2025 · Bali"
-    title: z.string(),
-    location: z.string(),
-    summary: z.string(),
-    participants: z.string(), // "12 participants · Sold out"
+    period: localized, // "Spring 2025 · Bali"
+    title: localized,
+    location: localized,
+    summary: localized,
+    participants: localized, // "12 participants · Sold out"
   }),
 });
 
@@ -85,7 +85,7 @@ const gallery = defineCollection({
     order: z.number().default(0),
     symbol: z.string(), // glyph / emoji shown over the tile
     variant: z.string(), // gimg-1 … gimg-8
-    caption: z.string(),
+    caption: localized,
   }),
 });
 
@@ -94,10 +94,10 @@ const testimonials = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/testimonials' }),
   schema: z.object({
     order: z.number().default(0),
-    quote: z.string(),
+    quote: localized,
     author: z.string(),
     initial: z.string(),
-    retreatRef: z.string(),
+    retreatRef: localized,
     rating: z.number().min(1).max(5).default(5),
   }),
 });

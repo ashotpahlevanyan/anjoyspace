@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import T from '../../components/T.astro';
 import type { NavLink } from '../../components/SiteNav.tsx';
 
 const navLinks: NavLink[] = [
@@ -18,78 +19,220 @@ const menuLinks: NavLink[] = [
 const breadcrumb = { ru: '/ для команд', en: '/ for teams' };
 const footer = {
   variant: 'simple' as const,
-  copyright: '© 2026, Anjoy Space · Corporate Retreats',
+  copyright: { ru: '© 2026, Anjoy Space · Корпоративные ретриты', en: '© 2026, Anjoy Space · Corporate Retreats' },
   links: [
-    { label: 'Back to anjoy.space', href: '/' },
-    { label: 'Retreat Center', href: '/retreat-center/' },
+    { label: { ru: 'Назад на anjoy.space', en: 'Back to anjoy.space' }, href: '/' },
+    { label: { ru: 'Ретрит-центр', en: 'Retreat Center' }, href: '/retreat-center/' },
   ],
 };
 
 const reasons = [
-  { icon: '⊙', title: "Burnout, before it's a resignation", body: 'Retreats give teams a structured reset before burnout turns into attrition — far cheaper than backfilling a senior role.' },
-  { icon: '☽', title: 'Deep work needs deep rest', body: "Yoga nidra and guided rest practices restore the kind of focus that caffeine and PTO days alone don't." },
-  { icon: '❋', title: 'Real connection, not forced fun', body: 'Shared physical practice builds trust between teammates faster than icebreakers or trust-fall exercises ever did.' },
-  { icon: '✦', title: 'A genuine employer benefit', body: 'In a tight talent market, "we run real wellness retreats" differentiates an offer letter more than another perk stipend.' },
-  { icon: '⬡', title: 'Distributed teams, finally together', body: 'For remote-first companies, this may be the only time the team is physically in one room all year — we make it count.' },
-  { icon: '◎', title: 'Built for small groups', body: "We don't do 200-person conferences. Our format is built for the 8-16 person team or leadership group, by design." },
+  {
+    icon: '⊙',
+    title: { ru: 'Выгорание — до того, как оно станет заявлением об уходе', en: "Burnout, before it's a resignation" },
+    body: {
+      ru: 'Ретриты дают команде структурированную перезагрузку до того, как выгорание превратится в текучку — это намного дешевле, чем искать замену на senior-роль.',
+      en: 'Retreats give teams a structured reset before burnout turns into attrition — far cheaper than backfilling a senior role.',
+    },
+  },
+  {
+    icon: '☽',
+    title: { ru: 'Глубокая работа требует глубокого отдыха', en: 'Deep work needs deep rest' },
+    body: {
+      ru: 'Йога-нидра и практики осознанного отдыха восстанавливают ту концентрацию, которую не вернут ни кофе, ни выходные.',
+      en: "Yoga nidra and guided rest practices restore the kind of focus that caffeine and PTO days alone don't.",
+    },
+  },
+  {
+    icon: '❋',
+    title: { ru: 'Настоящая близость, а не навязанное веселье', en: 'Real connection, not forced fun' },
+    body: {
+      ru: 'Совместная телесная практика выстраивает доверие в команде быстрее, чем любые ледоколы и тимбилдинги.',
+      en: 'Shared physical practice builds trust between teammates faster than icebreakers or trust-fall exercises ever did.',
+    },
+  },
+  {
+    icon: '✦',
+    title: { ru: 'Настоящее преимущество работодателя', en: 'A genuine employer benefit' },
+    body: {
+      ru: 'На конкурентном рынке фраза «мы проводим настоящие велнес-ретриты» выделяет оффер сильнее, чем ещё одна надбавка на бонусы.',
+      en: 'In a tight talent market, "we run real wellness retreats" differentiates an offer letter more than another perk stipend.',
+    },
+  },
+  {
+    icon: '⬡',
+    title: { ru: 'Распределённые команды — наконец вместе', en: 'Distributed teams, finally together' },
+    body: {
+      ru: 'Для remote-first компаний это может быть единственный за год момент, когда вся команда физически в одной комнате — мы делаем его значимым.',
+      en: 'For remote-first companies, this may be the only time the team is physically in one room all year — we make it count.',
+    },
+  },
+  {
+    icon: '◎',
+    title: { ru: 'Создано для небольших групп', en: 'Built for small groups' },
+    body: {
+      ru: 'Мы не проводим конференции на 200 человек. Наш формат создан для команды или руководящей группы из 8–16 человек — так задумано.',
+      en: "We don't do 200-person conferences. Our format is built for the 8-16 person team or leadership group, by design.",
+    },
+  },
 ];
+
 const packages = [
-  { featured: false, tag: 'Day Reset', title: 'One-Day Offsite', price: '€95', per: ' / person', duration: 'Full day, no overnight stay', items: ['Morning movement + breathwork session', 'Guided team reflection circle', 'Healthy lunch included', 'Afternoon yoga nidra reset', 'Best for: quarterly team days'] },
-  { featured: true, tag: 'Most Booked', title: 'Weekend Reset', price: '€340', per: ' / person', duration: '3 days, 2 nights', items: ['Full retreat schedule — yoga, nidra, meditation', 'Private accommodation for the group', 'All meals, vegetarian kitchen', 'One structured team-alignment session', 'Take-home practice guide for the team', 'Best for: team offsites, leadership retreats'] },
-  { featured: false, tag: 'Deep Immersion', title: 'Full Week Program', price: '€780', per: ' / person', duration: '7 days, 6 nights', items: ['Everything in Weekend Reset, extended', 'Daily one-on-one check-ins available', 'Dedicated facilitator for the full week', 'Custom programming around team goals', 'Best for: leadership cohorts, founder retreats'] },
+  {
+    featured: false,
+    tag: { ru: 'Дневная перезагрузка', en: 'Day Reset' },
+    title: { ru: 'Однодневный выезд', en: 'One-Day Offsite' },
+    price: '€95',
+    per: { ru: ' / чел.', en: ' / person' },
+    duration: { ru: 'Полный день, без ночёвки', en: 'Full day, no overnight stay' },
+    items: [
+      { ru: 'Утренняя практика движения и дыхания', en: 'Morning movement + breathwork session' },
+      { ru: 'Круг командной рефлексии с ведущим', en: 'Guided team reflection circle' },
+      { ru: 'Полезный обед включён', en: 'Healthy lunch included' },
+      { ru: 'Дневная перезагрузка через йога-нидру', en: 'Afternoon yoga nidra reset' },
+      { ru: 'Подходит для: ежеквартальных командных дней', en: 'Best for: quarterly team days' },
+    ],
+  },
+  {
+    featured: true,
+    tag: { ru: 'Чаще всего выбирают', en: 'Most Booked' },
+    title: { ru: 'Перезагрузка на выходные', en: 'Weekend Reset' },
+    price: '€340',
+    per: { ru: ' / чел.', en: ' / person' },
+    duration: { ru: '3 дня, 2 ночи', en: '3 days, 2 nights' },
+    items: [
+      { ru: 'Полное расписание ретрита — йога, нидра, медитация', en: 'Full retreat schedule — yoga, nidra, meditation' },
+      { ru: 'Отдельное размещение для группы', en: 'Private accommodation for the group' },
+      { ru: 'Всё питание, вегетарианская кухня', en: 'All meals, vegetarian kitchen' },
+      { ru: 'Одна структурированная сессия командной синхронизации', en: 'One structured team-alignment session' },
+      { ru: 'Гид по практикам, который команда заберёт с собой', en: 'Take-home practice guide for the team' },
+      { ru: 'Подходит для: командных выездов, ретритов для руководителей', en: 'Best for: team offsites, leadership retreats' },
+    ],
+  },
+  {
+    featured: false,
+    tag: { ru: 'Глубокое погружение', en: 'Deep Immersion' },
+    title: { ru: 'Программа на полную неделю', en: 'Full Week Program' },
+    price: '€780',
+    per: { ru: ' / чел.', en: ' / person' },
+    duration: { ru: '7 дней, 6 ночей', en: '7 days, 6 nights' },
+    items: [
+      { ru: 'Всё из «Перезагрузки на выходные», в расширенном виде', en: 'Everything in Weekend Reset, extended' },
+      { ru: 'Возможны ежедневные индивидуальные встречи', en: 'Daily one-on-one check-ins available' },
+      { ru: 'Персональный фасилитатор на всю неделю', en: 'Dedicated facilitator for the full week' },
+      { ru: 'Программа под цели вашей команды', en: 'Custom programming around team goals' },
+      { ru: 'Подходит для: команд руководителей, ретритов основателей', en: 'Best for: leadership cohorts, founder retreats' },
+    ],
+  },
 ];
+
 const process = [
-  { num: '01', title: 'Tell us about your team', body: "Team size, location preference, dates, and what you're hoping the offsite achieves — burnout relief, alignment, celebration, or all three." },
-  { num: '02', title: 'We send a tailored proposal', body: 'A specific itinerary and quote based on your team, not a generic brochure — usually within 48 hours.' },
-  { num: '03', title: 'We handle logistics', body: 'Venue, food, facilitators, and schedule are ours to manage. Your team just needs to show up.' },
-  { num: '04', title: 'Post-retreat follow-up', body: "A short practice guide and optional follow-up session so the reset doesn't evaporate the first week back at work." },
+  {
+    num: '01',
+    title: { ru: 'Расскажите о своей команде', en: 'Tell us about your team' },
+    body: {
+      ru: 'Размер команды, предпочтения по локации, даты и то, чего вы ждёте от выезда — снятия выгорания, синхронизации, празднования или всего сразу.',
+      en: "Team size, location preference, dates, and what you're hoping the offsite achieves — burnout relief, alignment, celebration, or all three.",
+    },
+  },
+  {
+    num: '02',
+    title: { ru: 'Мы присылаем индивидуальное предложение', en: 'We send a tailored proposal' },
+    body: {
+      ru: 'Конкретный маршрут и смета под вашу команду, а не типовая брошюра — обычно в течение 48 часов.',
+      en: 'A specific itinerary and quote based on your team, not a generic brochure — usually within 48 hours.',
+    },
+  },
+  {
+    num: '03',
+    title: { ru: 'Мы берём логистику на себя', en: 'We handle logistics' },
+    body: {
+      ru: 'Площадка, питание, фасилитаторы и расписание — наша забота. Вашей команде нужно просто приехать.',
+      en: 'Venue, food, facilitators, and schedule are ours to manage. Your team just needs to show up.',
+    },
+  },
+  {
+    num: '04',
+    title: { ru: 'Поддержка после ретрита', en: 'Post-retreat follow-up' },
+    body: {
+      ru: 'Короткий гид по практикам и по желанию — последующая сессия, чтобы эффект не испарился в первую же рабочую неделю.',
+      en: "A short practice guide and optional follow-up session so the reset doesn't evaporate the first week back at work.",
+    },
+  },
+];
+
+const resortList = [
+  { ru: 'Типовой конференц-зал отеля, переделанный под «время команды»', en: 'Generic hotel conference room, repurposed for "team time"' },
+  { ru: 'Расписание вокруг встреч, отдых — как заполнитель', en: 'Schedule built around meetings, with leisure as filler' },
+  { ru: 'Сближение вокруг алкоголя', en: 'Alcohol-centered social bonding' },
+  { ru: 'Экраны и слайды большую часть дня', en: 'Screens and slides for most of the day' },
+  { ru: 'Команда возвращается уставшей, а не восстановленной', en: 'Team returns tired, not recovered' },
+  { ru: 'Никаких устойчивых практик или привычек — эффект исчезает за неделю', en: 'No lasting practice or habit — resets within a week' },
+];
+const anjoyList = [
+  { ru: 'Пространство, созданное специально для отдыха и концентрации', en: 'Purpose-built space designed around rest and focus' },
+  { ru: 'Расписание вокруг тела — движение, тишина, диалог', en: 'Schedule built around the body — movement, stillness, dialogue' },
+  { ru: 'Близость через совместную практику, а не только ужин', en: 'Connection built through shared practice, not just dinner' },
+  { ru: 'Телефоны в стороне в отведённые блоки дня', en: 'Phones down for structured blocks of the day' },
+  { ru: 'Команда возвращается в балансе, а не просто расслабленной', en: 'Team returns regulated, not just relaxed' },
+  { ru: 'Простые практики, которые участники продолжат использовать после отъезда', en: 'Simple practices participants can keep using after they leave' },
 ];
 ---
 
-<BaseLayout title="Corporate Retreats for Tech Teams — Anjoy Space" pageClass="page-corporate" nav={{ breadcrumb, navLinks, menuLinks }} footer={footer} contact={false}>
+<BaseLayout title="Корпоративные ретриты для команд — Anjoy Space" pageClass="page-corporate" nav={{ breadcrumb, navLinks, menuLinks }} footer={footer} contact={false}>
   <!-- HERO -->
   <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-text">
-      <span class="eyebrow">For Tech &amp; Remote Teams</span>
-      <h1>Your offsite budget,<br />spent on something that <em>lasts</em></h1>
-      <p class="lede">Most team offsites are a hotel, a conference room, and an open bar. We replace that with a structured retreat built around rest, focus, and genuine reconnection — the kind that shows up in retention, not just a group photo.</p>
+      <T value={{ ru: 'Для tech- и удалённых команд', en: 'For Tech & Remote Teams' }} tag="span" class="eyebrow" />
+      <T value={{ ru: 'Бюджет на выезд,<br />потраченный на то, что <em>останется</em>', en: 'Your offsite budget,<br />spent on something that <em>lasts</em>' }} tag="h1" html />
+      <T
+        value={{
+          ru: 'Большинство корпоративных выездов — это отель, конференц-зал и открытый бар. Мы заменяем это структурированным ретритом вокруг отдыха, концентрации и настоящего воссоединения — тем, что отражается на удержании сотрудников, а не только на групповом фото.',
+          en: 'Most team offsites are a hotel, a conference room, and an open bar. We replace that with a structured retreat built around rest, focus, and genuine reconnection — the kind that shows up in retention, not just a group photo.',
+        }}
+        tag="p"
+        class="lede"
+      />
       <div>
-        <a href="#packages" class="btn-primary">View Packages</a>
-        <a href="#contact" class="btn-ghost">Talk to Us</a>
+        <a href="#packages" class="btn-primary"><T value={{ ru: 'Смотреть пакеты', en: 'View Packages' }} /></a>
+        <a href="#contact" class="btn-ghost"><T value={{ ru: 'Поговорить с нами', en: 'Talk to Us' }} /></a>
       </div>
     </div>
     <div class="hero-stats reveal">
-      <div class="hstat"><span class="num">77%</span><span class="desc">of tech workers report burnout at their current job</span></div>
-      <div class="hstat"><span class="num">3-5x</span><span class="desc">cost of replacing a senior engineer vs. retaining one</span></div>
-      <div class="hstat"><span class="num">8-16</span><span class="desc">team size we're built for — not a 200-person conference</span></div>
+      <div class="hstat">
+        <span class="num">77%</span>
+        <T value={{ ru: 'tech-специалистов сообщают о выгорании на текущей работе', en: 'of tech workers report burnout at their current job' }} tag="span" class="desc" />
+      </div>
+      <div class="hstat">
+        <span class="num">3-5x</span>
+        <T value={{ ru: 'стоимость замены senior-инженера против его удержания', en: 'cost of replacing a senior engineer vs. retaining one' }} tag="span" class="desc" />
+      </div>
+      <div class="hstat">
+        <span class="num">8-16</span>
+        <T value={{ ru: 'размер команды, для которого мы созданы — не конференция на 200 человек', en: "team size we're built for — not a 200-person conference" }} tag="span" class="desc" />
+      </div>
     </div>
   </div>
 
   <!-- COMPARISON -->
   <section class="compare-section">
-    <SectionHeader eyebrow="The shift" title="From <em>resort offsite</em> to <em>retreat</em>" text="The standard tech offsite hasn't changed in a decade. Teams are starting to ask for something different — here's the real difference." />
+    <SectionHeader
+      eyebrow={{ ru: 'Сдвиг', en: 'The shift' }}
+      title={{ ru: 'От <em>выезда на курорт</em> к <em>ретриту</em>', en: 'From <em>resort offsite</em> to <em>retreat</em>' }}
+      text={{ ru: 'Стандартный tech-выезд не менялся десятилетие. Команды начинают просить чего-то другого — вот в чём реальная разница.', en: "The standard tech offsite hasn't changed in a decade. Teams are starting to ask for something different — here's the real difference." }}
+    />
     <div class="compare-grid">
       <div class="compare-col reveal">
-        <h3>The resort offsite</h3>
+        <T value={{ ru: 'Выезд на курорт', en: 'The resort offsite' }} tag="h3" />
         <ul class="compare-list">
-          <li>Generic hotel conference room, repurposed for "team time"</li>
-          <li>Schedule built around meetings, with leisure as filler</li>
-          <li>Alcohol-centered social bonding</li>
-          <li>Screens and slides for most of the day</li>
-          <li>Team returns tired, not recovered</li>
-          <li>No lasting practice or habit — resets within a week</li>
+          {resortList.map((i) => <T value={i} tag="li" />)}
         </ul>
       </div>
       <div class="compare-col highlight reveal">
-        <h3>The Anjoy retreat</h3>
+        <T value={{ ru: 'Ретрит Anjoy', en: 'The Anjoy retreat' }} tag="h3" />
         <ul class="compare-list">
-          <li>Purpose-built space designed around rest and focus</li>
-          <li>Schedule built around the body — movement, stillness, dialogue</li>
-          <li>Connection built through shared practice, not just dinner</li>
-          <li>Phones down for structured blocks of the day</li>
-          <li>Team returns regulated, not just relaxed</li>
-          <li>Simple practices participants can keep using after they leave</li>
+          {anjoyList.map((i) => <T value={i} tag="li" />)}
         </ul>
       </div>
     </div>
@@ -97,14 +240,18 @@ const process = [
 
   <!-- WHY -->
   <section id="why">
-    <SectionHeader eyebrow="Why this, why now" title="The case for <em>human-centric</em> offsites" text="Engineering and product teams run on attention and nervous-system regulation — not free snacks. Here's what a retreat actually addresses that a hotel can't." />
+    <SectionHeader
+      eyebrow={{ ru: 'Почему это и почему сейчас', en: 'Why this, why now' }}
+      title={{ ru: 'Аргументы в пользу <em>человекоцентричных</em> выездов', en: 'The case for <em>human-centric</em> offsites' }}
+      text={{ ru: 'Инженерные и продуктовые команды работают на внимании и регуляции нервной системы — а не на бесплатных снеках. Вот что ретрит действительно решает, а отель — нет.', en: "Engineering and product teams run on attention and nervous-system regulation — not free snacks. Here's what a retreat actually addresses that a hotel can't." }}
+    />
     <div class="reasons-grid">
       {
         reasons.map((r) => (
           <div class="reason-card reveal">
             <span class="reason-icon">{r.icon}</span>
-            <h3>{r.title}</h3>
-            <p>{r.body}</p>
+            <T value={r.title} tag="h3" />
+            <T value={r.body} tag="p" />
           </div>
         ))
       }
@@ -113,33 +260,44 @@ const process = [
 
   <!-- PACKAGES -->
   <section id="packages" class="packages-section">
-    <SectionHeader eyebrow="Packages" title="Built for your <em>team size and budget</em>" text="Every package includes practice sessions, meals, and accommodation. Final pricing depends on group size, season, and location — these are starting points for planning." />
+    <SectionHeader
+      eyebrow={{ ru: 'Пакеты', en: 'Packages' }}
+      title={{ ru: 'Под ваш <em>размер команды и бюджет</em>', en: 'Built for your <em>team size and budget</em>' }}
+      text={{ ru: 'Каждый пакет включает практики, питание и проживание. Финальная стоимость зависит от размера группы, сезона и локации — это отправные точки для планирования.', en: 'Every package includes practice sessions, meals, and accommodation. Final pricing depends on group size, season, and location — these are starting points for planning.' }}
+    />
     <div class="packages-grid">
       {
         packages.map((p) => (
           <div class:list={['package-card', p.featured && 'featured', 'reveal']}>
-            <span class="package-tag">{p.tag}</span>
-            <h3>{p.title}</h3>
-            <div class="price">{p.price}<sub>{p.per}</sub></div>
-            <div class="duration">{p.duration}</div>
-            <ul class="package-list">{p.items.map((i) => <li>{i}</li>)}</ul>
-            <a href="#contact" class="btn-small">Request This</a>
+            <T value={p.tag} tag="span" class="package-tag" />
+            <T value={p.title} tag="h3" />
+            <div class="price">{p.price}<T value={p.per} tag="sub" /></div>
+            <T value={p.duration} tag="div" class="duration" />
+            <ul class="package-list">{p.items.map((i) => <T value={i} tag="li" />)}</ul>
+            <a href="#contact" class="btn-small"><T value={{ ru: 'Запросить', en: 'Request This' }} /></a>
           </div>
         ))
       }
     </div>
-    <p class="price-note">Pricing shown is indicative and scales with group size. Companies booking recurring quarterly retreats receive custom annual pricing — ask us for a proposal.</p>
+    <T
+      value={{
+        ru: 'Указанные цены ориентировочны и зависят от размера группы. Компании, которые бронируют ежеквартальные ретриты, получают индивидуальные годовые условия — запросите предложение.',
+        en: 'Pricing shown is indicative and scales with group size. Companies booking recurring quarterly retreats receive custom annual pricing — ask us for a proposal.',
+      }}
+      tag="p"
+      class="price-note"
+    />
   </section>
 
   <!-- PROCESS -->
   <section id="process">
-    <SectionHeader eyebrow="How it works" title="From inquiry to <em>offsite</em>" />
+    <SectionHeader eyebrow={{ ru: 'Как это работает', en: 'How it works' }} title={{ ru: 'От заявки до <em>выезда</em>', en: 'From inquiry to <em>offsite</em>' }} />
     <div class="process-list">
       {
         process.map((s) => (
           <div class="process-item reveal">
             <span class="process-num">{s.num}</span>
-            <div><h4>{s.title}</h4><p>{s.body}</p></div>
+            <div><T value={s.title} tag="h4" /><T value={s.body} tag="p" /></div>
           </div>
         ))
       }
@@ -148,24 +306,24 @@ const process = [
 
   <!-- CTA / CONTACT FORM -->
   <div class="cta-band" id="contact">
-    <span class="eyebrow" style="color:rgba(245,240,232,0.75)">Get a proposal</span>
-    <h2>Plan your team's retreat</h2>
-    <p>Tell us a bit about your team and we'll send a tailored proposal — no obligation, no generic PDF.</p>
+    <span class="eyebrow" style="color:rgba(245,240,232,0.75)" data-lang="ru">Получить предложение</span><span class="eyebrow" style="color:rgba(245,240,232,0.75)" data-lang="en">Get a proposal</span>
+    <T value={{ ru: 'Спланируйте ретрит для вашей команды', en: "Plan your team's retreat" }} tag="h2" />
+    <T value={{ ru: 'Расскажите немного о вашей команде — и мы пришлём индивидуальное предложение. Без обязательств и типовых PDF.', en: "Tell us a bit about your team and we'll send a tailored proposal — no obligation, no generic PDF." }} tag="p" />
     <form class="contact-form" id="corporateForm" name="corporate" method="POST" action="/api/lead">
       <input type="hidden" name="form-name" value="corporate" />
       <p hidden><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
-      <input type="text" name="company" placeholder="Company name" required />
-      <input type="text" name="name" placeholder="Your name" required />
-      <input type="email" name="email" placeholder="Work email" required />
+      <input type="text" name="company" placeholder="Название компании" data-ph-ru="Название компании" data-ph-en="Company name" required />
+      <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+      <input type="email" name="email" placeholder="Рабочая почта" data-ph-ru="Рабочая почта" data-ph-en="Work email" required />
       <select name="team-size" required>
-        <option value="" disabled selected>Team size</option>
-        <option>5–8 people</option>
-        <option>9–16 people</option>
-        <option>17–30 people</option>
-        <option>30+ people</option>
+        <option value="" disabled selected data-t-ru="Размер команды" data-t-en="Team size">Размер команды</option>
+        <option data-t-ru="5–8 человек" data-t-en="5–8 people">5–8 человек</option>
+        <option data-t-ru="9–16 человек" data-t-en="9–16 people">9–16 человек</option>
+        <option data-t-ru="17–30 человек" data-t-en="17–30 people">17–30 человек</option>
+        <option data-t-ru="30+ человек" data-t-en="30+ people">30+ человек</option>
       </select>
-      <textarea name="message" rows="3" placeholder="What are you hoping this offsite achieves?"></textarea>
-      <button type="submit">Request Proposal</button>
+      <textarea name="message" rows="3" placeholder="Чего вы хотите достичь этим выездом?" data-ph-ru="Чего вы хотите достичь этим выездом?" data-ph-en="What are you hoping this offsite achieves?"></textarea>
+      <button type="submit"><span data-lang="ru">Запросить предложение</span><span data-lang="en">Request Proposal</span></button>
       <p class="form-status" data-status hidden></p>
     </form>
   </div>
@@ -176,6 +334,9 @@ const process = [
       if (!form) return;
       var status = form.querySelector('[data-status]');
       var button = form.querySelector('button[type="submit"]');
+      var t = function (ru, en) {
+        return (document.documentElement.getAttribute('lang') || 'ru') === 'ru' ? ru : en;
+      };
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
         var data = Object.fromEntries(new FormData(form).entries());
@@ -189,10 +350,16 @@ const process = [
           });
           if (!res.ok) throw new Error(String(res.status));
           form.reset();
-          status.textContent = "Thank you — we'll send a tailored proposal within 24 hours.";
+          status.textContent = t(
+            'Спасибо — мы пришлём индивидуальное предложение в течение 24 часов.',
+            "Thank you — we'll send a tailored proposal within 24 hours.",
+          );
           status.style.color = 'var(--sage)';
         } catch (err) {
-          status.textContent = 'Something went wrong. Please email hello@anjoy.space directly.';
+          status.textContent = t(
+            'Что-то пошло не так. Напишите нам напрямую: hello@anjoy.space.',
+            'Something went wrong. Please email hello@anjoy.space directly.',
+          );
           status.style.color = 'var(--gold)';
         } finally {
           button.disabled = false;
