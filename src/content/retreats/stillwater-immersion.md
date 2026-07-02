@@ -2,7 +2,7 @@
 order: 1
 tag: { ru: "Сентябрь 2025", en: "Sep 2025" }
 tagStyle: upcoming
-title: { ru: "Погружение Тихой Воды", en: "Stillwater Immersion" }
+title: { ru: "Погружение в спокойные воды", en: "Stillwater Immersion" }
 location: { ru: "Бали, Индонезия", en: "Bali, Indonesia" }
 days: { ru: "7 дней", en: "7 Days" }
 participants: { ru: "12 участников", en: "12 Participants" }
