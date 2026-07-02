@@ -57,7 +57,7 @@ section { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
   text-transform: uppercase; color: var(--night);
   background: var(--gold); padding: 1rem 2.4rem;
   text-decoration: none; transition: all 0.3s;
-  margin-right: 1rem; border: none; cursor: pointer;
+  margin: 0 1rem 0.75rem 0; border: none; cursor: pointer;
 }
 .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
 
@@ -66,9 +66,14 @@ section { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
   font-size: 0.78rem; font-weight: 400; letter-spacing: 0.16em;
   text-transform: uppercase; color: var(--parchment-dim);
   border: 1px solid var(--border); padding: 1rem 2.4rem;
-  text-decoration: none; transition: all 0.3s;
+  text-decoration: none; transition: all 0.3s; margin-bottom: 0.75rem;
 }
 .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+/* On phones the hero buttons wrap; keep them centered with vertical spacing. */
+@media (max-width: 600px) {
+  .btn-primary { margin-right: 0; }
+}
 
 .btn-small {
   font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em;
