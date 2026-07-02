@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import T from '../../components/T.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+const navLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+];
+const steps = [
+  {
+    n: '01',
+    title: { ru: 'Устройтесь', en: 'Settle' },
+    body: {
+      ru: 'Лягте на спину, укройтесь тёплым пледом, руки вдоль тела ладонями вверх. Под колени можно положить валик. Тело должно быть тёплым и полностью поддержанным — вам не нужно ничего держать.',
+      en: 'Lie on your back, cover yourself with a warm blanket, arms alongside the body, palms up. A bolster under the knees helps. The body should be warm and fully supported — nothing for you to hold.',
+    },
+  },
+  {
+    n: '02',
+    title: { ru: 'Задайте намерение', en: 'Set an intention' },
+    body: {
+      ru: 'Про себя произнесите короткую фразу в настоящем времени — например: «Я спокоен и присутствую». В нидре это называется санкальпа. Не анализируйте её, просто отпустите.',
+      en: 'Silently say a short phrase in the present tense — for example, "I am calm and present." In Nidra this is called sankalpa. Don\'t analyse it, just let it go.',
+    },
+  },
+  {
+    n: '03',
+    title: { ru: 'Пройдите по телу', en: 'Rotate through the body' },
+    body: {
+      ru: 'Медленно переносите внимание по частям тела: правая рука — большой палец, указательный… ладонь, запястье, плечо. Затем левая рука, ноги, спина, лицо. Не двигайтесь — просто отмечайте каждую часть вниманием.',
+      en: 'Slowly move attention through the body: right hand — thumb, index finger… palm, wrist, shoulder. Then the left hand, the legs, the back, the face. Don\'t move — simply acknowledge each part with attention.',
+    },
+  },
+  {
+    n: '04',
+    title: { ru: 'Наблюдайте дыхание', en: 'Watch the breath' },
+    body: {
+      ru: 'Ничего не меняя, считайте выдохи в обратном порядке: 27, 26, 25… Если сбились — спокойно начните с любого числа. Это удерживает ум на мягкой грани между бодрствованием и сном.',
+      en: 'Without changing anything, count exhales backward: 27, 26, 25… If you lose track, calmly start from any number. This holds the mind at the soft edge between waking and sleep.',
+    },
+  },
+  {
+    n: '05',
+    title: { ru: 'Возвращайтесь медленно', en: 'Return slowly' },
+    body: {
+      ru: 'Повторите намерение ещё раз. Начните углублять дыхание, мягко пошевелите пальцами, повернитесь на правый бок и полежите так минуту, прежде чем сесть. Не вскакивайте — дайте нервной системе перенести это состояние в день.',
+      en: 'Repeat the intention once more. Begin to deepen the breath, gently move the fingers, roll to your right side and rest there a minute before sitting up. Don\'t jump up — let the nervous system carry this state into your day.',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="Your Yoga Nidra Starter Guide — Anjoy Space"
+  description="A simple, five-step home practice for deep, conscious rest."
+  pageClass="page-guide"
+  nav={{ navLinks, menuLinks }}
+  footer={{ variant: 'simple', copyright: { ru: '© 2026, Anjoy Space', en: '© 2026, Anjoy Space' } }}
+  contact={false}
+>
+  <meta name="robots" content="noindex, nofollow" slot="head" />
+
+  <article class="guide">
+    <header class="guide-head">
+      <span class="guide-symbol">☽</span>
+      <span class="eyebrow" data-lang="ru">Бесплатный гид</span><span class="eyebrow" data-lang="en">Free guide</span>
+      <T value={{ ru: 'Йога-нидра дома: <em>пять шагов</em>', en: 'Yoga Nidra at Home: <em>Five Steps</em>' }} tag="h1" html />
+      <T
+        value={{
+          ru: 'Короткая практика глубокого осознанного отдыха, которую можно делать вечером в кровати. Двадцать минут нидры могут ощущаться как несколько часов сна.',
+          en: 'A short practice of deep, conscious rest you can do in bed in the evening. Twenty minutes of Nidra can feel like hours of sleep.',
+        }}
+        tag="p"
+        class="lede"
+      />
+    </header>
+
+    <div class="guide-steps">
+      {
+        steps.map((s) => (
+          <div class="guide-step">
+            <span class="guide-step-n">{s.n}</span>
+            <div>
+              <T value={s.title} tag="h3" />
+              <T value={s.body} tag="p" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="guide-tip">
+      <T
+        value={{
+          ru: '<strong>Совет:</strong> не старайтесь уснуть и не старайтесь бодрствовать. Регулярность важнее длительности — даже десять минут каждый день меняют то, как тело умеет отдыхать.',
+          en: "<strong>Tip:</strong> don't try to fall asleep and don't try to stay awake. Consistency beats duration — even ten minutes a day changes how the body knows how to rest.",
+        }}
+        tag="p"
+        html
+      />
+    </div>
+
+    <div class="guide-cta">
+      <T value={{ ru: 'Хотите практиковать глубже — вживую?', en: 'Want to go deeper — in person?' }} tag="h2" />
+      <T
+        value={{
+          ru: 'Йога-нидра — в сердце каждого нашего ретрита. Посмотрите ближайшие даты.',
+          en: 'Yoga Nidra sits at the heart of every retreat we run. See the upcoming dates.',
+        }}
+        tag="p"
+      />
+      <a href="/#retreats" class="btn-primary"><T value={{ ru: 'Смотреть ретриты', en: 'View Retreats' }} /></a>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,175 @@
+/* Lead magnet — opt-in landing (.page-optin) and the gated guide (.page-guide). */
+
+.page-optin,
+.page-guide {
+  background: var(--night);
+  color: var(--parchment);
+}
+
+/* ── OPT-IN LANDING ── */
+.optin {
+  min-height: 82vh;
+  display: grid;
+  place-items: center;
+  padding: 7rem 1.5rem 4rem;
+}
+.optin-inner {
+  max-width: 560px;
+  text-align: center;
+
+  .optin-symbol { font-size: 2.6rem; color: var(--gold); display: block; }
+  .eyebrow {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  h1 {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+    line-height: 1.12;
+    margin: 0.75rem 0 1.1rem;
+    em { font-style: italic; color: var(--gold); }
+  }
+  .lede {
+    color: var(--parchment-dim);
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+.optin-benefits {
+  list-style: none;
+  margin: 2rem auto;
+  padding: 0;
+  max-width: 420px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+
+  li { display: flex; gap: 0.85rem; align-items: flex-start; color: var(--parchment); font-weight: 300; }
+  .optin-benefit-icon { color: var(--gold); flex-shrink: 0; }
+}
+
+.optin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 380px;
+  margin: 0 auto;
+
+  input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--parchment);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+  }
+  input:focus { outline: none; border-color: var(--gold); }
+  button {
+    padding: 0.95rem 1rem;
+    background: var(--gold);
+    color: var(--night);
+    border: none;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover { background: var(--gold-light); }
+  button:disabled { opacity: 0.6; cursor: default; }
+  .optin-status { font-size: 0.85rem; margin: 0.25rem 0 0; }
+}
+.optin-fineprint {
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: var(--parchment-dim);
+}
+
+/* ── GATED GUIDE ── */
+.guide {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 7rem 1.5rem 4rem;
+}
+.guide-head {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  .guide-symbol { font-size: 2.4rem; color: var(--gold); }
+  .eyebrow {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  h1 {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0.75rem 0 1rem;
+    em { font-style: italic; color: var(--gold); }
+  }
+  .lede { color: var(--parchment-dim); font-weight: 300; line-height: 1.8; }
+}
+
+.guide-steps { display: flex; flex-direction: column; gap: 1.5rem; }
+.guide-step {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+
+  .guide-step-n {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  h3 { font-family: var(--font-serif); font-weight: 400; font-size: 1.25rem; margin: 0 0 0.4rem; }
+  p { color: var(--parchment-dim); font-weight: 300; line-height: 1.75; margin: 0; }
+}
+
+.guide-tip {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 2px solid var(--gold);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+  color: var(--parchment);
+  font-weight: 300;
+  line-height: 1.75;
+  strong { color: var(--gold); font-weight: 500; }
+}
+
+.guide-cta {
+  text-align: center;
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+
+  h2 { font-family: var(--font-serif); font-weight: 300; font-size: 1.8rem; margin: 0 0 0.75rem; }
+  p { color: var(--parchment-dim); font-weight: 300; margin: 0 0 1.5rem; }
+}
+
+@media (max-width: 600px) {
+  .optin { padding-top: 5.5rem; }
+  .guide { padding-top: 5.5rem; }
+}
