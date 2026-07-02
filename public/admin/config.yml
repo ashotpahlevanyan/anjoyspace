@@ -68,6 +68,62 @@ collections:
       - { label: "CTA body (optional)", name: ctaBody, widget: text, required: false }
       - { label: "Overview (long description)", name: body, widget: markdown, required: false }
 
+  # ── BLOG / JOURNAL (each entry = a /blog/<slug>/ page) ──
+  - name: blog
+    label: "Blog"
+    label_singular: "Post"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title.en}}"
+    sortable_fields: [date, order]
+    fields:
+      - { label: "Order", name: order, widget: number, default: 0, value_type: int }
+      - { label: "Draft (hide from site)", name: draft, widget: boolean, default: false }
+      - { label: "Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Title"
+        name: title
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Excerpt (card + meta description)"
+        name: excerpt
+        widget: object
+        fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+      - label: "Category"
+        name: category
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Tags"
+        name: tags
+        widget: list
+        required: false
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - label: "Author name"
+        name: author
+        widget: object
+        fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+      - { label: "Author teacher slug (optional)", name: authorSlug, widget: string, required: false, hint: "e.g. ani — links the byline to /teachers/ani/" }
+      - { label: "Accent color", name: accent, widget: select, options: [gold, violet], default: gold }
+      - { label: "Hero symbol", name: heroSymbol, widget: string, default: "❋", hint: "A glyph or emoji" }
+      - { label: "Cover image (optional)", name: coverImage, widget: string, required: false, hint: "For social share cards" }
+      - { label: "Reading time (min, optional)", name: readingTime, widget: number, required: false, value_type: int }
+      - label: "Sections (article body)"
+        name: sections
+        widget: list
+        summary: "{{fields.heading.en}}"
+        fields:
+          - label: "Heading (optional)"
+            name: heading
+            widget: object
+            required: false
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - label: "Paragraphs"
+            name: body
+            widget: list
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+
   # ── PAST RETREATS (home archive) ──
   - name: pastRetreats
     label: "Past Retreats"

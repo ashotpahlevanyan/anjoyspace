@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import NewsletterForm from '../../components/NewsletterForm.tsx';
+import T from '../../components/T.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) =>
+  b.data.date.localeCompare(a.data.date),
+);
+
+const navLinks: NavLink[] = [
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/retreat-center/', label: { ru: 'Ретрит-центр', en: 'Retreat Center' } },
+  { href: '/corporate/', label: { ru: 'Для команд', en: 'For Teams' } },
+];
+const breadcrumb = { ru: '/ журнал', en: '/ journal' };
+---
+
+<BaseLayout
+  title="Журнал — Anjoy Space | Yoga, Nidra & Retreats"
+  description="Тексты о йоге, медитации, тишине и ретритах. Notes on yoga, meditation, deep rest, and the retreat life — in Russian and English."
+  pageClass="page-blog"
+  nav={{ breadcrumb, navLinks, menuLinks }}
+  footer={{ variant: 'full' }}
+>
+  <section class="blog-hero">
+    <span class="eyebrow" data-lang="ru">Журнал</span><span class="eyebrow" data-lang="en">The Journal</span>
+    <T value={{ ru: 'Практика, тишина и <em>дорога к себе</em>', en: 'Practice, stillness, and the <em>road home</em>' }} tag="h1" html />
+    <T
+      value={{
+        ru: 'Заметки о йоге, йога-нидре, медитации и жизни ретрита — от нашего сообщества преподавателей.',
+        en: 'Notes on yoga, Yoga Nidra, meditation, and the retreat life — from our community of teachers.',
+      }}
+      tag="p"
+      class="lede"
+    />
+  </section>
+
+  <section class="blog-list">
+    {
+      posts.length > 0 ? (
+        <div class="blog-grid">
+          {posts.map((post) => (
+            <BlogCard post={post} />
+          ))}
+        </div>
+      ) : (
+        <T
+          value={{ ru: 'Скоро здесь появятся первые статьи.', en: 'The first articles are coming soon.' }}
+          tag="p"
+          class="blog-empty"
+        />
+      )
+    }
+  </section>
+
+  <div class="cta-band post-cta">
+    <span class="eyebrow" data-lang="ru">Оставайтесь рядом</span><span class="eyebrow" data-lang="en">Stay close</span>
+    <T value={{ ru: 'Новые тексты — в вашей почте', en: 'New writing, in your inbox' }} tag="h2" />
+    <T
+      value={{
+        ru: 'Раз в несколько недель — статьи и анонсы ретритов. Без спама.',
+        en: 'Every few weeks — articles and retreat announcements. No spam.',
+      }}
+      tag="p"
+    />
+    <NewsletterForm client:visible />
+  </div>
+</BaseLayout>

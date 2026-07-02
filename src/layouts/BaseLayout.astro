@@ -12,6 +12,10 @@ interface Props {
   description?: string;
   pageClass: string;
   accentVars?: string;
+  /** Open Graph type (default "website"; use "article" for blog posts). */
+  ogType?: string;
+  /** Absolute or root-relative image URL for social cards. */
+  ogImage?: string;
   nav: {
     breadcrumb?: { ru: string; en: string };
     navLinks: NavLink[];
@@ -28,9 +32,22 @@ interface Props {
 }
 
 import siteData from '../content/settings/site.json';
-const { title, description, pageClass, accentVars, nav, footer = { variant: 'full' }, contact = true } =
-  Astro.props;
+const {
+  title,
+  description,
+  pageClass,
+  accentVars,
+  ogType = 'website',
+  ogImage,
+  nav,
+  footer = { variant: 'full' },
+  contact = true,
+} = Astro.props;
 const rootCss = buildRootCss();
+
+// Canonical + social URLs from the configured site origin.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://anjoy.space').href;
+const ogImageURL = ogImage ? new URL(ogImage, Astro.site ?? 'https://anjoy.space').href : undefined;
 ---
 
 <!doctype html>
@@ -40,6 +57,16 @@ const rootCss = buildRootCss();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Anjoy Space" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonicalURL} />
+    {ogImageURL && <meta property="og:image" content={ogImageURL} />}
+    <meta name="twitter:card" content={ogImageURL ? 'summary_large_image' : 'summary'} />
+    {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
+    <slot name="head" />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
