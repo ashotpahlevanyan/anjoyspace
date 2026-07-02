@@ -226,7 +226,7 @@
     text-align: center; position: relative; overflow: hidden;
   }
   .cta-band::before {
-    content: ''; position: absolute; inset: 0;
+    content: ''; position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
   }
   .cta-band h2 {
