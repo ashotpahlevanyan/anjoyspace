@@ -31,6 +31,8 @@ export default async function handler(req, res) {
   const company = String(body.company || '').trim();
   const teamSize = String(body['team-size'] || '').trim();
   const source = String(body.source || '').trim();
+  const utm = String(body.utm || '').trim();
+  const referrer = String(body.referrer || '').trim();
 
   if (!isEmail(email)) {
     return res.status(400).json({ ok: false, error: 'A valid email address is required.' });
@@ -39,7 +41,7 @@ export default async function handler(req, res) {
   const sinks = [];
   // Newsletter + lead-magnet signups join the mailing list; others are inquiries.
   if (form === 'newsletter' || form === 'lead-magnet') sinks.push(addToMailerLite({ email, name }));
-  sinks.push(notifyTelegram(form, { email, name, message, company, teamSize, source }));
+  sinks.push(notifyTelegram(form, { email, name, message, company, teamSize, source, utm, referrer }));
 
   const results = await Promise.all(sinks);
   const configured = results.some((r) => r.configured);
@@ -86,6 +88,8 @@ async function notifyTelegram(form, data) {
     data.teamSize && `*Team size:* ${escapeMd(data.teamSize)}`,
     data.message && `*Message:* ${escapeMd(data.message)}`,
     data.source && `*Source:* ${escapeMd(data.source)}`,
+    data.utm && `*Campaign:* ${escapeMd(data.utm)}`,
+    data.referrer && `*Referrer:* ${escapeMd(data.referrer)}`,
   ].filter(Boolean);
 
   try {
