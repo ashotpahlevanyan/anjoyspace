@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import T from '../../components/T.astro';
+import SocialShare from '../../components/SocialShare.astro';
 import type { NavLink } from '../../components/SiteNav.tsx';
 
 const navLinks: NavLink[] = [
@@ -82,6 +83,10 @@ const benefits = [
         <span data-lang="ru">Никакого спама. Иногда — новые статьи и анонсы ретритов.</span>
         <span data-lang="en">No spam. Occasionally — new articles and retreat announcements.</span>
       </p>
+      <div class="page-share">
+        <T value={{ ru: 'Поделиться с другом:', en: 'Share with a friend:' }} tag="p" class="page-share-note" />
+        <SocialShare />
+      </div>
     </div>
   </section>
 
