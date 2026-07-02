@@ -46,8 +46,8 @@
   font-weight: 300; color: var(--gold);
 }
 
-/* ── NEWSLETTER NETLIFY FORM ── */
-.newsletter-form { display: flex; max-width: 440px; margin: 2rem auto 0; }
+/* ── NEWSLETTER FORM ── */
+.newsletter-form { display: flex; max-width: 440px; margin: 2rem auto 0; position: relative; }
 .newsletter-form input {
   flex: 1; padding: 0.9rem 1.2rem;
   background: rgba(13, 17, 23, 0.5);
