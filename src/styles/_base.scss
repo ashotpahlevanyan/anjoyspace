@@ -105,3 +105,13 @@ section { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
 @media (prefers-reduced-motion: reduce) {
   .scroll-top { transition: opacity 0.3s, visibility 0.3s; transform: none; }
 }
+
+/* ── FREEBIE LINK (under newsletter CTAs) ── */
+.cta-freebie {
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+}
+.cta-freebie a { color: var(--parchment-dim); text-decoration: none; transition: color 0.2s; }
+.cta-freebie a:hover { color: var(--gold); }

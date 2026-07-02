@@ -25,7 +25,8 @@
       "heading": { "ru": "О нас", "en": "About" },
       "links": [
         { "label": { "ru": "Философия", "en": "Our Philosophy" }, "href": "/#about" },
-        { "label": { "ru": "Истории", "en": "Stories" }, "href": "/#testimonials" },
+        { "label": { "ru": "Журнал", "en": "Journal" }, "href": "/blog/" },
+        { "label": { "ru": "Бесплатный гид", "en": "Free guide" }, "href": "/free/" },
         { "label": { "ru": "Преподаватели", "en": "Our Teachers" }, "href": "/teachers/" },
         { "label": { "ru": "Ретрит-центр", "en": "Retreat Center" }, "href": "/retreat-center/" },
         { "label": { "ru": "Для команд", "en": "For Teams" }, "href": "/corporate/" }

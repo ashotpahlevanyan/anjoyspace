@@ -6,6 +6,7 @@ import type { Localized } from '../lib/i18n';
 import SiteNav, { type NavLink } from '../components/SiteNav.tsx';
 import SiteFooter from '../components/SiteFooter.astro';
 import ContactModal from '../components/ContactModal.tsx';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -81,6 +82,39 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site ?? 'https://anjoy.space
           var l = localStorage.getItem('anjoy_lang') || 'ru';
           document.documentElement.setAttribute('lang', l);
         } catch (e) {}
+      })();
+    </script>
+    <script is:inline>
+      // First-touch attribution: capture UTM params on landing, then attach
+      // them (+ referrer) to every /api/lead submission so leads are traceable
+      // to a campaign in the Telegram alert.
+      (function () {
+        try {
+          var p = new URLSearchParams(location.search);
+          var utm = {};
+          ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
+            var v = p.get(k);
+            if (v) utm[k] = v;
+          });
+          if (Object.keys(utm).length && !sessionStorage.getItem('anjoy_utm')) {
+            sessionStorage.setItem('anjoy_utm', JSON.stringify(utm));
+          }
+        } catch (e) {}
+
+        var orig = window.fetch;
+        window.fetch = function (url, opts) {
+          try {
+            if (typeof url === 'string' && url.indexOf('/api/lead') !== -1 && opts && opts.method === 'POST' && typeof opts.body === 'string') {
+              var utm = JSON.parse(sessionStorage.getItem('anjoy_utm') || '{}');
+              var body = JSON.parse(opts.body);
+              var tag = [utm.utm_source, utm.utm_medium, utm.utm_campaign].filter(Boolean).join(' / ');
+              if (tag && !body.utm) body.utm = tag;
+              if (!body.referrer && document.referrer) body.referrer = document.referrer;
+              opts.body = JSON.stringify(body);
+            }
+          } catch (e) {}
+          return orig.apply(this, arguments);
+        };
       })();
     </script>
   </head>
@@ -173,5 +207,6 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site ?? 'https://anjoy.space
         });
       })();
     </script>
+    <Analytics />
   </body>
 </html>
