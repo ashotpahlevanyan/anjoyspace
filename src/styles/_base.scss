@@ -115,3 +115,56 @@ section { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
 }
 .cta-freebie a { color: var(--parchment-dim); text-decoration: none; transition: color 0.2s; }
 .cta-freebie a:hover { color: var(--gold); }
+
+/* ── ALWAYS-VISIBLE BOOK CTA ── */
+/* Desktop: vertical tab on the right edge. Mobile: bottom-center pill. */
+.side-cta {
+  position: fixed; right: 0; top: 50%; transform: translateY(-50%);
+  z-index: 60;
+  writing-mode: vertical-rl; text-orientation: mixed;
+  background: var(--gold); color: var(--night);
+  padding: 1.15rem 0.55rem;
+  font-family: var(--font-mono); font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+  border-radius: 6px 0 0 6px;
+  box-shadow: -2px 0 14px rgba(0, 0, 0, 0.28);
+  transition: padding-right 0.25s, background 0.25s;
+}
+.side-cta:hover { background: var(--gold-light); padding-right: 0.85rem; }
+.side-cta:focus-visible { outline: 2px solid var(--parchment); outline-offset: 2px; }
+
+@media (max-width: 600px) {
+  .side-cta {
+    top: auto; bottom: 1rem; right: 50%; transform: translateX(50%);
+    writing-mode: horizontal-tb;
+    border-radius: 999px; padding: 0.8rem 1.5rem;
+    font-size: 0.72rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  }
+  /* keep the back-to-top clear of the centered mobile pill */
+  .scroll-top { bottom: 4.5rem; }
+}
+
+/* ── SOCIAL SHARE ── */
+.social-share {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+}
+.social-share .share-label {
+  font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--parchment-dim); margin-right: 0.15rem;
+}
+.social-share .share-btn {
+  width: 34px; height: 34px; display: inline-grid; place-items: center;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: transparent; color: var(--parchment-dim); cursor: pointer;
+  text-decoration: none; position: relative;
+  transition: color 0.2s, border-color 0.2s;
+}
+.social-share .share-btn:hover { color: var(--gold); border-color: var(--gold); }
+.social-share .share-copy .share-copied {
+  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em;
+  color: var(--gold); white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.social-share .share-copy.copied .share-copied { opacity: 1; }

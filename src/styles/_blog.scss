@@ -192,6 +192,18 @@
   padding: 0.35rem 0.9rem;
 }
 
+.post-share {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+.post-share--foot {
+  max-width: 720px;
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
 .post-cta { margin-top: 4rem; }
 
 .more-posts {
