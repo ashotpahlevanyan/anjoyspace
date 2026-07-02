@@ -35,12 +35,12 @@
       "en": "We've gathered in"
     },
     "places": [
-      { "ru": "Бали, Индонезия", "en": "Bali, Indonesia" },
-      { "ru": "Тоскана, Италия", "en": "Tuscany, Italy" },
-      { "ru": "Ришикеш, Индия", "en": "Rishikesh, India" },
-      { "ru": "Тулум, Мексика", "en": "Tulum, Mexico" },
-      { "ru": "Ереван, Армения", "en": "Yerevan, Armenia" },
-      { "ru": "Ибица, Испания", "en": "Ibiza, Spain" }
+      { "ru": "Бали, Индонезия", "en": "Bali, Indonesia", "href": "/retreats/stillwater-immersion/" },
+      { "ru": "Тоскана, Италия", "en": "Tuscany, Italy", "href": "/retreats/sacred-geometry-intensive/" },
+      { "ru": "Ришикеш, Индия", "en": "Rishikesh, India", "href": "/retreats/himalayan-source-journey/" },
+      { "ru": "Тулум, Мексика", "en": "Tulum, Mexico", "href": "/retreats/new-year-reset/" },
+      { "ru": "Ереван, Армения", "en": "Yerevan, Armenia", "href": "/retreats/caucasus-awakening/" },
+      { "ru": "Ибица, Испания", "en": "Ibiza, Spain", "href": "/retreats/mediterranean-light/" }
     ]
   },
   "retreatsHeader": {

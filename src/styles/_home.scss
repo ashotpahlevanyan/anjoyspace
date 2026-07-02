@@ -22,6 +22,8 @@
     font-size: 0.8rem; color: var(--parchment-dim);
     white-space: nowrap; font-weight: 300;
   }
+  .locations-strip a.loc { text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .locations-strip a.loc:hover { color: var(--gold); }
   .loc-dot { width: 3px; height: 3px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
 
   /* ── HERO ── */

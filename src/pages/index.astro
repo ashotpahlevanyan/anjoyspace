@@ -21,12 +21,9 @@ const past = (await getCollection('pastRetreats')).sort(byOrder);
 const galleryItems = (await getCollection('gallery')).sort(byOrder);
 const testimonials = (await getCollection('testimonials')).sort(byOrder);
 
+// Desktop top nav — trimmed so it fits; in-page section links live in the full menu.
 const navLinks: NavLink[] = [
   { href: '#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
-  { href: '#past', label: { ru: 'Прошлые', en: 'Past' } },
-  { href: '#gallery', label: { ru: 'Галерея', en: 'Gallery' } },
-  { href: '#testimonials', label: { ru: 'Истории', en: 'Stories' } },
-  { href: '#about', label: { ru: 'О нас', en: 'About' } },
   { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
   { href: '/lila/', label: { ru: 'Лила', en: 'Lila' } },
   { href: '/year-compass/', label: { ru: 'Year Compass', en: 'Year Compass' } },
@@ -34,8 +31,19 @@ const navLinks: NavLink[] = [
   { href: '/retreat-center/', label: { ru: 'Центр', en: 'Center' } },
   { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
 ];
+// Full hamburger menu — also includes the on-page sections.
 const menuLinks: NavLink[] = [
-  ...navLinks,
+  { href: '#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '#past', label: { ru: 'Прошлые', en: 'Past' } },
+  { href: '#gallery', label: { ru: 'Галерея', en: 'Gallery' } },
+  { href: '#testimonials', label: { ru: 'Истории', en: 'Stories' } },
+  { href: '#about', label: { ru: 'О нас', en: 'About' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/lila/', label: { ru: 'Игра Лила', en: 'The Lila Game' } },
+  { href: '/year-compass/', label: { ru: 'Year Compass', en: 'Year Compass' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+  { href: '/retreat-center/', label: { ru: 'Ретрит-центр', en: 'Retreat Center' } },
+  { href: '/corporate/', label: { ru: 'Командам', en: 'Teams' } },
   { href: '#contact', label: { ru: 'Записаться на ретрит', en: 'Reserve a Spot' }, contact: true },
 ];
 const cta = { ru: 'Записаться', en: 'Reserve' };
@@ -55,7 +63,11 @@ const cta = { ru: 'Записаться', en: 'Reserve' };
       home.locations.places.map((place, i) => (
         <>
           {i > 0 && <span class="loc-dot"></span>}
-          <T value={place} tag="span" class="loc" />
+          {'href' in place && place.href ? (
+            <a href={place.href} class="loc"><T value={place} /></a>
+          ) : (
+            <T value={place} tag="span" class="loc" />
+          )}
         </>
       ))
     }
