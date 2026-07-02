@@ -2,5 +2,5 @@
 order: 6
 symbol: "⬡"
 variant: "gimg-6"
-caption: "Sacred Geometry Workshop"
+caption: { ru: "Мастерская сакральной геометрии", en: "Sacred Geometry Workshop" }
 ---

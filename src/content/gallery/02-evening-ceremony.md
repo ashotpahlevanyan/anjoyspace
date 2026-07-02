@@ -2,5 +2,5 @@
 order: 2
 symbol: "✦"
 variant: "gimg-2"
-caption: "Evening Ceremony · Tuscany"
+caption: { ru: "Вечерняя церемония · Тоскана", en: "Evening Ceremony · Tuscany" }
 ---
