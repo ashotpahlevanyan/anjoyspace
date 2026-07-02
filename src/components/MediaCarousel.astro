@@ -103,6 +103,16 @@ const { items, variant = 'photo' } = Astro.props;
 </style>
 
 <script>
+  interface Slide {
+    type?: string;
+    src?: string;
+    poster?: string;
+    embed?: string;
+  }
+
+  let slides: Slide[] = [];
+  let index = 0;
+
   function getLightbox(): HTMLElement {
     let lb = document.getElementById('dyw-lightbox');
     if (lb) return lb;
@@ -113,6 +123,8 @@ const { items, variant = 'photo' } = Astro.props;
     lb.innerHTML =
       '<div class="dyw-lightbox__backdrop" data-dyw-close></div>' +
       '<button class="dyw-lightbox__close" data-dyw-close aria-label="Close">×</button>' +
+      '<button class="dyw-lightbox__nav dyw-lightbox__prev" data-dyw-nav="-1" aria-label="Previous">‹</button>' +
+      '<button class="dyw-lightbox__nav dyw-lightbox__next" data-dyw-nav="1" aria-label="Next">›</button>' +
       '<div class="dyw-lightbox__stage"></div>';
     document.body.appendChild(lb);
 
@@ -123,52 +135,94 @@ const { items, variant = 'photo' } = Astro.props;
       '.dyw-lightbox__backdrop{position:absolute;inset:0;background:rgba(8,12,10,.92);backdrop-filter:blur(4px)}' +
       '.dyw-lightbox__close{position:absolute;top:18px;right:24px;z-index:2;width:46px;height:46px;border-radius:50%;background:rgba(20,28,24,.6);border:1px solid rgba(245,240,232,.4);color:#f5f0e8;font-size:1.6rem;line-height:1;cursor:pointer}' +
       '.dyw-lightbox__close:hover{border-color:#c9a96e;color:#c9a96e}' +
+      '.dyw-lightbox__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px;height:46px;border-radius:50%;background:rgba(20,28,24,.6);border:1px solid rgba(245,240,232,.4);color:#f5f0e8;font-size:1.9rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}' +
+      '.dyw-lightbox__nav:hover{border-color:#c9a96e;color:#c9a96e}' +
+      '.dyw-lightbox__prev{left:18px}.dyw-lightbox__next{right:18px}' +
       '.dyw-lightbox__stage{position:relative;z-index:1;max-width:100%;max-height:100%;display:flex;align-items:center;justify-content:center}' +
       '.dyw-lightbox__stage img,.dyw-lightbox__stage video{max-width:100%;max-height:90vh;border-radius:10px;display:block}' +
       '.dyw-lightbox__stage video{max-height:90vh;height:90vh}' +
-      '.dyw-lightbox__stage iframe{width:min(90vw,1100px);aspect-ratio:16/9;max-height:90vh;border:0;border-radius:10px}';
+      '.dyw-lightbox__stage iframe{width:min(90vw,1100px);aspect-ratio:16/9;max-height:90vh;border:0;border-radius:10px}' +
+      '@media (max-width:600px){.dyw-lightbox__nav{width:40px;height:40px;font-size:1.6rem}.dyw-lightbox__prev{left:8px}.dyw-lightbox__next{right:8px}}';
     document.head.appendChild(style);
 
     const close = () => {
       lb!.setAttribute('hidden', '');
       lb!.querySelector('.dyw-lightbox__stage')!.innerHTML = '';
+      slides = [];
     };
     lb.querySelectorAll('[data-dyw-close]').forEach((el) => el.addEventListener('click', close));
+    lb.querySelectorAll<HTMLElement>('[data-dyw-nav]').forEach((el) =>
+      el.addEventListener('click', () => navigate(Number(el.dataset.dywNav))),
+    );
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !lb!.hasAttribute('hidden')) close();
+      if (lb!.hasAttribute('hidden')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') navigate(1);
+      else if (e.key === 'ArrowLeft') navigate(-1);
+    });
+
+    // Swipe navigation on touch.
+    const stageEl = lb.querySelector('.dyw-lightbox__stage') as HTMLElement;
+    let x0: number | null = null;
+    stageEl.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    stageEl.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) navigate(dx < 0 ? 1 : -1);
+      x0 = null;
     });
     return lb;
   }
 
-  function openItem(t: HTMLElement) {
+  function render() {
     const lb = getLightbox();
     const stage = lb.querySelector('.dyw-lightbox__stage') as HTMLElement;
-    const type = t.dataset.type;
-    const src = t.dataset.src;
-    const poster = t.dataset.poster;
-    const embed = t.dataset.embed;
-    if (type === 'video' && src) {
-      stage.innerHTML = '';
+    const it = slides[index];
+    if (!it) return;
+    stage.innerHTML = '';
+    if (it.type === 'video' && it.src) {
       const v = document.createElement('video');
-      v.src = src;
-      if (poster) v.poster = poster;
+      v.src = it.src;
+      if (it.poster) v.poster = it.poster;
       v.controls = true;
       v.autoplay = true;
       v.playsInline = true;
       stage.appendChild(v);
-    } else if (type === 'vk' && embed) {
+    } else if (it.type === 'vk' && it.embed) {
       stage.innerHTML =
-        '<iframe src="' + embed + '" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-    } else if (src) {
-      stage.innerHTML = '<img src="' + src + '" alt="">';
+        '<iframe src="' + it.embed + '" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+    } else if (it.src) {
+      const img = document.createElement('img');
+      img.src = it.src;
+      img.alt = '';
+      stage.appendChild(img);
     }
+    const showNav = slides.length > 1;
+    lb.querySelectorAll<HTMLElement>('.dyw-lightbox__nav').forEach((n) => {
+      n.style.display = showNav ? '' : 'none';
+    });
+  }
+
+  function navigate(dir: number) {
+    if (slides.length < 2) return;
+    index = (index + dir + slides.length) % slides.length;
+    render();
+  }
+
+  function openFrom(tile: HTMLElement) {
+    const carousel = tile.closest('[data-dyw-carousel]');
+    const tiles = Array.from(carousel?.querySelectorAll<HTMLElement>('[data-dyw-open]') ?? []);
+    slides = tiles.map((t) => ({ type: t.dataset.type, src: t.dataset.src, poster: t.dataset.poster, embed: t.dataset.embed }));
+    index = Math.max(0, tiles.indexOf(tile));
+    const lb = getLightbox();
+    render();
     lb.removeAttribute('hidden');
   }
 
   document.addEventListener('click', (e) => {
     const tile = (e.target as HTMLElement).closest<HTMLElement>('[data-dyw-open]');
     if (tile) {
-      openItem(tile);
+      openFrom(tile);
       return;
     }
     const arrow = (e.target as HTMLElement).closest<HTMLElement>('[data-dyw-dir]');
@@ -176,7 +230,7 @@ const { items, variant = 'photo' } = Astro.props;
       const track = arrow.parentElement!.querySelector<HTMLElement>('[data-dyw-track]');
       const tileEl = track?.querySelector<HTMLElement>('.dyw-tile');
       const step = (tileEl?.offsetWidth ?? 240) + 16;
-      track?.scrollBy({ left: step * Number(arrow.dataset.dyw_dir ?? arrow.dataset.dywDir), behavior: 'smooth' });
+      track?.scrollBy({ left: step * Number(arrow.dataset.dywDir), behavior: 'smooth' });
     }
   });
 </script>
