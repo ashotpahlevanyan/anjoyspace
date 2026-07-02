@@ -1,0 +1,188 @@
+---
+// Digital contact card — the destination the NFC tap and the printed QR both
+// open. Standalone (no site nav/footer) so it stays focused: brand mark, a
+// reliable "Save contact" action (links to /anjoy.vcf — the cross-platform-safe
+// method; iOS does not read raw vCard NFC records, a URL to a hosted .vcf works
+// on both iPhone and Android), and the social links.
+//
+// SINGLE SOURCE OF TRUTH: edit `contact` below, then mirror the same values in
+// /public/anjoy.vcf so the saved contact matches what's shown here.
+import Mandala from '../components/Mandala.astro';
+
+const contact = {
+  name: 'Anjoy Space',
+  role: 'Yoga Retreats',
+  email: 'hello@anjoy.space',
+  web: 'anjoy.space',
+  webHref: 'https://anjoy.space',
+  // TODO: replace the three placeholders below with real handles, then update /public/anjoy.vcf
+  instagram: { label: '@anjoy_space', href: 'https://www.instagram.com/anjoy_space/' },
+  telegram: { label: '@ovakimianani', href: 'https://t.me/ovakimianani' },
+  whatsapp: { label: '+7 915 159 3376', href: 'https://wa.me/79151593376' },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anjoy Space — Contact</title>
+    <meta name="description" content="Save Anjoy Space to your contacts." />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="card">
+      <div class="mark"><Mandala variant="hero" /></div>
+
+      <h1 class="wordmark"><span>anjoy</span><em>.space</em></h1>
+      <p class="role">{contact.role}</p>
+
+      <a class="save" href="/anjoy.vcf" download="anjoy-space.vcf">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+          <path d="M19 8v6M22 11h-6"></path>
+        </svg>
+        Save contact
+      </a>
+
+      <nav class="links">
+        <a href={`mailto:${contact.email}`}>
+          <span class="k">Email</span><span class="v">{contact.email}</span>
+        </a>
+        <a href={contact.instagram.href} target="_blank" rel="noopener">
+          <span class="k">Instagram</span><span class="v">{contact.instagram.label}</span>
+        </a>
+        <a href={contact.telegram.href} target="_blank" rel="noopener">
+          <span class="k">Telegram</span><span class="v">{contact.telegram.label}</span>
+        </a>
+        <a href={contact.whatsapp.href} target="_blank" rel="noopener">
+          <span class="k">WhatsApp</span><span class="v">{contact.whatsapp.label}</span>
+        </a>
+        <a href={contact.webHref} target="_blank" rel="noopener">
+          <span class="k">Web</span><span class="v">{contact.web}</span>
+        </a>
+      </nav>
+
+      <p class="tag">MAKE&nbsp;&nbsp;SPACE&nbsp;&nbsp;TO&nbsp;&nbsp;ENJOY</p>
+    </main>
+
+    <style is:global>
+      :root {
+        --night: #0d1117;
+        --deep: #141b24;
+        --card-bg: #1a2330;
+        --parchment: #f5f0e8;
+        --parchment-dim: #b8b0a0;
+        --gold: #c9a96e;
+        --gold-light: #e2c98a;
+        --border: rgba(201, 169, 110, 0.2);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        min-height: 100dvh;
+        background: radial-gradient(120% 80% at 50% 0%, var(--deep), var(--night));
+        color: var(--parchment);
+        font-family: 'DM Sans', -apple-system, sans-serif;
+        font-weight: 300;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 1.25rem 3rem;
+      }
+    </style>
+    <style>
+      .card {
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .mark { width: 128px; height: 128px; margin-top: 1rem; }
+      .mark :global(svg) { width: 100%; height: 100%; }
+      .wordmark {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 500;
+        font-size: 2.75rem;
+        line-height: 1;
+        margin-top: 0.5rem;
+        letter-spacing: 0.5px;
+      }
+      .wordmark span { color: var(--parchment); }
+      .wordmark em { color: var(--gold); font-style: normal; }
+      .role {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--parchment-dim);
+        margin-top: 0.75rem;
+      }
+      .save {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-top: 2rem;
+        padding: 0.9rem 2rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--gold-light), var(--gold));
+        color: var(--night);
+        font-weight: 500;
+        font-size: 1rem;
+        text-decoration: none;
+        box-shadow: 0 8px 30px rgba(201, 169, 110, 0.25);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .save:active { transform: scale(0.97); }
+      .links {
+        width: 100%;
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+      }
+      .links a {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        padding: 0.95rem 0.25rem;
+        border-bottom: 1px solid var(--border);
+        text-decoration: none;
+        color: var(--parchment);
+      }
+      .links a:first-child { border-top: 1px solid var(--border); }
+      .links .k {
+        flex: none;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--parchment-dim);
+      }
+      .links .v {
+        font-size: 0.95rem;
+        min-width: 0;
+        text-align: right;
+        overflow-wrap: anywhere;
+      }
+      .links a:active .v { color: var(--gold-light); }
+      .tag {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.35em;
+        color: var(--parchment-dim);
+        opacity: 0.7;
+        margin-top: 2.5rem;
+      }
+    </style>
+  </body>
+</html>

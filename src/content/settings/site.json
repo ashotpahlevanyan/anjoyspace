@@ -7,9 +7,9 @@
     "en": "Yoga retreats held in places where the earth remembers stillness. Small groups. Deep work. Real transformation."
   },
   "social": [
-    { "label": "Instagram", "href": "#" },
-    { "label": "Telegram", "href": "#" },
-    { "label": "WhatsApp", "href": "#" }
+    { "label": "Instagram", "href": "https://www.instagram.com/anjoy_space/" },
+    { "label": "Telegram", "href": "https://t.me/ovakimianani" },
+    { "label": "WhatsApp", "href": "https://wa.me/79151593376" }
   ],
   "footerColumns": [
     {
@@ -36,10 +36,11 @@
     {
       "heading": { "ru": "Связь", "en": "Connect" },
       "links": [
+        { "label": { "ru": "Визитка", "en": "Digital card" }, "href": "/card" },
         { "label": { "ru": "hello@anjoy.space", "en": "hello@anjoy.space" }, "href": "mailto:hello@anjoy.space" },
-        { "label": { "ru": "Instagram", "en": "Instagram" }, "href": "#" },
-        { "label": { "ru": "Telegram", "en": "Telegram" }, "href": "#" },
-        { "label": { "ru": "WhatsApp", "en": "WhatsApp" }, "href": "#" }
+        { "label": { "ru": "Instagram", "en": "Instagram" }, "href": "https://www.instagram.com/anjoy_space/" },
+        { "label": { "ru": "Telegram", "en": "Telegram" }, "href": "https://t.me/ovakimianani" },
+        { "label": { "ru": "WhatsApp", "en": "WhatsApp" }, "href": "https://wa.me/79151593376" }
       ]
     }
   ]
