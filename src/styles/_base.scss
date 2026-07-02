@@ -137,17 +137,32 @@ section { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
 }
 .side-cta:hover { background: var(--gold-light); padding-right: 0.85rem; }
 .side-cta:focus-visible { outline: 2px solid var(--parchment); outline-offset: 2px; }
+/* Icon is only used for the collapsible mobile FAB; hidden on desktop tab. */
+.side-cta__icon { display: none; }
 
 @media (max-width: 600px) {
+  /* Mobile: collapsible pill on the right edge. Collapsed = icon only;
+     first tap expands to reveal the label, second tap books (JS in
+     BaseLayout). Auto-collapses after a few seconds of inactivity. */
   .side-cta {
-    top: auto; bottom: 1rem; right: 50%; transform: translateX(50%);
-    writing-mode: horizontal-tb;
-    border-radius: 999px; padding: 0.8rem 1.5rem;
-    font-size: 0.72rem;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    top: 50%; bottom: auto; right: 0; transform: translateY(-50%);
+    writing-mode: horizontal-tb; text-orientation: mixed;
+    display: flex; align-items: center; gap: 0.5rem;
+    overflow: hidden;
+    max-width: 46px;                 /* collapsed: just the icon */
+    padding: 0.72rem;
+    border-radius: 999px 0 0 999px;
+    box-shadow: -2px 4px 16px rgba(0, 0, 0, 0.34);
+    transition: max-width 0.32s ease, padding 0.32s ease, background 0.25s;
   }
-  /* keep the back-to-top clear of the centered mobile pill */
-  .scroll-top { bottom: 4.5rem; }
+  .side-cta:hover { padding-right: 0.72rem; }   /* neutralise desktop hover pad */
+  .side-cta__icon { display: block; flex: none; }
+  .side-cta__label { white-space: nowrap; opacity: 0; transition: opacity 0.18s ease; }
+  .side-cta.is-expanded {
+    max-width: 260px;
+    padding: 0.72rem 1.15rem 0.72rem 0.9rem;
+  }
+  .side-cta.is-expanded .side-cta__label { opacity: 1; }
 }
 
 /* ── SOCIAL SHARE ── */
