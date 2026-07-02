@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import T from '../../components/T.astro';
+import type { NavLink } from '../../components/SiteNav.tsx';
+
+const navLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+];
+const menuLinks: NavLink[] = [
+  { href: '/', label: { ru: 'Главная', en: 'Home' } },
+  { href: '/blog/', label: { ru: 'Журнал', en: 'Journal' } },
+  { href: '/#retreats', label: { ru: 'Ретриты', en: 'Retreats' } },
+  { href: '/teachers/', label: { ru: 'Преподаватели', en: 'Teachers' } },
+];
+const benefits = [
+  {
+    icon: '☽',
+    text: { ru: 'Простая практика на пять шагов — можно делать прямо в кровати', en: 'A simple five-step practice — do it right in bed' },
+  },
+  {
+    icon: '❋',
+    text: { ru: 'Как успокоить нервную систему за 15–20 минут', en: 'How to settle the nervous system in 15–20 minutes' },
+  },
+  {
+    icon: '✦',
+    text: { ru: 'Готовый скрипт для сканирования тела и дыхания', en: 'A ready body-scan and breath script to follow' },
+  },
+];
+---
+
+<BaseLayout
+  title="Бесплатный гид по йога-нидре — Anjoy Space"
+  description="Заберите бесплатный гид: простая практика глубокого отдыха дома. Get our free Yoga Nidra starter guide — deep rest you can practise at home."
+  pageClass="page-optin"
+  nav={{ navLinks, menuLinks }}
+  footer={{ variant: 'simple', copyright: { ru: '© 2026, Anjoy Space', en: '© 2026, Anjoy Space' } }}
+  contact={false}
+>
+  <section class="optin">
+    <div class="optin-inner">
+      <span class="optin-symbol">☽</span>
+      <span class="eyebrow" data-lang="ru">Бесплатный гид</span><span class="eyebrow" data-lang="en">Free guide</span>
+      <T
+        value={{ ru: 'Йога-нидра дома: <em>глубокий отдых</em> за 20 минут', en: 'Yoga Nidra at Home: <em>deep rest</em> in 20 minutes' }}
+        tag="h1"
+        html
+      />
+      <T
+        value={{
+          ru: 'Оставьте почту — и мы откроем короткий гид по практике глубокого осознанного отдыха, которую можно делать вечером дома.',
+          en: 'Leave your email and we\'ll unlock a short guide to deep, conscious rest you can practise at home in the evening.',
+        }}
+        tag="p"
+        class="lede"
+      />
+
+      <ul class="optin-benefits">
+        {
+          benefits.map((b) => (
+            <li>
+              <span class="optin-benefit-icon">{b.icon}</span>
+              <T value={b.text} tag="span" />
+            </li>
+          ))
+        }
+      </ul>
+
+      <form class="optin-form" id="optinForm" name="lead-magnet" method="POST" action="/api/lead">
+        <input type="hidden" name="form-name" value="lead-magnet" />
+        <input type="hidden" name="source" value="nidra-guide" />
+        <p hidden><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+        <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+        <input type="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
+        <button type="submit">
+          <span data-lang="ru">Получить гид</span><span data-lang="en">Get the guide</span>
+        </button>
+        <p class="optin-status" data-status hidden></p>
+      </form>
+      <p class="optin-fineprint">
+        <span data-lang="ru">Никакого спама. Иногда — новые статьи и анонсы ретритов.</span>
+        <span data-lang="en">No spam. Occasionally — new articles and retreat announcements.</span>
+      </p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('optinForm');
+      if (!form) return;
+      var status = form.querySelector('[data-status]');
+      var button = form.querySelector('button[type="submit"]');
+      var t = function (ru, en) {
+        return (document.documentElement.getAttribute('lang') || 'ru') === 'ru' ? ru : en;
+      };
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var data = Object.fromEntries(new FormData(form).entries());
+        button.disabled = true;
+        status.hidden = true;
+        try {
+          var res = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          // Deliver the guide.
+          window.location.href = '/free/nidra-guide/';
+        } catch (err) {
+          status.textContent = t(
+            'Что-то пошло не так. Попробуйте ещё раз или напишите hello@anjoy.space.',
+            'Something went wrong. Please try again or email hello@anjoy.space.',
+          );
+          status.style.color = 'var(--gold)';
+          status.hidden = false;
+          button.disabled = false;
+        }
+      });
+    })();
+  </script>
+</BaseLayout>

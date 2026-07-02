@@ -30,15 +30,16 @@ export default async function handler(req, res) {
   const message = String(body.message || '').trim();
   const company = String(body.company || '').trim();
   const teamSize = String(body['team-size'] || '').trim();
+  const source = String(body.source || '').trim();
 
   if (!isEmail(email)) {
     return res.status(400).json({ ok: false, error: 'A valid email address is required.' });
   }
 
   const sinks = [];
-  // Newsletter signups go to the mailing list; other forms are inquiries.
-  if (form === 'newsletter') sinks.push(addToMailerLite({ email, name }));
-  sinks.push(notifyTelegram(form, { email, name, message, company, teamSize }));
+  // Newsletter + lead-magnet signups join the mailing list; others are inquiries.
+  if (form === 'newsletter' || form === 'lead-magnet') sinks.push(addToMailerLite({ email, name }));
+  sinks.push(notifyTelegram(form, { email, name, message, company, teamSize, source }));
 
   const results = await Promise.all(sinks);
   const configured = results.some((r) => r.configured);
@@ -84,6 +85,7 @@ async function notifyTelegram(form, data) {
     data.company && `*Company:* ${escapeMd(data.company)}`,
     data.teamSize && `*Team size:* ${escapeMd(data.teamSize)}`,
     data.message && `*Message:* ${escapeMd(data.message)}`,
+    data.source && `*Source:* ${escapeMd(data.source)}`,
   ].filter(Boolean);
 
   try {
