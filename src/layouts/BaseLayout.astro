@@ -221,10 +221,16 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site ?? 'https://anjoy.space
         var apply = function () {
           var l = lang();
           document.querySelectorAll('[data-ph-' + l + ']').forEach(function (el) {
-            el.setAttribute('placeholder', el.getAttribute('data-ph-' + l));
+            var v = el.getAttribute('data-ph-' + l);
+            if (el.getAttribute('placeholder') !== v) el.setAttribute('placeholder', v);
           });
+          // Only write when the text actually differs. Assigning textContent
+          // always replaces the child text node, which the body MutationObserver
+          // below sees as a childList change and re-schedules apply() — an
+          // every-frame loop that froze <select> dropdowns (e.g. Lila's format).
           document.querySelectorAll('[data-t-' + l + ']').forEach(function (el) {
-            el.textContent = el.getAttribute('data-t-' + l);
+            var v = el.getAttribute('data-t-' + l);
+            if (el.textContent !== v) el.textContent = v;
           });
         };
         var scheduled = false;
