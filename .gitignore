@@ -30,3 +30,6 @@ untitled/
 
 # Local Netlify CLI folder
 .netlify
+
+# Generated retreat-offer images/PDFs (regenerate with scripts/generate-offers.sh)
+marketing/retreat-offers/

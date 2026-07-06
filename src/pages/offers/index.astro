@@ -1,0 +1,146 @@
+---
+// Offers hub — one place to see every retreat offer and open it (preview,
+// toggle theme/language, or generate the image/PDF). Internal helper page:
+// noindex + excluded from the sitemap, same as the offer pages themselves.
+import { getCollection } from 'astro:content';
+import Mandala from '../../components/Mandala.astro';
+
+function bi(v) {
+  if (v == null) return { ru: '', en: '' };
+  if (typeof v === 'string') return { ru: v, en: v };
+  return { ru: v.ru ?? v.en ?? '', en: v.en ?? v.ru ?? '' };
+}
+
+const retreats = (await getCollection('retreats', (r) => !r.data.draft)).sort(
+  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0),
+);
+const items = retreats.map((r) => ({
+  slug: r.id,
+  title: bi(r.data.title),
+  location: bi(r.data.location),
+  days: bi(r.data.days),
+  price: bi(r.data.price),
+}));
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retreat Offers — Anjoy Space</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="page">
+      <header class="head">
+        <div class="mark"><Mandala variant="about" /></div>
+        <h1>Retreat Offers</h1>
+        <p class="sub">Open an offer to preview it, switch theme / language, or generate the image &amp; PDF.</p>
+      </header>
+
+      <ul class="list">
+        {items.map((it) => (
+          <li class="row">
+            <div class="meta">
+              <a class="name" href={`/offers/${it.slug}`}>{it.title.en || it.title.ru}</a>
+              <p class="loc">
+                {(it.location.en || it.location.ru) && <span>{it.location.en || it.location.ru}</span>}
+                {(it.days.en || it.days.ru) && <><span class="dot">·</span><span>{it.days.en || it.days.ru}</span></>}
+                {(it.price.en || it.price.ru) && <><span class="dot">·</span><span>{it.price.en || it.price.ru}</span></>}
+              </p>
+            </div>
+            <nav class="links">
+              <a href={`/offers/${it.slug}?theme=dark`}>Dark</a>
+              <a href={`/offers/${it.slug}?theme=light`}>Light</a>
+              <a class="open" href={`/offers/${it.slug}`}>Open →</a>
+            </nav>
+          </li>
+        ))}
+      </ul>
+
+      <footer class="foot">
+        <code>scripts/generate-offers.sh</code> renders every offer to
+        <code>marketing/retreat-offers/</code>.
+      </footer>
+    </main>
+
+    <style is:global>
+      :root {
+        --bg0: #0d1117; --bg1: #141b24; --card: #1a2330;
+        --ink: #f5f0e8; --dim: #b8b0a0;
+        --gold: #c9a96e; --goldl: #e2c98a;
+        --line: rgba(201, 169, 110, 0.2);
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        min-height: 100dvh;
+        background: radial-gradient(120% 80% at 50% 0%, var(--bg1), var(--bg0));
+        color: var(--ink);
+        font-family: 'DM Sans', -apple-system, sans-serif; font-weight: 300;
+        padding: 4rem 1.5rem 3rem;
+      }
+    </style>
+    <style>
+      .page { max-width: 760px; margin: 0 auto; }
+      .head { text-align: center; margin-bottom: 2.5rem; }
+      .mark { width: 66px; height: 66px; margin: 0 auto 1rem; }
+      .mark :global(svg) { width: 100%; height: 100%; }
+      h1 {
+        font-family: 'Cormorant Garamond', serif; font-weight: 600;
+        font-size: 2.6rem; letter-spacing: 0.4px;
+      }
+      .sub { color: var(--dim); font-size: 0.95rem; margin-top: 0.5rem; }
+      .list { list-style: none; }
+      .row {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 1rem; padding: 1.15rem 0.25rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .row:first-child { border-top: 1px solid var(--line); }
+      .name {
+        font-family: 'Cormorant Garamond', serif; font-weight: 500;
+        font-size: 1.5rem; color: var(--ink); text-decoration: none;
+      }
+      .name:hover { color: var(--goldl); }
+      .loc {
+        margin-top: 0.2rem;
+        font-family: 'DM Mono', monospace; font-size: 0.72rem;
+        letter-spacing: 0.06em; color: var(--dim);
+        display: flex; gap: 0.5rem; flex-wrap: wrap;
+      }
+      .loc .dot { color: var(--gold); }
+      .links {
+        display: flex; align-items: center; gap: 0.5rem; flex: none;
+        font-family: 'DM Mono', monospace; font-size: 0.72rem;
+        letter-spacing: 0.08em; text-transform: uppercase;
+      }
+      .links a {
+        color: var(--dim); text-decoration: none;
+        padding: 0.4rem 0.7rem; border: 1px solid var(--line); border-radius: 999px;
+        transition: color 0.15s, border-color 0.15s;
+      }
+      .links a:hover { color: var(--gold); border-color: var(--gold); }
+      .links .open { color: var(--bg0); background: var(--gold); border-color: var(--gold); }
+      .foot {
+        margin-top: 2.5rem; text-align: center;
+        font-size: 0.8rem; color: var(--dim);
+      }
+      .foot code {
+        font-family: 'DM Mono', monospace; color: var(--goldl);
+        background: rgba(201, 169, 110, 0.08); padding: 0.1rem 0.4rem; border-radius: 4px;
+      }
+      @media (max-width: 560px) {
+        .row { flex-direction: column; align-items: flex-start; }
+        .links { flex-wrap: wrap; }
+      }
+    </style>
+  </body>
+</html>
