@@ -5,6 +5,7 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import TeacherPortrait from '../../components/TeacherPortrait.astro';
 import T from '../../components/T.astro';
 import { accentStyle } from '../../lib/accents';
+import { pick } from '../../lib/i18n';
 import type { NavLink } from '../../components/SiteNav.tsx';
 
 export async function getStaticPaths() {
@@ -43,6 +44,20 @@ const breadcrumb = {
   ru: `/ ${d.name.ru.toLowerCase()}`,
   en: `/ ${d.name.en.toLowerCase()}`,
 };
+
+// Structured data: teacher as a Person tied to the Anjoy Space organization.
+const SITE = 'https://anjoy.space';
+const teacherUrl = `${SITE}/teachers/${teacher.id}/`;
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${teacherUrl}#person`,
+  name: pick(d.name),
+  jobTitle: pick(d.portraitRole),
+  description: pick(d.lede),
+  url: teacherUrl,
+  worksFor: { '@type': 'Organization', name: 'Anjoy Space', url: `${SITE}/` },
+};
 const navLinks: NavLink[] = [
   { href: '#offerings', label: { ru: 'Предложения', en: 'Offerings' } },
   { href: '#practices', label: { ru: 'Практики', en: 'Practices' } },
@@ -67,12 +82,14 @@ const footer = {
 
 <BaseLayout
   title={`${d.name.en} — Anjoy Space`}
+  description={pick(d.lede)}
   pageClass="page-teacher"
   accentVars={accentStyle(d.accent)}
   nav={{ breadcrumb, navLinks, menuLinks }}
   footer={footer}
   contact={false}
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(personLd)} slot="head" />
   <!-- HERO -->
   <div class="hero">
     <div class="hero-bg"></div>
