@@ -55,6 +55,48 @@ const footer = {
     { label: { ru: 'На главную', en: 'Home' }, href: '/' },
   ],
 };
+
+// Structured data: model each retreat as a TouristTrip (offer/price + itinerary)
+// plus an FAQPage when the retreat has questions — both eligible for rich results.
+const SITE = 'https://anjoy.space';
+const retreatUrl = `${SITE}/retreats/${retreat.id}/`;
+const priceRaw = pick(d.price, 'en');
+const priceCurrency = priceRaw.includes('₽') ? 'RUB' : priceRaw.includes('€') ? 'EUR' : priceRaw.includes('$') ? 'USD' : undefined;
+const priceValue = Number(priceRaw.replace(/[^\d.]/g, '')) || undefined;
+const heroImage = d.photos?.[0]?.src ? `${SITE}${d.photos[0].src}` : undefined;
+
+const tripLd = {
+  '@type': 'TouristTrip',
+  '@id': `${retreatUrl}#trip`,
+  name: pick(d.title),
+  description: pick(d.summary),
+  url: retreatUrl,
+  touristType: 'Yoga retreat',
+  provider: { '@type': 'Organization', name: 'Anjoy Space', url: `${SITE}/` },
+  ...(heroImage ? { image: heroImage } : {}),
+  ...(d.itinerary?.length
+    ? {
+        itinerary: {
+          '@type': 'ItemList',
+          itemListElement: d.itinerary.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: pick(s.title) })),
+        },
+      }
+    : {}),
+  ...(priceValue && priceCurrency
+    ? { offers: { '@type': 'Offer', price: priceValue, priceCurrency, availability: 'https://schema.org/InStock', url: retreatUrl } }
+    : {}),
+};
+const faqLd = d.faq?.length
+  ? {
+      '@type': 'FAQPage',
+      mainEntity: d.faq.map((f) => ({
+        '@type': 'Question',
+        name: pick(f.q),
+        acceptedAnswer: { '@type': 'Answer', text: pick(f.a) },
+      })),
+    }
+  : null;
+const retreatLd = { '@context': 'https://schema.org', '@graph': [tripLd, ...(faqLd ? [faqLd] : [])] };
 ---
 
 <BaseLayout
@@ -64,6 +106,7 @@ const footer = {
   nav={{ breadcrumb, navLinks, menuLinks }}
   footer={footer}
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(retreatLd)} slot="head" />
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>

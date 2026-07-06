@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import home from '../content/pages/home.json';
+import site from '../content/settings/site.json';
 import SectionHeader from '../components/SectionHeader.astro';
 import T from '../components/T.astro';
 import { pick } from '../lib/i18n';
@@ -47,6 +48,33 @@ const menuLinks: NavLink[] = [
   { href: '#contact', label: { ru: 'Записаться на ретрит', en: 'Reserve a Spot' }, contact: true },
 ];
 const cta = { ru: 'Записаться', en: 'Reserve' };
+
+// Site-wide structured data: Organization (brand/knowledge panel) + WebSite.
+const SITE = 'https://anjoy.space';
+const socials = (site.social ?? []).map((s) => s.href).filter((h) => /^https?:/.test(h));
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE}/#organization`,
+      name: 'Anjoy Space',
+      url: `${SITE}/`,
+      email: site.email,
+      logo: `${SITE}/assets/favicon.svg`,
+      description: pick(home.description),
+      sameAs: socials,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      url: `${SITE}/`,
+      name: 'Anjoy Space',
+      publisher: { '@id': `${SITE}/#organization` },
+      inLanguage: 'ru',
+    },
+  ],
+};
 ---
 
 <BaseLayout
@@ -56,6 +84,7 @@ const cta = { ru: 'Записаться', en: 'Reserve' };
   nav={{ navLinks, menuLinks, cta }}
   footer={{ variant: 'full' }}
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(orgLd)} slot="head" />
   <!-- LOCATIONS STRIP -->
   <div class="locations-strip">
     <T value={home.locations.label} tag="span" class="label" />
