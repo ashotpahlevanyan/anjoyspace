@@ -1,0 +1,377 @@
+---
+// Retreat offer / program image — the render surface for the offer generator.
+// One 1080×1080 canvas per retreat, driven entirely by the retreats content
+// collection so offers stay in sync with the site. Theme + language are read
+// from the query string (?theme=dark|light&lang=ru|en) by a tiny inline script,
+// so the generator can screenshot every variant without a rebuild.
+//
+// Not a customer-facing route: noindex + excluded from the sitemap. It exists
+// to be rendered to PNG by scripts/generate-offers.sh.
+import { getCollection } from 'astro:content';
+import Mandala from '../../components/Mandala.astro';
+
+export async function getStaticPaths() {
+  const retreats = await getCollection('retreats', (r) => !r.data.draft);
+  return retreats.map((r) => ({ params: { slug: r.id }, props: { data: r.data } }));
+}
+
+const { data } = Astro.props;
+
+// Where the "Reserve your place" button links to in the PDF export (clickable
+// link annotation). Defaults to this retreat's own page, which carries the
+// booking form. Change SITE or the path here to retarget every offer at once.
+const slug = Astro.params.slug;
+const SITE = 'https://anjoy.space';
+const bookUrl = `${SITE}/retreats/${slug}/`;
+
+// Booking contact — shown on every offer so the CTA is actionable even in the
+// flat PNG (readable/typable), and clickable in the PDF. Brand-level, so edit
+// here once to change it everywhere.
+const contact = {
+  phone: '+7 915 159 3376',
+  whatsapp: 'https://wa.me/79151593376',
+  telegram: '@ovakimianani',
+  telegramUrl: 'https://t.me/ovakimianani',
+};
+
+// Normalise "string | {ru,en}" into a {ru,en} pair.
+function bi(v) {
+  if (v == null) return { ru: '', en: '' };
+  if (typeof v === 'string') return { ru: v, en: v };
+  return { ru: v.ru ?? v.en ?? '', en: v.en ?? v.ru ?? '' };
+}
+
+const title = bi(data.title);
+const eyebrow = bi(data.heroEyebrow || data.tag);
+const location = bi(data.location);
+const days = bi(data.days);
+const participants = bi(data.participants);
+const tag = bi(data.tag);
+const price = bi(data.price);
+const fromWord = data.priceFrom ? { ru: 'от', en: 'from' } : { ru: '', en: '' };
+
+// Up to three program steps (label + title).
+const program = (data.itinerary || []).slice(0, 3).map((s) => ({
+  label: bi(s.label),
+  title: bi(s.title),
+}));
+
+// Real dates line, if the content carries a "Dates / Даты" section.
+const datesSection = (data.sections || []).find((s) => {
+  const h = bi(s.heading);
+  return /dates/i.test(h.en) || /дат/i.test(h.ru);
+});
+const datesLine = datesSection ? bi(datesSection.body?.[0]) : null;
+
+// Meta chips (skip empties).
+const chips = [days, participants, tag].filter((c) => c.ru || c.en);
+---
+
+<!doctype html>
+<html lang="ru" data-lang="ru" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title.en} — Offer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=block"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      (function () {
+        var p = new URLSearchParams(location.search);
+        var r = document.documentElement;
+        r.dataset.theme = p.get('theme') === 'light' ? 'light' : 'dark';
+        r.dataset.lang = p.get('lang') === 'en' ? 'en' : 'ru';
+        r.setAttribute('lang', r.dataset.lang);
+        // The generator passes ?capture=1 so the preview toggles are hidden
+        // from the exported image. Humans open /offer/<slug> without it.
+        if (p.get('capture')) r.dataset.capture = '1';
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- Preview-only controls: hidden from the exported PNG via ?capture=1. -->
+    <div class="toggles" id="offerToggles" aria-hidden="true">
+      <div class="tg" data-group="theme">
+        <button type="button" data-val="dark">Dark</button>
+        <button type="button" data-val="light">Light</button>
+      </div>
+      <div class="tg" data-group="lang">
+        <button type="button" data-val="ru">RU</button>
+        <button type="button" data-val="en">EN</button>
+      </div>
+    </div>
+
+    <div class="canvas">
+      <div class="watermark"><Mandala variant="hero" /></div>
+      <div class="frame"></div>
+
+      <div class="inner">
+        <div class="mark"><Mandala variant="about" /></div>
+
+        <p class="eyebrow"><span class="l ru">{eyebrow.ru}</span><span class="l en">{eyebrow.en}</span></p>
+
+        <h1 class="title"><span class="l ru">{title.ru}</span><span class="l en">{title.en}</span></h1>
+
+        {(location.ru || location.en) && (
+          <p class="location"><span class="l ru">{location.ru}</span><span class="l en">{location.en}</span></p>
+        )}
+
+        <div class="chips">
+          {chips.map((c, i) => (
+            <>
+              {i > 0 && <span class="dot">·</span>}
+              <span class="chip"><span class="l ru">{c.ru}</span><span class="l en">{c.en}</span></span>
+            </>
+          ))}
+        </div>
+
+        <div class="rule"></div>
+
+        {program.length > 0 && (
+          <ul class="program">
+            {program.map((s) => (
+              <li>
+                <span class="p-label"><span class="l ru">{s.label.ru}</span><span class="l en">{s.label.en}</span></span>
+                <span class="p-title"><span class="l ru">{s.title.ru}</span><span class="l en">{s.title.en}</span></span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {datesLine && (
+          <p class="dates"><span class="l ru">{datesLine.ru}</span><span class="l en">{datesLine.en}</span></p>
+        )}
+
+        <div class="foot">
+          {(price.ru || price.en) && (
+            <p class="price">
+              <span class="from"><span class="l ru">{fromWord.ru}</span><span class="l en">{fromWord.en}</span></span>
+              <span class="amount"><span class="l ru">{price.ru}</span><span class="l en">{price.en}</span></span>
+            </p>
+          )}
+          <div class="cta">
+            <a class="cta-pill" href={bookUrl}><span class="l ru">Забронировать место</span><span class="l en">Reserve your place</span></a>
+            <p class="contact">
+              <a href={contact.whatsapp}>WhatsApp {contact.phone}</a>
+              <span class="sep">·</span>
+              <a href={contact.telegramUrl}>{contact.telegram}</a>
+            </p>
+            <a class="cta-url" href={SITE}>anjoy.space</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style is:global>
+      :root {
+        --bg0: #0d1117; --bg1: #141b24;
+        --ink: #f5f0e8; --dim: #b8b0a0;
+        --gold: #c9a96e; --goldl: #e2c98a;
+        --line: rgba(201, 169, 110, 0.22);
+        --wm: 0.07;
+      }
+      :root[data-theme='light'] {
+        --bg0: #f5efe4; --bg1: #fbf8f2;
+        --ink: #1b2430; --dim: #6f6656;
+        --gold: #a9834a; --goldl: #c19a58;
+        --line: rgba(169, 131, 74, 0.28);
+        --wm: 0.06;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        background: var(--bg0);
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+      /* PDF export: one square page (1080px @96dpi = 11.25in), no margins. */
+      @page { size: 11.25in 11.25in; margin: 0; }
+      /* language show/hide */
+      .l.en { display: none; }
+      :root[data-lang='en'] .l.ru { display: none; }
+      :root[data-lang='en'] .l.en { display: inline; }
+
+      /* preview-only toggle chrome (hidden in the exported image) */
+      .toggles {
+        position: fixed; top: 16px; left: 16px; z-index: 99;
+        display: flex; gap: 10px; font-family: 'DM Mono', monospace;
+      }
+      :root[data-capture] .toggles { display: none; }
+      .tg {
+        display: flex; overflow: hidden; border-radius: 999px;
+        background: rgba(13, 17, 23, 0.82);
+        border: 1px solid rgba(201, 169, 110, 0.3);
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      .tg button {
+        appearance: none; border: 0; background: transparent; color: #b8b0a0;
+        font: inherit; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+        padding: 7px 15px; cursor: pointer; transition: background 0.15s, color 0.15s;
+      }
+      .tg button.on { background: #c9a96e; color: #0d1117; }
+    </style>
+    <style>
+      .canvas {
+        position: relative;
+        width: 1080px; height: 1080px;
+        overflow: hidden;
+        background: radial-gradient(120% 82% at 50% 30%, var(--bg1), var(--bg0));
+        color: var(--ink);
+        font-family: 'DM Sans', -apple-system, sans-serif;
+        font-weight: 300;
+      }
+      .watermark {
+        position: absolute; inset: -18% -18% auto -18%; top: -6%;
+        opacity: var(--wm);
+        pointer-events: none;
+      }
+      .watermark :global(svg) { width: 136%; height: auto; margin-left: -18%; }
+      .frame {
+        position: absolute; inset: 40px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        pointer-events: none;
+      }
+      .inner {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center;
+        text-align: center;
+        padding: 92px 108px;
+      }
+      .mark { width: 92px; height: 92px; }
+      .mark :global(svg) { width: 100%; height: 100%; }
+      .eyebrow {
+        margin-top: 30px;
+        font-family: 'DM Mono', monospace;
+        font-size: 19px; letter-spacing: 0.34em; text-transform: uppercase;
+        color: var(--gold);
+      }
+      .title {
+        margin-top: 20px;
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 500; font-size: 82px; line-height: 1.02;
+        letter-spacing: 0.5px; color: var(--ink);
+        max-width: 14ch;
+      }
+      .location {
+        margin-top: 22px;
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic; font-size: 30px; color: var(--dim);
+      }
+      .chips {
+        margin-top: 20px;
+        display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+        justify-content: center;
+        font-family: 'DM Mono', monospace;
+        font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--dim);
+      }
+      .chips .dot { color: var(--gold); }
+      .rule {
+        width: 64px; height: 1px; margin: 34px 0 4px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      }
+      .program {
+        list-style: none;
+        margin-top: 26px;
+        display: flex; flex-direction: column; gap: 18px;
+        width: 100%;
+      }
+      .program li {
+        display: flex; align-items: baseline; justify-content: center;
+        gap: 16px;
+      }
+      .p-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--gold);
+        flex: none; min-width: 210px; text-align: right;
+      }
+      .p-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 30px; color: var(--ink);
+        flex: none; min-width: 210px; text-align: left;
+      }
+      .dates {
+        margin-top: 30px;
+        font-family: 'DM Mono', monospace;
+        font-size: 15px; letter-spacing: 0.08em; color: var(--dim);
+        max-width: 40ch;
+      }
+      .foot {
+        margin-top: auto;
+        display: flex; flex-direction: column; align-items: center; gap: 20px;
+      }
+      .price {
+        display: flex; align-items: baseline; gap: 12px;
+        font-family: 'Cormorant Garamond', serif;
+      }
+      .price .from {
+        font-size: 22px; font-style: italic; color: var(--dim);
+        text-transform: lowercase;
+      }
+      .price .amount { font-size: 52px; font-weight: 500; color: var(--goldl); }
+      .cta { display: flex; flex-direction: column; align-items: center; gap: 13px; }
+      .contact {
+        display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+        justify-content: center;
+        font-family: 'DM Mono', monospace; font-size: 15px; letter-spacing: 0.04em;
+        color: var(--dim);
+      }
+      .contact a { color: var(--ink); text-decoration: none; }
+      .contact .sep { color: var(--gold); }
+      .cta-pill {
+        display: inline-block; text-decoration: none;
+        padding: 16px 40px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--goldl), var(--gold));
+        color: var(--bg0);
+        font-family: 'DM Sans', sans-serif; font-weight: 500;
+        font-size: 20px; letter-spacing: 0.02em;
+      }
+      .cta-url {
+        text-decoration: none;
+        font-family: 'DM Mono', monospace;
+        font-size: 15px; letter-spacing: 0.28em; text-transform: uppercase;
+        color: var(--dim);
+      }
+    </style>
+
+    <script is:inline>
+      // Wire the preview toggles: flip data-theme / data-lang live and keep the
+      // URL in sync (so a chosen variant is shareable / matches the generator).
+      (function () {
+        var r = document.documentElement;
+        var box = document.getElementById('offerToggles');
+        if (!box) return;
+        function sync() {
+          box.querySelectorAll('button').forEach(function (b) {
+            var g = b.parentElement.dataset.group;
+            var cur = g === 'theme' ? r.dataset.theme : r.dataset.lang;
+            b.classList.toggle('on', b.dataset.val === cur);
+          });
+        }
+        box.addEventListener('click', function (e) {
+          var b = e.target.closest('button');
+          if (!b) return;
+          var g = b.parentElement.dataset.group;
+          var v = b.dataset.val;
+          if (g === 'theme') {
+            r.dataset.theme = v;
+          } else {
+            r.dataset.lang = v;
+            r.setAttribute('lang', v);
+          }
+          var p = new URLSearchParams(location.search);
+          p.set(g === 'theme' ? 'theme' : 'lang', v);
+          history.replaceState(null, '', location.pathname + '?' + p.toString());
+          sync();
+        });
+        sync();
+      })();
+    </script>
+  </body>
+</html>
