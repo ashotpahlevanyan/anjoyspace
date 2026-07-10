@@ -94,6 +94,23 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site ?? 'https://anjoy.space
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/110564858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrica -->
+
+    <!-- Google Analytics 4 (G-QNCQES8F55) — production domain only. -->
+    <script is:inline>
+      (function () {
+        if (!/(^|\.)anjoy\.space$/.test(location.hostname)) return;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QNCQES8F55';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-QNCQES8F55');
+      })();
+    </script>
+    <!-- /Google Analytics 4 -->
     <script is:inline>
       (function () {
         try {
