@@ -8,6 +8,6 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://anjoy.space',
   output: 'static',
-  integrations: [react(), sitemap({ filter: (page) => !page.includes('/offers') })],
+  integrations: [react(), sitemap({ filter: (page) => !page.includes('/offers') && !page.includes('/admin') })],
   scopedStyleStrategy: 'class',
 });
