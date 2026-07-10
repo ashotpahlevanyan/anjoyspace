@@ -56,13 +56,29 @@ const orgLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Organization',
+      '@type': ['Organization', 'LocalBusiness'],
       '@id': `${SITE}/#organization`,
       name: 'Anjoy Space',
       url: `${SITE}/`,
       email: site.email,
+      telephone: '+7 915 159 3376',
       logo: `${SITE}/assets/favicon.svg`,
       description: pick(home.description),
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Москва',
+        addressRegion: 'Москва',
+        addressCountry: 'RU',
+      },
+      areaServed: [
+        { '@type': 'City', name: 'Москва' },
+        { '@type': 'AdministrativeArea', name: 'Московская область' },
+      ],
+      knowsAbout: [
+        'Йога', 'Yoga', 'Йога-ретриты', 'Yoga retreats', 'Медитация', 'Meditation',
+        'Йога-нидра', 'Yoga Nidra', 'Саундхилинг', 'Sound healing', 'Женские круги',
+        'Игра Лила', 'Lila game', 'Year Compass', 'Корпоративные ретриты', 'Осознанность',
+      ],
       sameAs: socials,
     },
     {
