@@ -77,6 +77,23 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site ?? 'https://anjoy.space
       rel="stylesheet"
     />
     <style is:global set:html={rootCss}></style>
+
+    <!-- Yandex.Metrica (counter 110564858) — only on the production domain so
+         dev / preview / localhost traffic doesn't pollute the stats. -->
+    <script type="text/javascript" is:inline>
+      (function () {
+        if (!/(^|\.)anjoy\.space$/.test(location.hostname)) return;
+        (function (m, e, t, r, i, k, a) {
+          m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+          m[i].l = 1 * new Date();
+          for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+          k = e.createElement(t); a = e.getElementsByTagName(t)[0]; k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=110564858', 'ym');
+        ym(110564858, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: 'dataLayer', accurateTrackBounce: true, trackLinks: true });
+      })();
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/110564858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrica -->
     <script is:inline>
       (function () {
         try {
