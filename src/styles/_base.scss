@@ -107,6 +107,30 @@ section { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
 @media (max-width: 600px) {
   .scroll-top { right: 1rem; bottom: 1rem; width: 40px; height: 40px; }
 }
+
+/* ── FLOATING CHAT (WhatsApp / Telegram) ── */
+.chat-fab {
+  position: fixed; left: 1.5rem; bottom: 1.5rem; z-index: 55;
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.chat-btn {
+  width: 46px; height: 46px; display: grid; place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--deep) 82%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  color: var(--gold);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.chat-btn svg { width: 22px; height: 22px; }
+.chat-btn:hover { color: var(--night); background: var(--gold); border-color: var(--gold); transform: translateY(-2px); }
+.chat-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (max-width: 600px) {
+  .chat-fab { left: 1rem; bottom: 1rem; }
+  .chat-btn { width: 42px; height: 42px; }
+  .chat-btn svg { width: 20px; height: 20px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .scroll-top { transition: opacity 0.3s, visibility 0.3s; transform: none; }
 }

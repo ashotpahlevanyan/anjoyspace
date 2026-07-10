@@ -52,6 +52,25 @@ const cta = { ru: 'Записаться', en: 'Reserve' };
 // Site-wide structured data: Organization (brand/knowledge panel) + WebSite.
 const SITE = 'https://anjoy.space';
 const socials = (site.social ?? []).map((s) => s.href).filter((h) => /^https?:/.test(h));
+
+// Review + aggregate rating from the real testimonials shown on this page
+// (each renders visible ★ stars, so this is compliant, not fabricated).
+const reviewLd = testimonials.map((t) => ({
+  '@type': 'Review',
+  reviewRating: { '@type': 'Rating', ratingValue: t.data.rating, bestRating: 5, worstRating: 1 },
+  author: { '@type': 'Person', name: t.data.author },
+  reviewBody: pick(t.data.quote),
+}));
+const ratings = testimonials.map((t) => t.data.rating);
+const aggregateRating = ratings.length
+  ? {
+      '@type': 'AggregateRating',
+      ratingValue: Math.round((ratings.reduce((a, b) => a + b, 0) / ratings.length) * 10) / 10,
+      reviewCount: ratings.length,
+      bestRating: 5,
+      worstRating: 1,
+    }
+  : null;
 const orgLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -80,6 +99,8 @@ const orgLd = {
         'Игра Лила', 'Lila game', 'Year Compass', 'Корпоративные ретриты', 'Осознанность',
       ],
       sameAs: socials,
+      ...(aggregateRating ? { aggregateRating } : {}),
+      ...(reviewLd.length ? { review: reviewLd } : {}),
     },
     {
       '@type': 'WebSite',
