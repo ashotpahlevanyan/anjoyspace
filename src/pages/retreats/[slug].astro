@@ -173,6 +173,33 @@ const retreatLd = { '@context': 'https://schema.org', '@graph': [tripLd, ...(faq
     )
   }
 
+  <!-- SPACES / WHAT AWAITS YOU -->
+  {
+    d.spaces.length > 0 && (
+      <section class="spaces-section">
+        <SectionHeader
+          eyebrow={{ ru: 'Пространство', en: 'The space' }}
+          title={{ ru: 'Дом и территория', en: 'The house & grounds' }}
+        />
+        <div class="spaces-grid">
+          {d.spaces.map((s) => (
+            <div class="space-card reveal">
+              {s.image && (
+                <div class="space-img">
+                  <img src={s.image} alt="" loading="lazy" />
+                </div>
+              )}
+              <div class="space-body">
+                <T value={s.title} tag="h4" />
+                <T value={s.body} tag="p" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
   <!-- ITINERARY -->
   {
     d.itinerary.length > 0 && (

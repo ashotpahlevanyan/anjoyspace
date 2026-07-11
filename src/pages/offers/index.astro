@@ -5,7 +5,7 @@
 import { getCollection } from 'astro:content';
 import Mandala from '../../components/Mandala.astro';
 
-function bi(v) {
+function bi(v: any) {
   if (v == null) return { ru: '', en: '' };
   if (typeof v === 'string') return { ru: v, en: v };
   return { ru: v.ru ?? v.en ?? '', en: v.en ?? v.ru ?? '' };
