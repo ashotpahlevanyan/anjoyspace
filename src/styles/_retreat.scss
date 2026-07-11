@@ -98,6 +98,23 @@
     font-family: var(--font-serif); font-size: 3rem; color: rgba(201, 169, 110, 0.15);
   }
 
+  /* ── SPACES / "WHAT AWAITS YOU" ── */
+  .spaces-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem;
+  }
+  .space-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .space-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .space-img { aspect-ratio: 4 / 3; overflow: hidden; background: var(--deep); }
+  .space-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+  .space-card:hover .space-img img { transform: scale(1.04); }
+  .space-body { padding: 1.1rem 1.25rem 1.4rem; }
+  .space-body h4 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--parchment); margin: 0 0 0.4rem; }
+  .space-body p { font-size: 0.9rem; color: var(--parchment-dim); font-weight: 300; line-height: 1.6; margin: 0; }
+
   /* ── CTA ── */
   .cta-band {
     background: linear-gradient(135deg, var(--sage) 0%, #2a4a3e 50%, #1a3028 100%);

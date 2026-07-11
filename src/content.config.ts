@@ -45,6 +45,10 @@ const retreats = defineCollection({
       .array(z.object({ heading: localized, body: z.array(localized).default([]) }))
       .default([]),
     faq: z.array(z.object({ q: localized, a: localized })).default([]),
+    // Named venue spaces ("What awaits you") — title + description + optional image.
+    spaces: z
+      .array(z.object({ title: localized, body: localized, image: z.string().optional() }))
+      .default([]),
     // real venue photos (carousel + lightbox); preferred over `gallery` glyphs.
     photos: z.array(z.object({ src: z.string(), alt: localized.optional() })).default([]),
     // video / image testimonials shown in a carousel with popups.

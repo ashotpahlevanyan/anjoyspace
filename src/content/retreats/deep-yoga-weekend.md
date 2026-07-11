@@ -210,6 +210,28 @@ faq:
     a:
       ru: "Да, если это никому не мешает."
       en: "Yes, as long as it doesn't disturb anyone."
+spaces:
+  - title: { ru: "Зал для йоги", en: "Yoga Hall" }
+    body: { ru: "Большой зал для проведения практик.", en: "A large hall for practice sessions." }
+    image: "/retreats/deep-yoga-weekend/photos/01.jpg"
+  - title: { ru: "Гостиная для активностей", en: "Activity Lounge" }
+    body: { ru: "Уютная гостиная для вечерних мероприятий.", en: "A cozy lounge for evening gatherings." }
+    image: "/retreats/deep-yoga-weekend/photos/04.jpg"
+  - title: { ru: "Номера в общем доме", en: "Rooms in the Shared House" }
+    body: { ru: "Отдельные комнаты с санузлом.", en: "Private rooms with en-suite bathrooms." }
+    image: "/retreats/deep-yoga-weekend/photos/08.jpg"
+  - title: { ru: "Номера в VIP-доме", en: "Rooms in the VIP House" }
+    body: { ru: "Отдельные комнаты с санузлом.", en: "Private rooms with en-suite bathrooms." }
+    image: "/retreats/deep-yoga-weekend/photos/10.jpg"
+  - title: { ru: "Холл деревянного дома", en: "The Wooden House Hall" }
+    body: { ru: "Большое пространство, соединяющее комнаты и гостиную.", en: "A large space connecting the rooms and the lounge." }
+    image: "/retreats/deep-yoga-weekend/photos/12.jpg"
+  - title: { ru: "Территория", en: "The Grounds" }
+    body: { ru: "Берег Плещеева озера — с холма открывается прекрасный вид.", en: "On the shore of Lake Pleshcheyevo, with a beautiful view from the hill." }
+    image: "/retreats/deep-yoga-weekend/photos/03.jpg"
+  - title: { ru: "3-разовое питание", en: "Three Meals a Day" }
+    body: { ru: "Вас ждёт огромное разнообразие вегетарианских блюд.", en: "A huge variety of vegetarian dishes awaits you." }
+    image: "/retreats/deep-yoga-weekend/photos/14.jpg"
 photos:
   - { src: "/retreats/deep-yoga-weekend/photos/01.jpg" }
   - { src: "/retreats/deep-yoga-weekend/photos/02.jpg" }

@@ -57,6 +57,21 @@ collections:
           - { label: "Label", name: label, widget: string, hint: "e.g. Days 1–2" }
           - { label: "Title", name: title, widget: string }
           - { label: "Body", name: body, widget: text }
+      - label: "Spaces (What awaits you)"
+        name: spaces
+        widget: list
+        required: false
+        summary: "{{fields.title.en}}"
+        fields:
+          - label: "Title"
+            name: title
+            widget: object
+            fields: [{ label: RU, name: ru, widget: string }, { label: EN, name: en, widget: string }]
+          - label: "Description"
+            name: body
+            widget: object
+            fields: [{ label: RU, name: ru, widget: text }, { label: EN, name: en, widget: text }]
+          - { label: "Image path", name: image, widget: string, required: false, hint: "e.g. /retreats/deep-yoga-weekend/photos/01.jpg" }
       - label: "Gallery tiles"
         name: gallery
         widget: list
