@@ -35,7 +35,7 @@ const contact = {
 };
 
 // Normalise "string | {ru,en}" into a {ru,en} pair.
-function bi(v) {
+function bi(v: any) {
   if (v == null) return { ru: '', en: '' };
   if (typeof v === 'string') return { ru: v, en: v };
   return { ru: v.ru ?? v.en ?? '', en: v.en ?? v.ru ?? '' };
