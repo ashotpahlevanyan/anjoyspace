@@ -73,13 +73,13 @@
     padding: 1.6rem 0; border-bottom: 1px solid var(--border); align-items: baseline;
   }
   .itinerary-label { font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold); letter-spacing: 0.05em; }
-  .itinerary-item h4 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; color: var(--parchment); margin-bottom: 0.3rem; }
+  .itinerary-item h3 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; color: var(--parchment); margin-bottom: 0.3rem; }
   .itinerary-item p { font-size: 0.85rem; color: var(--parchment-dim); font-weight: 300; line-height: 1.7; }
 
   /* ── FAQ ── */
   .faq-list { border-top: 1px solid var(--border); }
   .faq-item { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
-  .faq-item h4 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; color: var(--parchment); margin-bottom: 0.5rem; }
+  .faq-item h3 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; color: var(--parchment); margin-bottom: 0.5rem; }
   .faq-item p { font-size: 0.9rem; color: var(--parchment-dim); font-weight: 300; line-height: 1.8; max-width: 760px; }
 
   /* ── REVIEWS ── */
@@ -112,7 +112,7 @@
   .space-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
   .space-card:hover .space-img img { transform: scale(1.04); }
   .space-body { padding: 1.1rem 1.25rem 1.4rem; }
-  .space-body h4 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--parchment); margin: 0 0 0.4rem; }
+  .space-body h3 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--parchment); margin: 0 0 0.4rem; }
   .space-body p { font-size: 0.9rem; color: var(--parchment-dim); font-weight: 300; line-height: 1.6; margin: 0; }
 
   /* ── CTA ── */

@@ -73,7 +73,7 @@
   .process-list { border-top: 1px solid var(--border); }
   .process-item { display: grid; grid-template-columns: 70px 1fr; gap: 2rem; padding: 1.8rem 0; border-bottom: 1px solid var(--border); align-items: baseline; }
   .process-num { font-family: var(--font-mono); font-size: 0.9rem; color: var(--gold); }
-  .process-item h4 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; margin-bottom: 0.4rem; color: var(--parchment); }
+  .process-item h3 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; margin-bottom: 0.4rem; color: var(--parchment); }
   .process-item p { font-size: 0.88rem; color: var(--parchment-dim); font-weight: 300; line-height: 1.7; }
 
   /* ── CTA / CONTACT FORM ── */
