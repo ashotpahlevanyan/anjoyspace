@@ -184,9 +184,9 @@ const steps = [
       <input type="hidden" name="form-name" value="year-compass" />
       <input type="hidden" name="source" value="year-compass-page" />
       <p hidden><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
-      <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
-      <input type="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
-      <textarea name="message" rows="3" placeholder="Вопрос или пожелание (по желанию)" data-ph-ru="Вопрос или пожелание (по желанию)" data-ph-en="A question or note (optional)"></textarea>
+      <input type="text" name="name" aria-label="Ваше имя" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+      <input type="email" name="email" aria-label="Ваш email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
+      <textarea name="message" rows="3" aria-label="Вопрос или пожелание" placeholder="Вопрос или пожелание (по желанию)" data-ph-ru="Вопрос или пожелание (по желанию)" data-ph-en="A question or note (optional)"></textarea>
       <button type="submit"><span data-lang="ru">Зарегистрироваться</span><span data-lang="en">Register</span></button>
       <p class="form-status" data-status hidden></p>
     </form>

@@ -197,15 +197,15 @@ const steps = [
       <input type="hidden" name="form-name" value="lila" />
       <input type="hidden" name="source" value="lila-page" />
       <p hidden><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
-      <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
-      <input type="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
-      <select name="format" required>
+      <input type="text" name="name" aria-label="Ваше имя" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+      <input type="email" name="email" aria-label="Ваш email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
+      <select name="format" aria-label="Формат" required>
         <option value="" disabled selected data-t-ru="Формат" data-t-en="Format">Формат</option>
         <option data-t-ru="Индивидуально" data-t-en="One-on-one">Индивидуально</option>
         <option data-t-ru="Малая группа" data-t-en="Small group">Малая группа</option>
         <option data-t-ru="Пока не знаю" data-t-en="Not sure yet">Пока не знаю</option>
       </select>
-      <textarea name="message" rows="3" placeholder="Что вас привело? (по желанию)" data-ph-ru="Что вас привело? (по желанию)" data-ph-en="What brings you? (optional)"></textarea>
+      <textarea name="message" rows="3" aria-label="Что вас привело?" placeholder="Что вас привело? (по желанию)" data-ph-ru="Что вас привело? (по желанию)" data-ph-en="What brings you? (optional)"></textarea>
       <button type="submit"><span data-lang="ru">Отправить заявку</span><span data-lang="en">Send request</span></button>
       <p class="form-status" data-status hidden></p>
     </form>

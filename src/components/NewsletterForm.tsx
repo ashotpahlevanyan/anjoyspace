@@ -39,6 +39,7 @@ export default function NewsletterForm() {
       <input
         type="email"
         name="email"
+        aria-label="Ваш email для анонсов ретритов"
         placeholder="Ваш email — для анонсов ретритов"
         data-ph-ru="Ваш email — для анонсов ретритов"
         data-ph-en="Your email — for retreat announcements"
