@@ -23,7 +23,7 @@ const words = d.sections
   .filter(Boolean).length;
 const minutes = d.readingTime ?? Math.max(1, Math.round(words / 200));
 const readLabel = { ru: `${minutes} мин`, en: `${minutes} min` };
-const accentVars = d.accent === 'violet' ? '--accent: var(--violet);' : '--accent: var(--gold);';
+const accentVars = d.accent === 'violet' ? '--accent: var(--violet); --accent-text: var(--violet-text);' : '--accent: var(--gold); --accent-text: var(--gold);';
 ---
 
 <a href={`/blog/${post.id}/`} class="blog-card reveal" style={accentVars}>

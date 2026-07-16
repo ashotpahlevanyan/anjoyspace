@@ -18,7 +18,9 @@
         "gold": "#C9A96E",
         "gold-light": "#E2C98A",
         "sage": "#3D6B5E",
+        "sage-text": "#6BA593",
         "violet": "#8B6F9E",
+        "violet-text": "#A98BC0",
         "card-bg": "#1A2330",
         "border": "rgba(201,169,110,0.2)"
       }
@@ -34,7 +36,9 @@
         "gold": "#B99AD4",
         "gold-light": "#D6C2EC",
         "sage": "#4A6B7E",
+        "sage-text": "#7FA0B3",
         "violet": "#8B6F9E",
+        "violet-text": "#A98BC0",
         "card-bg": "#1E1730",
         "border": "rgba(185,154,212,0.22)"
       }

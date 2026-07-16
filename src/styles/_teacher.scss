@@ -2,7 +2,7 @@
    Accent color is set per-teacher via --accent / --accent-light / --border on
    the .page-teacher wrapper (see TeacherLayout). */
 .page-teacher {
-  .eyebrow { color: var(--accent); }
+  .eyebrow { color: var(--accent-text, var(--accent)); }
   .btn-primary { background: var(--accent); }
   .btn-primary:hover { background: var(--accent-light); }
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
@@ -137,7 +137,7 @@
     display: grid; grid-template-columns: 110px 1fr; gap: 2rem;
     padding: 1.6rem 0; border-bottom: 1px solid var(--border); align-items: baseline;
   }
-  .path-year { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.05em; }
+  .path-year { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-text, var(--accent)); letter-spacing: 0.05em; }
   .path-item h4 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; color: var(--parchment); margin-bottom: 0.3rem; }
   .path-item p { font-size: 0.85rem; color: var(--parchment-dim); font-weight: 300; line-height: 1.7; }
 
@@ -163,7 +163,7 @@
     font-weight: 300; line-height: 1.7; color: var(--parchment); margin-bottom: 1.2rem;
   }
   .testimonial-name { font-size: 0.82rem; font-weight: 500; color: var(--parchment); }
-  .testimonial-meta { font-family: var(--font-mono); font-size: 0.62rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
+  .testimonial-meta { font-family: var(--font-mono); font-size: 0.62rem; color: var(--accent-text, var(--accent)); letter-spacing: 0.08em; text-transform: uppercase; }
 
   /* ── CTA ── */
   .cta-band {

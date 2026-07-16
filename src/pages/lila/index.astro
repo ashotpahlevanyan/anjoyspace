@@ -68,7 +68,7 @@ const steps = [
   title="Игра Лила с Ани Овакимян — Anjoy Space"
   description="Лила — древняя индийская трансформационная игра самопознания. Индивидуально или в малой группе, ведёт Ани Овакимян. Lila — a transformational game to move out of self-made traps."
   pageClass="page-dir page-lila"
-  accentVars="--accent: var(--violet);"
+  accentVars="--accent: var(--violet); --accent-text: var(--violet-text);"
   nav={{ breadcrumb, navLinks, menuLinks }}
   footer={footer}
   contact={false}
@@ -234,7 +234,7 @@ const steps = [
           if (!res.ok) throw new Error(String(res.status));
           form.reset();
           status.textContent = t('Спасибо — Ани свяжется с вами в течение 24 часов.', 'Thank you — Ani will be in touch within 24 hours.');
-          status.style.color = 'var(--sage)';
+          status.style.color = 'var(--sage-text)';
         } catch (err) {
           status.textContent = t('Что-то пошло не так. Напишите нам напрямую: hello@anjoy.space.', 'Something went wrong. Please email hello@anjoy.space directly.');
           status.style.color = 'var(--gold)';

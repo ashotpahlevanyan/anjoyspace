@@ -215,7 +215,7 @@ const steps = [
           if (!res.ok) throw new Error(String(res.status));
           form.reset();
           status.textContent = t('Спасибо — мы пришлём дату и детали ближайшей встречи.', "Thank you — we'll send the date and details of the next meetup.");
-          status.style.color = 'var(--sage)';
+          status.style.color = 'var(--sage-text)';
         } catch (err) {
           status.textContent = t('Что-то пошло не так. Напишите нам напрямую: hello@anjoy.space.', 'Something went wrong. Please email hello@anjoy.space directly.');
           status.style.color = 'var(--gold)';

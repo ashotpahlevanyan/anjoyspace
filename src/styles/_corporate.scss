@@ -1,6 +1,6 @@
 /* ════ CORPORATE ════ */
 .page-corporate {
-  .eyebrow { color: var(--violet); }
+  .eyebrow { color: var(--violet-text); }
   section, .hero { padding: var(--gap) clamp(1.5rem, 6vw, 8rem); }
 
   /* ── HERO ── */
@@ -52,7 +52,7 @@
   .package-card.featured { background: #1a2a22; }
   .package-card:hover { background: #1c2530; }
   .package-card.featured:hover { background: #1e3329; }
-  .package-tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--violet); margin-bottom: 1rem; }
+  .package-tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--violet-text); margin-bottom: 1rem; }
   .package-card.featured .package-tag { color: var(--gold); }
   .package-card h3 { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 400; margin-bottom: 0.6rem; color: var(--parchment); }
   .package-card .price { font-family: var(--font-serif); font-size: 1.8rem; color: var(--gold); margin-bottom: 0.3rem; }
