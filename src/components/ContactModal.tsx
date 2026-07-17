@@ -91,11 +91,12 @@ export default function ContactModal() {
                   Don't fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" />
                 </label>
               </p>
-              <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
-              <input type="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
+              <input type="text" name="name" aria-label="Ваше имя" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+              <input type="email" name="email" aria-label="Ваш email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" required />
               <textarea
                 name="message"
                 rows={4}
+                aria-label="Сообщение"
                 placeholder="Какой ретрит вам интересен, или просто поздоровайтесь..."
                 data-ph-ru="Какой ретрит вам интересен, или просто поздоровайтесь..."
                 data-ph-en="Which retreat interests you, or just say hello..."

@@ -190,7 +190,7 @@ const retreatLd = { '@context': 'https://schema.org', '@graph': [tripLd, ...(faq
                 </div>
               )}
               <div class="space-body">
-                <T value={s.title} tag="h4" />
+                <T value={s.title} tag="h3" />
                 <T value={s.body} tag="p" />
               </div>
             </div>
@@ -213,7 +213,7 @@ const retreatLd = { '@context': 'https://schema.org', '@graph': [tripLd, ...(faq
             <div class="itinerary-item reveal">
               <T value={it.label} tag="span" class="itinerary-label" />
               <div>
-                <T value={it.title} tag="h4" />
+                <T value={it.title} tag="h3" />
                 <T value={it.body} tag="p" />
               </div>
             </div>
@@ -234,7 +234,7 @@ const retreatLd = { '@context': 'https://schema.org', '@graph': [tripLd, ...(faq
         <div class="faq-list">
           {d.faq.map((f) => (
             <div class="faq-item reveal">
-              <T value={f.q} tag="h4" />
+              <T value={f.q} tag="h3" />
               <T value={f.a} tag="p" />
             </div>
           ))}

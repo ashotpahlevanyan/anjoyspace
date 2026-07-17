@@ -297,7 +297,7 @@ const anjoyList = [
         process.map((s) => (
           <div class="process-item reveal">
             <span class="process-num">{s.num}</span>
-            <div><T value={s.title} tag="h4" /><T value={s.body} tag="p" /></div>
+            <div><T value={s.title} tag="h3" /><T value={s.body} tag="p" /></div>
           </div>
         ))
       }
@@ -312,17 +312,17 @@ const anjoyList = [
     <form class="contact-form" id="corporateForm" name="corporate" method="POST" action="/api/lead">
       <input type="hidden" name="form-name" value="corporate" />
       <p hidden><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
-      <input type="text" name="company" placeholder="Название компании" data-ph-ru="Название компании" data-ph-en="Company name" required />
-      <input type="text" name="name" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
-      <input type="email" name="email" placeholder="Рабочая почта" data-ph-ru="Рабочая почта" data-ph-en="Work email" required />
-      <select name="team-size" required>
+      <input type="text" name="company" aria-label="Название компании" placeholder="Название компании" data-ph-ru="Название компании" data-ph-en="Company name" required />
+      <input type="text" name="name" aria-label="Ваше имя" placeholder="Ваше имя" data-ph-ru="Ваше имя" data-ph-en="Your name" required />
+      <input type="email" name="email" aria-label="Рабочая почта" placeholder="Рабочая почта" data-ph-ru="Рабочая почта" data-ph-en="Work email" required />
+      <select name="team-size" aria-label="Размер команды" required>
         <option value="" disabled selected data-t-ru="Размер команды" data-t-en="Team size">Размер команды</option>
         <option data-t-ru="5–8 человек" data-t-en="5–8 people">5–8 человек</option>
         <option data-t-ru="9–16 человек" data-t-en="9–16 people">9–16 человек</option>
         <option data-t-ru="17–30 человек" data-t-en="17–30 people">17–30 человек</option>
         <option data-t-ru="30+ человек" data-t-en="30+ people">30+ человек</option>
       </select>
-      <textarea name="message" rows="3" placeholder="Чего вы хотите достичь этим выездом?" data-ph-ru="Чего вы хотите достичь этим выездом?" data-ph-en="What are you hoping this offsite achieves?"></textarea>
+      <textarea name="message" rows="3" aria-label="Чего вы хотите достичь этим выездом?" placeholder="Чего вы хотите достичь этим выездом?" data-ph-ru="Чего вы хотите достичь этим выездом?" data-ph-en="What are you hoping this offsite achieves?"></textarea>
       <button type="submit"><span data-lang="ru">Запросить предложение</span><span data-lang="en">Request Proposal</span></button>
       <p class="form-status" data-status hidden></p>
     </form>
@@ -354,7 +354,7 @@ const anjoyList = [
             'Спасибо — мы пришлём индивидуальное предложение в течение 24 часов.',
             "Thank you — we'll send a tailored proposal within 24 hours.",
           );
-          status.style.color = 'var(--sage)';
+          status.style.color = 'var(--sage-text)';
         } catch (err) {
           status.textContent = t(
             'Что-то пошло не так. Напишите нам напрямую: hello@anjoy.space.',
