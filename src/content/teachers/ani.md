@@ -262,8 +262,8 @@ cta:
 contacts:
   - label: Telegram — @ani_ovakimian
     href: https://t.me/ani_ovakimian
-  - label: Instagram — @ani_ovakimian
-    href: https://instagram.com/ani_ovakimian
+  - label: Instagram — @anjoy_space
+    href: https://www.instagram.com/anjoy_space/
 footerName:
   ru: Ани Овакимян
   en: Ani Ovakimian
