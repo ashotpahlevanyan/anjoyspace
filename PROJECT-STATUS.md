@@ -1,7 +1,7 @@
 # Anjoy Space — Project Status & Context
 
 > Resume point. Where things stand, key facts, and what's next.
-> Last updated: 2026-07-17.
+> Last updated: 2026-09-10.
 
 ## What this is
 The whole anjoy.space site + brand system is a **gift being built for Ani (Ani Ovakimian)**,
@@ -58,10 +58,23 @@ brand authentic (real presence over AI).
 5. **Online booking / deposit** (YooKassa/CloudPayments or structured Telegram) — biggest revenue lever.
 6. **Link-in-bio page** (like `/card`, UTM-tagged) — highest-leverage IG move.
 7. Quick wins: "spots left" urgency, self-host fonts, image optimization (`astro:assets`).
-8. **Real asana videos with Ani** + IG content — after Ani accepts. See `marketing/instagram-content-ideas.md`.
+8. **Gift certificate product w/ checkout** — shares the payment rail with #5; cash upfront and it
+   acquires *new* customers. See `marketing/competitor-analysis.md` › R1.
+9. **"Anjoy Circle" membership** + a points/loyalty currency — monetizes priority booking on
+   sold-out dates and the 94% return rate (› R6, R4).
+10. **Thermal + bodywork program for Lori/Gavar** — `/retreat-center` lists six facilities and none
+   is water, heat or bodywork. Add the facility cards (C1) and settle the wet-block siting at
+   design time (C5). See `marketing/retreat-center-program.md`.
+11. **Anjoy classes hosted in premium Moscow venues** — they own the room and the 6,000 ₽ price
+   point, Anjoy brings the yoga depth they lack. Zero rent, feeds the retreat funnel (› R7).
+12. **Real asana videos with Ani** + IG content — after Ani accepts. See `marketing/instagram-content-ideas.md`.
 
 ## Docs
 - `marketing/instagram-content-ideas.md` — IG/content strategy backlog (living).
+- `marketing/competitor-analysis.md` — scope/feature backlog from Yoga Barn, Vikasa, **Respace (Moscow)** (living).
+- `marketing/revenue-strategy.md` — prioritized revenue levers (living).
+- `marketing/retreat-center-program.md` — Lori/Gavar facility & service program: banya, thermal,
+  bodywork; phasing and design-time decisions (living).
 - `marketing/business-card/` — NFC card art + print spec.
 
 ## Conventions
